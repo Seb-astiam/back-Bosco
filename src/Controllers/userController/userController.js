@@ -1,19 +1,28 @@
 const { User } = require("../../Models/User");
 
 const createNewuser = async (user) => {
-  const { name, email, password, address, phone, balance } = user;
+  const { name, email, password, province, city, address, phone, balance } =
+    user;
 
   const defaults = {
     name,
     password,
+    province,
+    city,
     address,
     phone,
-    balance,
   };
-  const [newUser, created] = await User.findOrCreate({
-    where: { email },
-    defaults,
-  });
+  if (balance) defaults.balance = balance;
+
+  try {
+    const [newUser, created] = await User.findOrCreate({
+      where: { email },
+      defaults,
+    });
+    return created;
+  } catch (error) {
+    throw Error(error.message);
+  }
 };
 
 const getAllUsers = async () => {};
