@@ -43,7 +43,14 @@ const getUserById = async (id) => {
   }
 };
 
-const deleteUser = async () => {};
+const deleteUser = async (id) => {
+  try {
+    const deleted = await User.destroy({ where: { id } });
+    return deleted;
+  } catch (error) {
+    throw Error(error.message);
+  }
+};
 
 const updateUser = async () => {};
 
