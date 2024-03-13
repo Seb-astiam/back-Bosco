@@ -1,5 +1,6 @@
 const {
   createNewuser,
+  getAllUsers,
 } = require("../../Controllers/userController/userController");
 
 const postUser = async (req, res) => {
@@ -27,8 +28,20 @@ const postUser = async (req, res) => {
       return res.status(400).send("Ya existe un usuario con el mail ingresado");
     }
   } catch (error) {
-    console.log("Error creando usuario: " + error.message);
+    res.status(500).send("Error creando usuario: " + error.message);
   }
 };
 
-module.exports = { postUser };
+const getUsers = async (req, res) => {
+  try {
+    const users = await getAllUsers();
+    if (users.length < 1)
+      return res.status(404).send("No se encontraron usuarios");
+
+    return res.json(users);
+  } catch (error) {
+    res.status(500).send("Error buscando usuarios: " + error.message);
+  }
+};
+
+module.exports = { postUser, getUsers };
