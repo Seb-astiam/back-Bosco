@@ -2,6 +2,7 @@ const {
   createNewuser,
   getAllUsers,
   getUserById,
+  deleteUser,
 } = require("../../Controllers/userController/userController");
 
 const postUser = async (req, res) => {
@@ -55,4 +56,15 @@ const getUserId = async (req, res) => {
   }
 };
 
-module.exports = { postUser, getUsers, getUserId };
+const delUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deleted = await deleteUser(id);
+    if (deleted === 0) return res.status(404).send("Id no valida");
+    return res.send("Usuario borrado exitosamente");
+  } catch (error) {
+    res.status(500).send("Error borrando usuario: " + error.message);
+  }
+};
+
+module.exports = { postUser, getUsers, getUserId, delUser };
