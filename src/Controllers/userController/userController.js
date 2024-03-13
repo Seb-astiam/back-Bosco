@@ -52,7 +52,44 @@ const deleteUser = async (id) => {
   }
 };
 
-const updateUser = async () => {};
+const updateUser = async (user) => {
+  const {
+    name,
+    email,
+    password,
+    province,
+    city,
+    address,
+    phone,
+    balance,
+    housingProfile,
+    petProfile,
+  } = user;
+  try {
+    const updatedUser = await User.findOne({ where: { email } });
+    if (!updatedUser) return false;
+
+    let attributes = {};
+    if (name) attributes = { ...attributes, name };
+    if (password) attributes = { ...attributes, password };
+    if (province) attributes = { ...attributes, province };
+    if (city) attributes = { ...attributes, city };
+    if (address) attributes = { ...attributes, address };
+    if (phone) attributes = { ...attributes, phone };
+    if (balance) attributes = { ...attributes, balance };
+    if (housingProfile) attributes = { ...attributes, housingProfile };
+    if (petProfile) attributes = { ...attributes, petProfile };
+
+    await updatedUser.update(attributes, {
+      where: { name },
+      fields: Object.keys(attributes),
+    });
+
+    return true;
+  } catch (error) {
+    throw Error(error.message);
+  }
+};
 
 module.exports = {
   createNewuser,
