@@ -16,4 +16,10 @@ UserModel(sequelize);
 
 const { Housing, Mascota, User } = sequelize.models;
 
+User.hasOne(Housing);
+Housing.belongsTo(User);
+
+User.hasMany(Mascota);
+Mascota.belongsTo(User);
+
 module.exports = { conn: sequelize, Housing, Mascota, User };
