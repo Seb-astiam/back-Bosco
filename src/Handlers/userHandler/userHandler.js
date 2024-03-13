@@ -52,6 +52,7 @@ const getUserId = async (req, res) => {
   try {
     const user = await getUserById(id);
     if (!user) return res.status(404).send("Usuario no encontrado");
+    return res.json(user);
   } catch (error) {
     res.status(500).send("Error buscando usuario: " + error.message);
   }
@@ -80,7 +81,7 @@ const updateUserProfile = async (req, res) => {
     balance,
     housingProfile,
     petProfile,
-  } = req.params;
+  } = req.body;
 
   const user = {
     name,
@@ -95,6 +96,7 @@ const updateUserProfile = async (req, res) => {
     petProfile,
   };
   try {
+    console.log(email);
     if (!email) return res.status(400).send("El email es requerido");
     const updated = await updateUser(user);
     if (!updated) return res.status(404).send("Usuario no encontrado");

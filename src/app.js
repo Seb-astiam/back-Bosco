@@ -11,6 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(cors());
+
 app.use("", router);
 
 module.exports = {

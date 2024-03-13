@@ -1,4 +1,4 @@
-const express = require("express");
+const { Router } = require("express");
 const {
   postUser,
   getUsers,
@@ -7,7 +7,7 @@ const {
   updateUserProfile,
 } = require("../Handlers/userHandler/userHandler");
 
-const routerUser = express.Router();
+const routerUser = Router();
 
 routerUser.post("/", postUser);
 routerUser.get("/", getUsers);
@@ -15,4 +15,4 @@ routerUser.get("/:id", getUserId);
 routerUser.delete("/:id", delUser);
 routerUser.put("/", updateUserProfile);
 
-module.exports = routerUser;
+module.exports = { routerUser };

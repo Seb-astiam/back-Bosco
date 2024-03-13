@@ -1,4 +1,4 @@
-const { User } = require("../../Models/User");
+const { User } = require("../../DB_conection");
 
 const createNewuser = async (user) => {
   const { name, email, password, province, city, address, phone, balance } =
@@ -21,6 +21,7 @@ const createNewuser = async (user) => {
     });
     return created;
   } catch (error) {
+    console.log(error);
     throw Error(error.message);
   }
 };
