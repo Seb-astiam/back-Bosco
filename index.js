@@ -1,5 +1,5 @@
 const PORT = 3001;
-const { conn } = require("./DB_conection");
+const { conn } = require("./src/DB_conection");
 const { app } = require("./src/app");
 
 conn.sync({ alter: true }).then(() => {
