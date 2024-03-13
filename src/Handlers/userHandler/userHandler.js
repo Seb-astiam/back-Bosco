@@ -1,6 +1,7 @@
 const {
   createNewuser,
   getAllUsers,
+  getUserById,
 } = require("../../Controllers/userController/userController");
 
 const postUser = async (req, res) => {
@@ -44,4 +45,14 @@ const getUsers = async (req, res) => {
   }
 };
 
-module.exports = { postUser, getUsers };
+const getUserId = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await getUserById(id);
+    if (!user) return res.status(404).send("Usuario no encontrado");
+  } catch (error) {
+    res.status(500).send("Error buscando usuario: " + error.message);
+  }
+};
+
+module.exports = { postUser, getUsers, getUserId };
