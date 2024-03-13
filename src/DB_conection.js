@@ -6,7 +6,7 @@ const MascotaModel = require("./Models/Mascota");
 const UserModel = require("./Models/User");
 
 const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${DB_NAME}`,
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
   { logging: false, native: false }
 );
 
@@ -14,12 +14,12 @@ HousingModel(sequelize);
 MascotaModel(sequelize);
 UserModel(sequelize);
 
-const { Housing, Mascota, User } = sequelize.models;
+const { Housing,UserMascota, User } = sequelize.models;
 
 User.hasOne(Housing);
 Housing.belongsTo(User);
 
-User.hasMany(Mascota);
-Mascota.belongsTo(User);
+User.hasMany(UserMascota);
+UserMascota.belongsTo(User);
 
-module.exports = { conn: sequelize, Housing, Mascota, User };
+module.exports = { conn: sequelize, Housing, UserMascota, User };
