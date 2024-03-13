@@ -3,6 +3,7 @@ const {
   getAllUsers,
   getUserById,
   deleteUser,
+  updateUser,
 } = require("../../Controllers/userController/userController");
 
 const postUser = async (req, res) => {
@@ -67,4 +68,40 @@ const delUser = async (req, res) => {
   }
 };
 
-module.exports = { postUser, getUsers, getUserId, delUser };
+const updateUserProfile = async (req, res) => {
+  const {
+    name,
+    email,
+    password,
+    province,
+    city,
+    address,
+    phone,
+    balance,
+    housingProfile,
+    petProfile,
+  } = req.params;
+
+  const user = {
+    name,
+    email,
+    password,
+    province,
+    city,
+    address,
+    phone,
+    balance,
+    housingProfile,
+    petProfile,
+  };
+  try {
+    if (!email) return res.status(400).send("El email es requerido");
+    const updated = await updateUser(user);
+    if (!updated) return res.status(404).send("Usuario no encontrado");
+    return res.send("Usuario actualizado exitosamente");
+  } catch (error) {
+    return res.status(500).send("Error actualizando usuario: " + error.message);
+  }
+};
+
+module.exports = { postUser, getUsers, getUserId, delUser, updateUserProfile };
