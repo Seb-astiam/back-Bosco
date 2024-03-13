@@ -25,7 +25,14 @@ const createNewuser = async (user) => {
   }
 };
 
-const getAllUsers = async () => {};
+const getAllUsers = async () => {
+  try {
+    const users = await User.findAll();
+    return users;
+  } catch (error) {
+    throw Error(error.message);
+  }
+};
 
 const getUserById = async (id) => {};
 
