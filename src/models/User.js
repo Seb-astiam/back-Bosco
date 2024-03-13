@@ -16,6 +16,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      validate: {
+        isEmail: true,
+      },
     },
     password: {
       type: DataTypes.STRING,
@@ -28,6 +31,17 @@ module.exports = (sequelize) => {
     phone: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    balance: {
+      type: DataTypes.DECIMAL,
+    },
+    housingProfile: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    petProfile: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
   });
 };
