@@ -1,5 +1,9 @@
+const PORT = 3001;
+const { conn } = require("./DB_conection");
 const { app } = require("./src/app");
 
-app.listen(3001, () => {
-    console.log('%s listening at 3001'); 
-}); 
+conn.sync({ alter: true }).then(() => {
+  app.listen(PORT, async () => {
+    console.log("Server raised in port: " + PORT);
+  });
+});
