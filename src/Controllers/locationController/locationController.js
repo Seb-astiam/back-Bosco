@@ -1,7 +1,7 @@
 const axios = require("axios");
 const URL = "https://apis.datos.gob.ar/georef/api/";
 
-const getProvinces = async () => {
+const getProvincesList = async () => {
   try {
     const { data } = await axios(`${URL}provincias?campos=id,nombre`);
     const { provincias } = data;
@@ -11,4 +11,4 @@ const getProvinces = async () => {
   }
 };
 
-module.exports = getProvinces;
+module.exports = { getProvincesList };
