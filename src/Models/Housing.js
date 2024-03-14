@@ -22,6 +22,10 @@ module.exports = (sequelize) => {
         availability: {
             type: DataTypes.ENUM("availability", "busy", "maintenance"),
             allowNull: false
-        }
+        },
+        image:{
+            type:DataTypes.STRING,
+            allowNull:false,
+         },
     });
 };
