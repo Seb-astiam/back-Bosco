@@ -15,4 +15,4 @@ routerUser.get("/:id", getUserId);
 routerUser.delete("/:id", delUser);
 routerUser.put("/", updateUserProfile);
 
-module.exports = { routerUser };
+module.exports =  routerUser ;

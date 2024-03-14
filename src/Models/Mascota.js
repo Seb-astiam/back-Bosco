@@ -25,11 +25,11 @@ module.exports = (sequelize) => {
          allowNull: false
          },
 
-      aggressiveness: { type: DataTypes.ENUM("yes", "no"),
+      aggressiveness: { type: DataTypes.BOOLEAN,
         allowNull: false
        },
 
-      genre: { type: DataTypes.ENUM("he", "she"),
+      genre: { type: DataTypes.STRING,
        allowNull: false 
       },
 
@@ -40,7 +40,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      coexistence: { type: DataTypes.ENUM("yes", "no"),
+      coexistence: { type: DataTypes.BOOLEAN,
         allowNull: false,
       },
     },
