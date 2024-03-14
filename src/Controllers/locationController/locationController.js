@@ -11,11 +11,11 @@ const getProvincesList = async () => {
   }
 };
 
-const getCityList = async (province, name) => {
+const getCityList = async (province, searchTerm) => {
   try {
-    if (name) {
+    if (searchTerm) {
       const { data } = await axios(
-        `${URL}/localidades?provincia=${province}&campos=id,nombre&max=1000&nombre=${name}`
+        `${URL}/localidades?provincia=${province}&campos=id,nombre&max=1000&nombre=${searchTerm}`
       );
       const cities = data.localidades;
       return cities;
