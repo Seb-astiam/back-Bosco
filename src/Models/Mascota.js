@@ -36,7 +36,7 @@ module.exports = (sequelize) => {
       raze: { type: DataTypes.STRING,
         allowNull: false,
       },
-      size: { type: DataTypes.INTEGER,
+      size: { type: DataTypes.STRING,
         allowNull: false,
       },
 

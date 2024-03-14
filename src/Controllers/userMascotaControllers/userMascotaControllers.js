@@ -4,7 +4,6 @@ const createUserMascotaController = async ({ image, name, type, age, raze, aggre
 
     try {
       const newUserMascota = await UserMascota.create({ image, name, type, age, raze, aggressiveness, genre, coexistence, size });
-      console.log(image, name, type, age, raze, aggressiveness, genre, coexistence, size, "PROPIEDES ACTUALIZADAS")
       return newUserMascota
     } catch (error) {
       throw new Error("Error creating userMascota: " + error.message);
