@@ -2,14 +2,14 @@ const { Router } = require("express");
 const {createUserMascotaHandler, getAllUserMascotasHandler, deleteUserMascotaHandler, updateUserMascotaHandler} = require("../Handlers/userMascotaHandlers/userMascotaHandlers")
 
 
-routeMascota = Router();
+routerMascota = Router();
 
-routeMascota.get("/allMascotas", getAllUserMascotasHandler );
+routerMascota.get("/allMascotas", getAllUserMascotasHandler );
 
-routeMascota.post("/newMascota", createUserMascotaHandler);
+routerMascota.post("/newMascota", createUserMascotaHandler);
 
-routeMascota.delete('/mascota/:id', deleteUserMascotaHandler);
+routerMascota.delete('/mascota/:id', deleteUserMascotaHandler);
 
-routeMascota.put('/mascota/:id', updateUserMascotaHandler);
+routerMascota.put('/mascota/:id', updateUserMascotaHandler);
 
-module.exports = routeMascota;
+module.exports = {routerMascota};
