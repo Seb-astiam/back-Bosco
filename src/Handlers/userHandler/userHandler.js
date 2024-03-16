@@ -7,7 +7,7 @@ const {
 } = require("../../Controllers/userController/userController");
 
 const postUser = async (req, res) => {
-  const { name, email, password, province, city, address, phone, balance } =
+  const { name, email, password, province, city, address, phone, balance ,servicesIds} =
     req.body;
   try {
     if (
@@ -17,13 +17,14 @@ const postUser = async (req, res) => {
       !province ||
       !city ||
       !address ||
-      !phone
+      !phone ||
+      !servicesIds
     )
       return res.status(400).send("Falta información de registro");
     const newUser = { name, email, password, province, city, address, phone };
     if (balance) newUser.balance = balance;
 
-    const created = await createNewuser(newUser);
+    const created = await createNewuser(newUser,servicesIds);
 
     if (created) {
       return res.status(201).send("Usuario creado exitosamente");

@@ -1,6 +1,6 @@
-const { User } = require("../../DB_conection");
+const { User, Service } = require("../../DB_conection");
 
-const createNewuser = async (user) => {
+const createNewuser = async (user,servicesIds) => {
   const { name, email, password, province, city, address, phone, balance } =
     user;
 
@@ -19,6 +19,15 @@ const createNewuser = async (user) => {
       where: { email },
       defaults,
     });
+    console.log("user creado");
+    console.log("created" + created);
+    console.log("service" + servicesIds);
+    if (created && servicesIds) {
+      console.log("creando");
+      const services = await Service.findAll({ where: { id: servicesIds } });
+      console.log(services);
+      await newUser.addServices(services);
+    }
     return created;
   } catch (error) {
     console.log(error);
@@ -28,7 +37,14 @@ const createNewuser = async (user) => {
 
 const getAllUsers = async () => {
   try {
-    const users = await User.findAll();
+    const users = await User.findAll(
+      {
+        include: {
+          model: Service,
+          attributes: { exclude: ['userServices'] },
+        },
+      }
+    );
     return users;
   } catch (error) {
     throw Error(error.message);
