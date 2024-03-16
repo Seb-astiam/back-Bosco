@@ -5,4 +5,4 @@ const routerLogin = Router();
 
 routerLogin.use("/", login);
 
-module.exports = routerLogin;
+module.exports = { routerLogin };
