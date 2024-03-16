@@ -5,6 +5,7 @@ const routerLocation = require("./locationRoute");
 const routerProfile = require("./profileRoute");
 const { routerService } = require("./serviceRoute");
 const { routerRole } = require("./RoleRoute");
+const { routerLogin } = require("./loginRoute");
 
 const router = Router();
 
@@ -20,7 +21,6 @@ router.use("/service", routerService);
 
 router.use("/role", routerRole);
 
-
-
+router.use("/login", routerLogin);
 
 module.exports = router;
