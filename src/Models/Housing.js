@@ -7,12 +7,28 @@ module.exports = (sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        datesAvailable: {
+            type: DataTypes.DATE,
+            allowNull: true 
+        },
+        datesEnd: {
+            type: DataTypes.DATE,
+            allowNull: true 
+        },
         type: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        cost: {
+        price: {
             type: DataTypes.INTEGER, 
+            allowNull: false
+        },
+        location:{
+            type: DataTypes.STRING,
             allowNull: false
         },
         square: {
@@ -20,12 +36,17 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         availability: {
-            type: DataTypes.ENUM("availability", "busy", "maintenance"),
+            type: DataTypes.BOOLEAN,
             allowNull: false
         },
-        image:{
-            type:DataTypes.STRING,
-            allowNull:false,
-         },
+        images: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            allowNull: false,
+        },
+        accommodationType: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+ 
     });
 };

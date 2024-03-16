@@ -5,22 +5,45 @@ const routerLocation = require("./locationRoute");
 const routerProfile = require("./profileRoute");
 const { routerService } = require("./serviceRoute");
 const { routerRole } = require("./RoleRoute");
+
+const Housings = require("./HousingsRoute");
+const express = require("express");
+const path = require("path");
+
 const { routerLogin } = require("./loginRoute");
+
 
 const router = Router();
 
-router.use("/user", routerUser);
+const imagesRouter = express.Router();
 
-router.use("/", routerMascota);
+imagesRouter.get("/:imageName", (req, res) => {
+  const imageName = req.params.imageName;
+  const imagePath = path.join(__dirname, `../Uploads/${imageName}`);
 
-router.use("/location", routerLocation);
+  // Sirve la imagen
+  res.sendFile(imagePath);
+});
+
+
+router.use("/Uploads", imagesRouter);
 
 router.use("/profile", routerProfile);
 
 router.use("/service", routerService);
 
+
+// Agrega el resto de las rutas
+router.use("/user", routerUser);
+router.use("/", routerMascota);
+router.use("/location", routerLocation);
+router.use("/service", routerService);
 router.use("/role", routerRole);
 
+router.use("/profileHousing", Housings);
+
+
 router.use("/login", routerLogin);
+
 
 module.exports = router;

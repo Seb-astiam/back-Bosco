@@ -29,6 +29,7 @@ Housing.belongsTo(User);
 
 User.hasMany(UserMascota);
 UserMascota.belongsTo(User);
+Housing.belongsToMany(Service, { through: "ServicexHousing" })
 
 
 User.hasOne(Profile);
