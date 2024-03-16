@@ -1,18 +1,14 @@
 const { User } = require("../../DB_conection");
+const bcrypt = require("bcrypt");
 
 const createNewuser = async (user) => {
-  const { name, email, password, province, city, address, phone, balance } =
-    user;
+  const { name, email, password } = user;
 
+  const hashedPassword = await bcrypt.hash(password, 10);
   const defaults = {
     name,
-    password,
-    province,
-    city,
-    address,
-    phone,
+    password: hashedPassword,
   };
-  if (balance) defaults.balance = balance;
 
   try {
     const [newUser, created] = await User.findOrCreate({
@@ -54,18 +50,7 @@ const deleteUser = async (id) => {
 };
 
 const updateUser = async (user) => {
-  const {
-    name,
-    email,
-    password,
-    province,
-    city,
-    address,
-    phone,
-    balance,
-    housingProfile,
-    petProfile,
-  } = user;
+  const { name, email, password } = user;
   try {
     const updatedUser = await User.findOne({ where: { email } });
     if (!updatedUser) return false;
@@ -73,13 +58,6 @@ const updateUser = async (user) => {
     let attributes = {};
     if (name) attributes = { ...attributes, name };
     if (password) attributes = { ...attributes, password };
-    if (province) attributes = { ...attributes, province };
-    if (city) attributes = { ...attributes, city };
-    if (address) attributes = { ...attributes, address };
-    if (phone) attributes = { ...attributes, phone };
-    if (balance) attributes = { ...attributes, balance };
-    if (housingProfile) attributes = { ...attributes, housingProfile };
-    if (petProfile) attributes = { ...attributes, petProfile };
 
     await updatedUser.update(attributes, {
       where: { name },

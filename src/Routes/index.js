@@ -2,11 +2,16 @@ const { Router } = require("express");
 const routerUser = require("./UserRoute");
 const { routerMascota } = require("./MascotaRoute");
 const routerLocation = require("./locationRoute");
+const routerProfile = require("./profileRoute");
 const { routerService } = require("./serviceRoute");
 const { routerRole } = require("./RoleRoute");
+
 const Housings = require("./HousingsRoute");
 const express = require("express");
 const path = require("path");
+
+const { routerLogin } = require("./loginRoute");
+
 
 const router = Router();
 
@@ -20,7 +25,13 @@ imagesRouter.get("/:imageName", (req, res) => {
   res.sendFile(imagePath);
 });
 
+
 router.use("/Uploads", imagesRouter);
+
+router.use("/profile", routerProfile);
+
+router.use("/service", routerService);
+
 
 // Agrega el resto de las rutas
 router.use("/user", routerUser);
@@ -28,6 +39,11 @@ router.use("/", routerMascota);
 router.use("/location", routerLocation);
 router.use("/service", routerService);
 router.use("/role", routerRole);
+
 router.use("/profileHousing", Housings);
+
+
+router.use("/login", routerLogin);
+
 
 module.exports = router;
