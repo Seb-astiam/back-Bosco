@@ -26,5 +26,6 @@ Housing.belongsTo(User);
 
 User.hasMany(UserMascota);
 UserMascota.belongsTo(User);
+Housing.belongsToMany(Service, { through: "ServicexHousing" })
 
 module.exports = { conn: sequelize, Housing, UserMascota, User, Service, Role, Company };
