@@ -5,7 +5,7 @@ const routerLocation = require("./locationRoute");
 const routerProfile = require("./profileRoute");
 const { routerService } = require("./serviceRoute");
 const { routerRole } = require("./RoleRoute");
-
+const filterhousing = require('./FIlterRoute')
 const Housings = require("./HousingsRoute");
 const express = require("express");
 const path = require("path");
@@ -41,7 +41,7 @@ router.use("/service", routerService);
 router.use("/role", routerRole);
 
 router.use("/profileHousing", Housings);
-
+router.use('/filter',filterhousing)
 
 router.use("/login", routerLogin);
 
