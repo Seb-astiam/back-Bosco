@@ -41,3 +41,10 @@ Profile.belongsTo(User);
 
 module.exports = { conn: sequelize, Housing, UserMascota, User, Service, Role, Company, Profile };
 
+<<<<<<< HEAD
+=======
+User.belongsToMany(Service ,{ through: 'userServices' });
+Service.belongsToMany(User ,{ through: 'userServices' });
+
+module.exports = { conn: sequelize, Housing, UserMascota, User, Service, Role, Company };
+>>>>>>> 1d3c03ca3c23cf0caa00b00c18feb3ba36bc74e3

@@ -7,13 +7,33 @@ const {
 } = require("../../Controllers/userController/userController");
 
 const postUser = async (req, res) => {
+<<<<<<< HEAD
   const { name, email, password ,roleIds } = req.body;
   try {
     if (!name || !email || !password || !roleIds)
+=======
+  const { name, email, password, province, city, address, phone, balance ,servicesIds} =
+    req.body;
+  try {
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !province ||
+      !city ||
+      !address ||
+      !phone ||
+      !servicesIds
+    )
+>>>>>>> 1d3c03ca3c23cf0caa00b00c18feb3ba36bc74e3
       return res.status(400).send("Falta información de registro");
     const newUser = { name, email, password };
 
+<<<<<<< HEAD
     const created = await createNewuser(newUser,roleIds);
+=======
+    const created = await createNewuser(newUser,servicesIds);
+>>>>>>> 1d3c03ca3c23cf0caa00b00c18feb3ba36bc74e3
 
     if (created) {
       return res.status(201).send("Usuario creado exitosamente");
