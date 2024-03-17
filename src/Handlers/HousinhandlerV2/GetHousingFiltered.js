@@ -48,16 +48,21 @@ const getHousingFilteredHandler = async (
       datesEnd: { [Op.gte]: startDate },
     };
 
-  let include = {
-    model: Service,
-    attributes: ["id", "type"], // Incluye solo los atributos que necesitas
-    through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
-  };
-  if (serviceId) {
-    include.through.where.id = serviceId;
-  }
   try {
-    const housingFiltered = await Housing.findAll({ where, include, order });
+    if (serviceId) {
+      let include = [
+        {
+          model: Service,
+          where: { id: serviceId },
+          attributes: ["id", "type"], // Incluye solo los atributos que necesitas
+          through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
+        },
+      ];
+      const housingFiltered = await Housing.findAll({ where, include, order });
+      return housingFiltered;
+    }
+
+    const housingFiltered = await Housing.findAll({ where, order });
     return housingFiltered;
   } catch (error) {
     throw Error(error.message);
