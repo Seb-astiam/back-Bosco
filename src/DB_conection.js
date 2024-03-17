@@ -27,6 +27,9 @@ const { Housing, UserMascota, User, Service, Role, Company, Profile } = sequeliz
 User.hasOne(Housing);
 Housing.belongsTo(User);
 
+User.belongsToMany(Role ,{ through: 'userRol' });
+Role.belongsToMany(User ,{ through: 'userRol' });
+
 User.hasMany(UserMascota);
 UserMascota.belongsTo(User);
 Housing.belongsToMany(Service, { through: "ServicexHousing" })

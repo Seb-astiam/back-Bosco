@@ -7,13 +7,13 @@ const {
 } = require("../../Controllers/userController/userController");
 
 const postUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password ,roleIds } = req.body;
   try {
-    if (!name || !email || !password)
+    if (!name || !email || !password || !roleIds)
       return res.status(400).send("Falta información de registro");
     const newUser = { name, email, password };
 
-    const created = await createNewuser(newUser);
+    const created = await createNewuser(newUser,roleIds);
 
     if (created) {
       return res.status(201).send("Usuario creado exitosamente");

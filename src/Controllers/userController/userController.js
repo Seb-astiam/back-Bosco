@@ -1,7 +1,7 @@
-const { User } = require("../../DB_conection");
+const { User, Role } = require("../../DB_conection");
 const bcrypt = require("bcrypt");
 
-const createNewuser = async (user) => {
+const createNewuser = async (user,roleIds) => {
   const { name, email, password } = user;
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -15,16 +15,26 @@ const createNewuser = async (user) => {
       where: { email },
       defaults,
     });
+    if (created && roleIds) {
+      console.log("creando");
+      const roles = await Role.findAll({ where: { id: roleIds } });
+      await newUser.addRoles(roles);
+    }
     return created;
   } catch (error) {
-    console.log(error);
     throw Error(error.message);
   }
 };
 
 const getAllUsers = async () => {
   try {
-    const users = await User.findAll();
+    const users = await User.findAll(
+      {
+        include: {
+          model: Role,
+        },
+      }
+    );
     return users;
   } catch (error) {
     throw Error(error.message);
