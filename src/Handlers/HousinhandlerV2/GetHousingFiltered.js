@@ -21,7 +21,8 @@ const getHousingFilteredHandler = async (
   startDate,
   endDate,
   orderBy,
-  orderDirection
+  orderDirection,
+  accommodationType
 ) => {
   let order = [];
   if (orderBy && orderDirection) order = [[orderBy, orderDirection]];
@@ -30,6 +31,8 @@ const getHousingFilteredHandler = async (
 
   if (location) where = { ...where, location };
 
+
+  if (accommodationType) where = { ...where, accommodationType };
   if (square) where = { ...where, square: { [Op.gte]: square } };
 
   if (maxPrice) where = { ...where, price: { [Op.lte]: maxPrice } };
@@ -57,6 +60,7 @@ const getHousingFilteredHandler = async (
     include.through.where.id = serviceId;
   }
   try {
+    console.log()
     const housingFiltered = await Housing.findAll({ where, include, order });
     return housingFiltered;
   } catch (error) {
