@@ -13,6 +13,15 @@
 const { Housing, Service } = require("../../DB_conection");
 const { Op } = require("sequelize");
 
+const AlldataFormat= (filter)=>{
+  return  filter.map(housing => ({
+    ...housing.toJSON(),
+    images: housing.images.map(image => `http://localhost:3001/Uploads${image.replace('/uploads', '')}`) // Corrige la URL de la imagen
+  }));
+
+
+}
+
 const getHousingFilteredHandler = async (
   location,
   serviceId,
@@ -21,8 +30,7 @@ const getHousingFilteredHandler = async (
   startDate,
   endDate,
   orderBy,
-  orderDirection,
-  accommodationType
+  orderDirection
 ) => {
   let order = [];
   if (orderBy && orderDirection) order = [[orderBy, orderDirection]];
@@ -31,8 +39,6 @@ const getHousingFilteredHandler = async (
 
   if (location) where = { ...where, location };
 
-
-  if (accommodationType) where = { ...where, accommodationType };
   if (square) where = { ...where, square: { [Op.gte]: square } };
 
   if (maxPrice) where = { ...where, price: { [Op.lte]: maxPrice } };
@@ -51,17 +57,26 @@ const getHousingFilteredHandler = async (
       datesEnd: { [Op.gte]: startDate },
     };
 
-  let include = {
-    model: Service,
-    attributes: ["id", "type"], // Incluye solo los atributos que necesitas
-    through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
-  };
-  if (serviceId) {
-    include.through.where.id = serviceId;
-  }
   try {
-    const housingFiltered = await Housing.findAll({ where, include, order });
-    return housingFiltered;
+    if (serviceId) {
+      let include = [
+        {
+          model: Service,
+          where: { id: serviceId },
+          attributes: ["id", "type"], // Incluye solo los atributos que necesitas
+          through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
+        },
+      ];
+      const housingFiltered = await Housing.findAll({ where, include, order });
+      
+  
+      return AlldataFormat(housingFiltered)
+      
+    }
+
+    const housingFiltered = await Housing.findAll({ where, order });
+    return AlldataFormat(housingFiltered)
+    
   } catch (error) {
     throw Error(error.message);
   }
