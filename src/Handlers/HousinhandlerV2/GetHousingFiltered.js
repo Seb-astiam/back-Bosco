@@ -83,7 +83,7 @@ const getHousingFilteredHandler = async (
     let include= includeAll(serviceId)
 
       
-      const housingFiltered = await Housing.findAll({include, order });
+      const housingFiltered = await Housing.findAll({include, where, order });
       
   
       return AlldataFormat(housingFiltered)
