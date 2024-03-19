@@ -30,9 +30,6 @@ router.use("/Uploads", imagesRouter);
 
 router.use("/profile", routerProfile);
 
-router.use("/service", routerService);
-
-
 // Agrega el resto de las rutas
 router.use("/user", routerUser);
 router.use("/", routerMascota);
