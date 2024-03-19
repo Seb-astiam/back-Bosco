@@ -1,5 +1,6 @@
 const { Housing, Service } = require('../../DB_conection');
 
+
 const getHousingWithServicesHandler = async (location) => {
     try {
       let queryOptions = {
@@ -15,6 +16,7 @@ const getHousingWithServicesHandler = async (location) => {
           ...queryOptions,
           where: {
             location: location,
+           
           },
         };
       }

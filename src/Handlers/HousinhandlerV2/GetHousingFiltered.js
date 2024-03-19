@@ -13,6 +13,15 @@
 const { Housing, Service } = require("../../DB_conection");
 const { Op } = require("sequelize");
 
+const AlldataFormat= (filter)=>{
+  return  filter.map(housing => ({
+    ...housing.toJSON(),
+    images: housing.images.map(image => `http://localhost:3001/Uploads${image.replace('/uploads', '')}`) // Corrige la URL de la imagen
+  }));
+
+
+}
+
 const getHousingFilteredHandler = async (
   location,
   serviceId,
@@ -59,11 +68,15 @@ const getHousingFilteredHandler = async (
         },
       ];
       const housingFiltered = await Housing.findAll({ where, include, order });
-      return housingFiltered;
+      
+  
+      return AlldataFormat(housingFiltered)
+      
     }
 
     const housingFiltered = await Housing.findAll({ where, order });
-    return housingFiltered;
+    return AlldataFormat(housingFiltered)
+    
   } catch (error) {
     throw Error(error.message);
   }
