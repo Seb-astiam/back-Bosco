@@ -60,7 +60,6 @@ const getHousingFilteredHandler = async (
     include.through.where.id = serviceId;
   }
   try {
-    console.log()
     const housingFiltered = await Housing.findAll({ where, include, order });
     return housingFiltered;
   } catch (error) {
