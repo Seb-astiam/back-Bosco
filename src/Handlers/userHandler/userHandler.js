@@ -68,7 +68,6 @@ const updateUserProfile = async (req, res) => {
     password,
   };
   try {
-    console.log(email);
     if (!email) return res.status(400).send("El email es requerido");
     const updated = await updateUser(user);
     if (!updated) return res.status(404).send("Usuario no encontrado");

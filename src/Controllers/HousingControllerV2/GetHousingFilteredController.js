@@ -11,17 +11,7 @@ const getHousingFiltered = async (req, res) => {
     orderBy,
     orderDirection,
     accommodationType
-  } = req.body;
-
-console.log(location,
-  serviceId,
-  square,
-  maxPrice,
-  startDate,
-  endDate,
-  orderBy,
-  orderDirection,
-  accommodationType)
+  } = req.query;
 
   try {
     const housingFiltered = await getHousingFilteredHandler(
