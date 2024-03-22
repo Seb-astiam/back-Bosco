@@ -2,11 +2,12 @@ const { User } = require("../../DB_conection");
 const bcrypt = require("bcrypt");
 
 const createNewuser = async (user) => {
-  const { name, email, password, role } = user;
+  const { name, email, password, role, picture } = user;
 
   const hashedPassword = await bcrypt.hash(password, 10);
   const defaults = {
     name,
+    picture,
     password: hashedPassword,
   };
 
@@ -61,17 +62,18 @@ const deleteUser = async (id) => {
 };
 
 const updateUser = async (user) => {
-  const { name, email, password } = user;
+  const { name, email, password, picture } = user;
   try {
     const updatedUser = await User.findOne({ where: { email } });
     if (!updatedUser) return false;
 
     let attributes = {};
     if (name) attributes = { ...attributes, name };
+    if (picture) attributes = { ...attributes, picture };
     if (password) attributes = { ...attributes, password };
 
     await updatedUser.update(attributes, {
-      where: { name },
+      where: { email },
       fields: Object.keys(attributes),
     });
 

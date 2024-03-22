@@ -7,12 +7,12 @@ const {
 } = require("../../Controllers/userController/userController");
 
 const postUser = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, role, picture } = req.body;
 
   try {
     if (!name || !email || !password || !role)
       return res.status(400).send("Falta información de registro");
-    const newUser = { name, email, password, role };
+    const newUser = { name, email, password, role, picture };
 
     const created = await createNewuser(newUser);
 
@@ -71,12 +71,13 @@ const delUser = async (req, res) => {
 };
 
 const updateUserProfile = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, picture } = req.body;
 
   const user = {
     name,
     email,
     password,
+    picture,
   };
   try {
     if (!email) return res.status(400).send("El email es requerido");
