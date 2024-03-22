@@ -20,9 +20,16 @@ module.exports = (sequelize) => {
         isEmail: true,
       },
     },
+    picture: {
+      type: DataTypes.STRING,
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    googleAccount: {
+      type: DataTypes.BOOLEAN,
+      default: false,
     },
   });
 };
