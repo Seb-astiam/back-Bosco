@@ -4,7 +4,7 @@ const { conn } = require("./src/DB_conection");
 const { app } = require("./src/app");
 
 conn.sync({ force: false }).then(() => {
-  app.listen(PORT, async () => {
-    console.log("Server raised in port: " + PORT);
-  });
+  app.listen(process.env.PORT || 3000, () => {
+    console.log("On work")
+})
 });
