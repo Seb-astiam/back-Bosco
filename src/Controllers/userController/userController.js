@@ -34,14 +34,22 @@ const getAllUsers = async () => {
   }
 };
 
-const getUserById = async (id) => {
+const getUserByEmail = async (email) => {
   try {
-    const user = await User.findByPk(id);
+    const user = await User.findOne({ where: { email } });
     return user;
   } catch (error) {
     throw Error(error.message);
   }
 };
+// const getUserById = async (id) => {
+//   try {
+//     const user = await User.findByPk(id);
+//     return user;
+//   } catch (error) {
+//     throw Error(error.message);
+//   }
+// };
 
 const deleteUser = async (id) => {
   try {
@@ -76,7 +84,7 @@ const updateUser = async (user) => {
 module.exports = {
   createNewuser,
   getAllUsers,
-  getUserById,
+  getUserByEmail,
   deleteUser,
   updateUser,
 };

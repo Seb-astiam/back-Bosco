@@ -1,9 +1,9 @@
 const {
   createNewuser,
   getAllUsers,
-  getUserById,
   deleteUser,
   updateUser,
+  getUserByEmail,
 } = require("../../Controllers/userController/userController");
 
 const postUser = async (req, res) => {
@@ -38,16 +38,26 @@ const getUsers = async (req, res) => {
   }
 };
 
-const getUserId = async (req, res) => {
-  const { id } = req.params;
+const getUserEmail = async (req, res) => {
+  const { email } = req.params;
   try {
-    const user = await getUserById(id);
+    const user = await getUserByEmail(email);
     if (!user) return res.status(404).send("Usuario no encontrado");
     return res.json(user);
   } catch (error) {
     res.status(500).send("Error buscando usuario: " + error.message);
   }
 };
+// const getUserId = async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const user = await getUserById(id);
+//     if (!user) return res.status(404).send("Usuario no encontrado");
+//     return res.json(user);
+//   } catch (error) {
+//     res.status(500).send("Error buscando usuario: " + error.message);
+//   }
+// };
 
 const delUser = async (req, res) => {
   const { id } = req.params;
@@ -78,4 +88,10 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-module.exports = { postUser, getUsers, getUserId, delUser, updateUserProfile };
+module.exports = {
+  postUser,
+  getUsers,
+  getUserEmail,
+  delUser,
+  updateUserProfile,
+};
