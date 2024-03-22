@@ -47,6 +47,7 @@ const getAllUsers = async () => {
 
 const getUserByEmail = async (email) => {
   try {
+<<<<<<< HEAD
     const user = await User.findOne({
       where: { email },
       attributes: ["name", "email", "picture"],
@@ -58,6 +59,9 @@ const getUserByEmail = async (email) => {
         },
       },
     });
+=======
+    const user = await User.findOne({ where: { email } });
+>>>>>>> 9ebe548 (handler controller googlelogin guille)
     return user;
   } catch (error) {
     throw Error(error.message);
