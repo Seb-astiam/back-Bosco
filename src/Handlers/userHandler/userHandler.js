@@ -12,7 +12,7 @@ const postUser = async (req, res) => {
   try {
     if (!name || !email || !password || !role)
       return res.status(400).send("Falta información de registro");
-    const createUser = { name, email, password, role, picture };
+    const createUser = { name, email, password, role, picture, picture };
 
     const [newUser, created] = await createNewuser(createUser);
 

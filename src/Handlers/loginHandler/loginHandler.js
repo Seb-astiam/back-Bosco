@@ -26,7 +26,7 @@ const login = async (req, res) => {
         .send("No hay usuario registrado con el mail ingresado");
     if (error.message === "Bad Password")
       return res.status(401).send("Contraseña o Usuario incorrecto");
-    console.log(error);
+
     res.status(500).send("Internal server error");
   }
 };
