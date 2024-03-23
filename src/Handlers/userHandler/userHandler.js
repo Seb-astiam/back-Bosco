@@ -17,7 +17,13 @@ const postUser = async (req, res) => {
     const created = await createNewuser(newUser);
 
     if (created) {
-      return res.status(201).send("Usuario creado exitosamente");
+      const response = {
+        name: newUser.name,
+        email: newUser.email,
+        picture: newUser.picture,
+        roles: newUser.Roles,
+      };
+      return res.status(201).json(response);
     } else {
       return res.status(400).send("Ya existe un usuario con el mail ingresado");
     }
