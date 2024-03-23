@@ -19,7 +19,7 @@ const createNewuser = async (user) => {
 
     await newUser.addRole(role);
 
-    return created;
+    return [user, created];
   } catch (error) {
     console.log(error);
     throw Error(error.message);

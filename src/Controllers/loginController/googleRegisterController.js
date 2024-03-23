@@ -24,7 +24,7 @@ const googleRegisterController = async (token) => {
       defaults,
     });
     if (created) await newUser.addRoles(1);
-    return created;
+    return [newUser, created];
   } catch (error) {
     throw Error(error.message);
   }
