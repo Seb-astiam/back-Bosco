@@ -15,7 +15,7 @@ routerUser.get("/:email", getUserEmail);
 <<<<<<< HEAD
 routerUser.delete("/:email", delUser);
 =======
-routerUser.delete("/:id", delUser);
+routerUser.delete("/:email", delUser);
 >>>>>>> 9ebe548 (handler controller googlelogin guille)
 routerUser.put("/", updateUserProfile);
 
