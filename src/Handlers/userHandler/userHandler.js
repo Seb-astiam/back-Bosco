@@ -60,9 +60,9 @@ const getUserEmail = async (req, res) => {
 // };
 
 const delUser = async (req, res) => {
-  const { id } = req.params;
+  const { email } = req.params;
   try {
-    const deleted = await deleteUser(id);
+    const deleted = await deleteUser(email);
     if (deleted === 0) return res.status(404).send("Id no valida");
     return res.send("Usuario borrado exitosamente");
   } catch (error) {

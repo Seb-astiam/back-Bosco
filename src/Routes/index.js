@@ -27,7 +27,6 @@ imagesRouter.get("/:imageName", (req, res) => {
   res.sendFile(imagePath);
 });
 
-
 router.use("/Uploads", imagesRouter);
 
 router.use("/profile", routerProfile);

@@ -12,7 +12,16 @@ const googleLoginController = async (token) => {
     });
     const { email } = ticket.getPayload();
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({
+      where: { email },
+      include: {
+        model: Role,
+        attributes: ["id", "name"],
+        through: {
+          attributes: [],
+        },
+      },
+    });
     return user;
   } catch (error) {
     throw Error(error.message);
