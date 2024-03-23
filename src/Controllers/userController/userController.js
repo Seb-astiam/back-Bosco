@@ -86,7 +86,7 @@ const getUserByEmail = async (email) => {
 
 const deleteUser = async (email) => {
   try {
-    const deleted = await User.destroy({ where: { id }});
+    const deleted = await User.destroy({ where: { email } });
     return deleted;
   } catch (error) {
     throw Error(error.message);

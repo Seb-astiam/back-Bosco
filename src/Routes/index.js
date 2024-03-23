@@ -41,11 +41,8 @@ router.use("/role", routerRole);
 router.use("/profileHousing", Housings);
 
 
-router.use("/login", routerLogin);
 
 router.use("/loginBackOffice", routerLoginbackOffice);
-
-
-router.use("/loginBackOffice", routerLoginbackOffice);
+router.use("/auth", routerLogin);
 
 module.exports = router;
