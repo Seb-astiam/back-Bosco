@@ -1,4 +1,4 @@
-const { User } = require("../../DB_conection");
+const { User, Role } = require("../../DB_conection");
 const bcrypt = require("bcrypt");
 
 const createNewuser = async (user) => {
@@ -16,6 +16,8 @@ const createNewuser = async (user) => {
       where: { email },
       defaults,
     });
+    if (created) await newUser.addRoles(1);
+
     return created;
   } catch (error) {
     console.log(error);
@@ -25,7 +27,16 @@ const createNewuser = async (user) => {
 
 const getAllUsers = async () => {
   try {
-    const users = await User.findAll();
+    const users = await User.findAll({
+      attributes: ["name", "email", "picture"],
+      include: {
+        model: Role,
+        attributes: ["id", "name"],
+        through: {
+          attributes: [],
+        },
+      },
+    });
     return users;
   } catch (error) {
     throw Error(error.message);
@@ -34,7 +45,17 @@ const getAllUsers = async () => {
 
 const getUserByEmail = async (email) => {
   try {
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({
+      where: { email },
+      attributes: ["name", "email", "picture"],
+      include: {
+        model: Role,
+        attributes: ["id", "name"],
+        through: {
+          attributes: [],
+        },
+      },
+    });
     return user;
   } catch (error) {
     throw Error(error.message);
@@ -49,9 +70,9 @@ const getUserByEmail = async (email) => {
 //   }
 // };
 
-const deleteUser = async (id) => {
+const deleteUser = async (email) => {
   try {
-    const deleted = await User.destroy({ where: { id } });
+    const deleted = await User.destroy({ where: { email } });
     return deleted;
   } catch (error) {
     throw Error(error.message);

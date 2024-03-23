@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
     },
     googleAccount: {
       type: DataTypes.BOOLEAN,
-      default: false,
+      defaultValue: false,
     },
   });
 };
