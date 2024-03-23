@@ -1,15 +1,3 @@
-//filtros directos
-//location
-//type (?)
-//Rating queda pendiente por ahora
-
-//Filtro segun tabla pivote
-//Servicios (id del servicio)
-
-//Filtros con operadores
-//square (plazas :p)
-//price (un maximo)
-//fecha de entrada y salida (datesAvailable datesEnd)
 const { Housing, Service } = require("../../DB_conection");
 const { Op } = require("sequelize");
 
@@ -35,14 +23,7 @@ const includeAll=(serviceId)=>{
   }
   
 }
-const AlldataFormat= (filter)=>{
-  return  filter.map(housing => ({
-    ...housing.toJSON(),
-    images: housing.images.map(image => `http://localhost:3001/Uploads${image.replace('/uploads', '')}`) // Corrige la URL de la imagen
-  }));
 
-
-}
 
 const getHousingFilteredHandler = async (
   location,
@@ -86,7 +67,7 @@ const getHousingFilteredHandler = async (
       const housingFiltered = await Housing.findAll({include, where, order });
       
   
-      return AlldataFormat(housingFiltered)
+      return housingFiltered;
       
    
 
