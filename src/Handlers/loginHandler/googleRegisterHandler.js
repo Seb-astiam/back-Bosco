@@ -5,9 +5,15 @@ const {
 const googleRegister = async (req, res) => {
   const { token } = req.body;
   try {
-    const created = await googleRegisterController(token);
+    const [newUser, created] = await googleRegisterController(token);
     if (created) {
-      return res.status(201).send("Usuario creado exitosamente");
+      const response = {
+        name: newUser.name,
+        email: newUser.email,
+        picture: newUser.picture,
+        roles: newUser.Roles,
+      };
+      return res.status(201).json(response);
     } else {
       return res.status(400).send("Ya existe un usuario con el mail ingresado");
     }

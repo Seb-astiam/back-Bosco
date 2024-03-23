@@ -16,9 +16,22 @@ const createNewuser = async (user) => {
       where: { email },
       defaults,
     });
-    if (created) await newUser.addRoles(1);
+    if (created) {
+      await newUser.addRoles(1);
+      var user = await User.findOne({
+        where: { email },
+        attributes: ["name", "email", "picture"],
+        include: {
+          model: Role,
+          attributes: ["id", "name"],
+          through: {
+            attributes: [],
+          },
+        },
+      });
+    }
 
-    return created;
+    return [user, created];
   } catch (error) {
     console.log(error);
     throw Error(error.message);

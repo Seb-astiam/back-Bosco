@@ -11,12 +11,18 @@ const postUser = async (req, res) => {
   try {
     if (!name || !email || !password)
       return res.status(400).send("Falta información de registro");
-    const newUser = { name, email, password, picture };
+    const createUser = { name, email, password, picture };
 
-    const created = await createNewuser(newUser);
+    const [newUser, created] = await createNewuser(createUser);
 
     if (created) {
-      return res.status(201).send("Usuario creado exitosamente");
+      const response = {
+        name: newUser.name,
+        email: newUser.email,
+        picture: newUser.picture,
+        roles: newUser.Roles,
+      };
+      return res.status(201).json(response);
     } else {
       return res.status(400).send("Ya existe un usuario con el mail ingresado");
     }
