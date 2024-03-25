@@ -1,17 +1,12 @@
-const { OAuth2Client } = require("google-auth-library");
-require("dotenv").config();
-const { GOOGLE_CLIENT_ID } = process.env;
 const { User } = require("../../DB_conection");
+const axios = require("axios");
 
 const googleLoginController = async (token) => {
   try {
-    const client = new OAuth2Client(GOOGLE_CLIENT_ID);
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: GOOGLE_CLIENT_ID,
-    });
-    const { email } = ticket.getPayload();
-
+    const { data } = await axios(
+      `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`
+    );
+    const { email } = data;
     const user = await User.findOne({
       where: { email },
       include: {
