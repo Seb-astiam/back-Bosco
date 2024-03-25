@@ -2,7 +2,7 @@ const { User } = require("../../DB_conection");
 const bcrypt = require("bcrypt");
 
 const createNewuser = async (user) => {
-  const { name, email, password } = user;
+  const { name, email, password, role } = user;
 
   const hashedPassword = await bcrypt.hash(password, 10);
   const defaults = {
@@ -15,6 +15,9 @@ const createNewuser = async (user) => {
       where: { email },
       defaults,
     });
+
+    await newUser.addRole(role);
+
     return created;
   } catch (error) {
     console.log(error);
@@ -42,7 +45,7 @@ const getUserById = async (id) => {
 
 const deleteUser = async (id) => {
   try {
-    const deleted = await User.destroy({ where: { id } });
+    const deleted = await User.destroy({ where: { id }});
     return deleted;
   } catch (error) {
     throw Error(error.message);
