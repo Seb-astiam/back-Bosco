@@ -11,7 +11,7 @@ const googleRegisterController = async (token) => {
 
     const defaults = {
       name,
-      // picture,
+      picture,
       password: "thisisagoogleaccount",
       googleAccount: true,
     };
@@ -20,7 +20,7 @@ const googleRegisterController = async (token) => {
       where: { email },
       defaults,
     });
-    if (created) await newUser.addRoles(2);
+    if (created) await newUser.addRoles(1);
     return [newUser, created];
   } catch (error) {
     throw Error(error.message);
