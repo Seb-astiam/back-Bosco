@@ -1,4 +1,4 @@
-const { loginBackOfficeController } = require("../../Controllers/loginBackOffice/loginBackOfficeController");
+const { loginBackOfficeController } = require("../../Controllers/loginBackOfficeController/loginBackOfficeController");
   
   const loginBackOfficeHandler = async (req, res) => {
     try {
