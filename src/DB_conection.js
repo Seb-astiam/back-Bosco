@@ -31,6 +31,7 @@ Housing.belongsTo(User);
 
 User.hasMany(UserMascota);
 UserMascota.belongsTo(User);
+
 Housing.belongsToMany(Service, { through: "ServicexHousing" });
 Service.belongsToMany(Housing, { through: "ServicexHousing" });
 
