@@ -2,7 +2,7 @@ const { User, Role } = require("../../DB_conection");
 const bcrypt = require("bcrypt");
 
 const createNewuser = async (user) => {
-  const { name, email, password, role, picture } = user;
+  const { name, email, password, picture } = user;
 
   const hashedPassword = await bcrypt.hash(password, 10);
   const defaults = {
@@ -16,8 +16,20 @@ const createNewuser = async (user) => {
       where: { email },
       defaults,
     });
-
-    await newUser.addRole(role);
+    if (created) {
+      await newUser.addRoles(1);
+      var user = await User.findOne({
+        where: { email },
+        attributes: ["name", "email", "picture"],
+        include: {
+          model: Role,
+          attributes: ["id", "name"],
+          through: {
+            attributes: [],
+          },
+        },
+      });
+    }
 
     return [user, created];
   } catch (error) {

@@ -4,7 +4,7 @@ const { app } = require("./src/app");
 const { PORT } = process.env;
 
 conn.sync({ force: false }).then(() => {
-  app.listen(PORT || 3000, () => {
+  app.listen(PORT || 3001, () => {
     console.log(`On work port: ${PORT}`)
 })
 });

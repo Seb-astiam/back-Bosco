@@ -1,17 +1,6 @@
 const { User, Role } = require("../../DB_conection");
 const bcrypt = require("bcrypt");
 
-// const gamesDb = await Videogame.findAll({
-//   attributes: ["id", "name", "background_image", "rating", "userCreated"],
-//   include: {
-//     model: Genre,
-//     as: "genres",
-//     attributes: ["id", "name"],
-//     through: {
-//       attributes: [],
-//     },
-//   },
-// });
 
 const loginController = async (email, password) => {
   try {
