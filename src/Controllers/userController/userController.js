@@ -5,21 +5,21 @@ const createNewuser = async (user) => {
   const { name, email, password, role, picture } = user;
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const defaults = {
-    name,
-    picture,
-    password: hashedPassword,
-  };
+  // const defaults = {
+  //   name,
+  //   picture,
+  //   password: hashedPassword,
+  // };
 
   try {
     const [newUser, created] = await User.findOrCreate({
       where: { email },
-      defaults,
+      // defaults,
     });
 
     await newUser.addRole(role);
 
-    return [user, created];
+    return created;
   } catch (error) {
     console.log(error);
     throw Error(error.message);
@@ -73,7 +73,7 @@ const getUserByEmail = async (email) => {
 
 const deleteUser = async (email) => {
   try {
-    const deleted = await User.destroy({ where: { email } });
+    const deleted = await User.destroy({ where: { id }});
     return deleted;
   } catch (error) {
     throw Error(error.message);

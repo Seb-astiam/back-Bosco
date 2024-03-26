@@ -46,4 +46,6 @@ router.use("/login", routerLogin);
 router.use("/loginBackOffice", routerLoginbackOffice);
 
 
+router.use("/loginBackOffice", routerLoginbackOffice);
+
 module.exports = router;

@@ -37,8 +37,8 @@ Service.belongsToMany(Housing, { through: "ServicexHousing" });
 User.hasOne(Profile);
 Profile.belongsTo(User);
 
-User.belongsToMany(Role, { through: "UserRoles" });
-Role.belongsToMany(User, { through: "UserRoles" });
+User.belongsToMany(Role, { through: "UserRole" });
+Role.belongsToMany(User, { through: "UserRole" });
 
 module.exports = {
   conn: sequelize,
