@@ -16,6 +16,8 @@ const initializeSocket = (server) => {
       // Puedes emitir mensajes a otros clientes, guardar en la base de datos, etc.
       // hay que emitir el evento con io.to.emit por que son notifiacicon individual ya vere como lo hago 
       // io.emit('notificacion', 'Nuevo mensaje recibido: ' + mensaje);
+
+      
     });
   
 
