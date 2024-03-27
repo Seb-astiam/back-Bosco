@@ -12,8 +12,7 @@ const path = require("path");
 
 const { routerLogin } = require("./loginRoute");
 
-const { routerLoginbackOffice } = require("./routerLoginbackOffice")
-
+const { routerLoginbackOffice } = require("./routerLoginbackOffice");
 
 const router = Router();
 
@@ -39,8 +38,6 @@ router.use("/service", routerService);
 router.use("/role", routerRole);
 
 router.use("/profileHousing", Housings);
-
-
 
 router.use("/loginBackOffice", routerLoginbackOffice);
 router.use("/auth", routerLogin);

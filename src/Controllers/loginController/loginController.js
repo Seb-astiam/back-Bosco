@@ -1,7 +1,6 @@
 const { User, Role } = require("../../DB_conection");
 const bcrypt = require("bcrypt");
 
-
 const loginController = async (email, password) => {
   try {
     const user = await User.findOne({
@@ -18,6 +17,7 @@ const loginController = async (email, password) => {
     if (!user) throw Error("No user");
 
     if (user.googleAccount) throw Error("Google Account");
+    if (user.facebookAccount) throw Error("Facebook Account");
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 

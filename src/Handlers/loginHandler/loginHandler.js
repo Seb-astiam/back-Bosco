@@ -20,6 +20,8 @@ const login = async (req, res) => {
   } catch (error) {
     if (error.message === "Google Account")
       return res.status(401).send("Ingrese con el acceso de Google");
+    if (error.message === "Facebook Account")
+      return res.status(401).send("Ingrese con el acceso de Facebook");
     if (error.message === "No user")
       return res
         .status(401)

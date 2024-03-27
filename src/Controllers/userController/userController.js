@@ -38,7 +38,6 @@ const createNewuser = async (user) => {
   }
 };
 
-
 const getAllUsers = async () => {
   try {
     const users = await User.findAll({
@@ -75,7 +74,14 @@ const getUserByEmail = async (email) => {
     throw Error(error.message);
   }
 };
-
+// const getUserById = async (id) => {
+//   try {
+//     const user = await User.findByPk(id);
+//     return user;
+//   } catch (error) {
+//     throw Error(error.message);
+//   }
+// };
 
 // const getUserById = async (id) => {
 //   try {
