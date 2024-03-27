@@ -1,4 +1,4 @@
-const { User } = require("../../DB_conection");
+const { User, Role } = require("../../DB_conection");
 const axios = require("axios");
 
 const googleLoginController = async (token) => {

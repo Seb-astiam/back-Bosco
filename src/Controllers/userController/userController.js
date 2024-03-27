@@ -83,6 +83,15 @@ const getUserByEmail = async (email) => {
 //   }
 // };
 
+// const getUserById = async (id) => {
+//   try {
+//     const user = await User.findByPk(id);
+//     return user;
+//   } catch (error) {
+//     throw Error(error.message);
+//   }
+// };
+
 const deleteUser = async (email) => {
   try {
     const deleted = await User.destroy({ where: { email } });
