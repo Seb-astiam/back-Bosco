@@ -3,7 +3,7 @@ const { Sequelize } = require("sequelize");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 const HousingModel = require("./Models/Housing");
 const MascotaModel = require("./Models/Mascota");
-const UserModel = require("./Models/User");
+const UserModel = require("./Models/usuario");
 const ProfileModel = require("./Models/Profile");
 const ServiceModel = require("./Models/Service");
 const RoleModel = require("./Models/Role");
@@ -26,19 +26,17 @@ RoleModel(sequelize);
 const { Housing, UserMascota, User, Service, Role, Company, Profile } =
   sequelize.models;
 
-User.hasOne(Housing);
+User.hasMany(Housing);
 Housing.belongsTo(User);
 
 User.hasMany(UserMascota);
 UserMascota.belongsTo(User);
+
 Housing.belongsToMany(Service, { through: "ServicexHousing" });
 Service.belongsToMany(Housing, { through: "ServicexHousing" });
 
 User.hasOne(Profile);
 Profile.belongsTo(User);
-
-User.belongsToMany(Role, { through: "UserRoles" });
-Role.belongsToMany(User, { through: "UserRoles" });
 
 module.exports = {
   conn: sequelize,
