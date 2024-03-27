@@ -16,6 +16,8 @@ const loginController = async (email, password) => {
 
     if (!user) throw Error("No user");
 
+    if(!user.status) throw Error("Acceso Denegado")
+
     if (user.googleAccount) throw Error("Google Account");
     if (user.facebookAccount) throw Error("Facebook Account");
 
