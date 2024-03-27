@@ -3,10 +3,12 @@ const {
   getAllUserMascotasController,
   deleteUserMascotaController,
   updateUserMascotaController,
+  getUserMascotasController,
 } = require("../../Controllers/userMascotaControllers/userMascotaControllers");
 
 const createUserMascotaHandler = async (req, res) => {
   const {
+    userId,
     image,
     name,
     type,
@@ -23,6 +25,7 @@ const createUserMascotaHandler = async (req, res) => {
       (image, name, type, age, raze, aggressiveness, genre, coexistence, size)
     ) {
       const responseController = await createUserMascotaController({
+        userId,
         image,
         name,
         type,
@@ -45,6 +48,17 @@ const createUserMascotaHandler = async (req, res) => {
 const getAllUserMascotasHandler = async (req, res) => {
   try {
     const userMascotas = await getAllUserMascotasController();
+    res.status(200).json(userMascotas);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error al obtener UserMascota: " + error.message });
+  }
+};
+const getUserMascotasHandler = async (req, res) => {
+  const {id}=req.params
+  try {
+    const userMascotas = await getUserMascotasController(id);
     res.status(200).json(userMascotas);
   } catch (error) {
     res
@@ -93,4 +107,5 @@ module.exports = {
   getAllUserMascotasHandler,
   deleteUserMascotaHandler,
   updateUserMascotaHandler,
+  getUserMascotasHandler
 };
