@@ -3,6 +3,7 @@ const { Service } = require("../../DB_conection");
 const createService = async (service) => {
     const { type } =
         service;
+    console.log(type);
     const defaults = {
         type
     };
@@ -15,6 +16,7 @@ const createService = async (service) => {
         });
         return created;
     } catch (error) {
+        console.log(error);
         throw Error(error.message);
     }
 };
@@ -28,6 +30,7 @@ const getServices = async () => {
         });
         return services;
     } catch (error) {
+        console.log(error);
         throw Error(error.message);
     }
 };
