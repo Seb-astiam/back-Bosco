@@ -1,19 +1,20 @@
 const { User, Role } = require("../../DB_conection");
 const axios = require("axios");
 
-const googleRegisterController = async (token) => {
+const facebookRegisterController = async (token, userId) => {
   try {
     const { data } = await axios(
-      `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`
+      `https://graph.facebook.com/${userId}?fields=id,name,email,picture&access_token=${token}`
     );
 
-    const { name, picture, email } = data;
+    const { name, email } = data;
+    const picture = data.picture.data.url;
 
     const defaults = {
       name,
       picture,
-      password: "thisisagoogleaccount",
-      googleAccount: true,
+      password: "thisisafacebookaccount",
+      facebookAccount: true,
     };
 
     const [newUser, created] = await User.findOrCreate({
@@ -41,4 +42,4 @@ const googleRegisterController = async (token) => {
   }
 };
 
-module.exports = { googleRegisterController };
+module.exports = { facebookRegisterController };
