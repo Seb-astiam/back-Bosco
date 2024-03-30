@@ -10,6 +10,9 @@ const {
 const {
   facebookRegister,
 } = require("../Handlers/loginHandler/facebookRegisterHandler");
+const {
+  resetPassword,
+} = require("../Handlers/loginHandler/resetPasswordHandler");
 
 const routerLogin = Router();
 
@@ -18,5 +21,6 @@ routerLogin.post("/google-login", googleLogin);
 routerLogin.post("/google-register", googleRegister);
 routerLogin.post("/facebook-login", facebookLogin);
 routerLogin.post("/facebook-register", facebookRegister);
+routerLogin.post("/password-reset/:email", resetPassword);
 
 module.exports = { routerLogin };
