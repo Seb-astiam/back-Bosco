@@ -11,6 +11,7 @@ const express = require("express");
 const path = require("path");
 
 const { routerLogin } = require("./loginRoute");
+const { routerReservation } = require("./ReserveRoute");
 
 const router = Router();
 
@@ -34,6 +35,8 @@ router.use("/", routerMascota);
 router.use("/location", routerLocation);
 router.use("/service", routerService);
 router.use("/role", routerRole);
+
+router.use("/reserv", routerReservation)
 
 router.use("/profileHousing", Housings);
 
