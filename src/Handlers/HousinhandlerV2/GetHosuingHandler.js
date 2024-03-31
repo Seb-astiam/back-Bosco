@@ -3,12 +3,23 @@ const { Housing, Service } = require('../../DB_conection');
 
 const getHousingWithServicesHandler = async (location) => {
     try {
+      // let queryOptions = {
+      //   include: {
+      //     model: Service,
+      //     attributes: ["id", "type"], // Incluye solo los atributos que necesitas
+      //     through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
+      //   },
+      // };
       let queryOptions = {
-        include: {
+        include: [{
           model: Service,
           attributes: ["id", "type"], // Incluye solo los atributos que necesitas
           through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
-        },
+        },{
+          model: User,
+          attributes: ["id"], // Incluye solo los atributos que necesitas
+          through: { attributes: [] },
+        }]
       };
   
       if (location) {

@@ -5,7 +5,7 @@ const { app } = require("./src/app");
 const port = process.env.PORT || 3001
 
 conn.sync({ force: false }).then(() => {
-  app.listen(port, () => {
+    app.listen(port, () => {
     console.log(`On work port: ${port}`)
 })
 });

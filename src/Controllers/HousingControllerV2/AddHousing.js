@@ -5,11 +5,12 @@ const fs = require('fs-extra');
 const addhousing = async (req, res) => {
   const { accommodationType, datesAvailable, datesEnd, location, price, services, square, title } = req.body;
   const { email } = req.query;
+  console.log(email);
   const images = req.files;
 
   try {
     const uploadImage = async (imagePaths) => {
-      // Opciones para la carga de imágenes en Cloudinary
+      // Opciones para la carga de imágenes en Cloudinary propiedades de una imagen
       const options = {
         use_filename: true,
         unique_filename: false,
