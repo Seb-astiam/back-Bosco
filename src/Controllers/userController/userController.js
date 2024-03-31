@@ -1,5 +1,10 @@
 const { User, Role } = require("../../DB_conection");
 const bcrypt = require("bcrypt");
+//esto
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const createActivationBody = require("../../Utils/createActivationBody");
+const transporter = require("../../Utils/createTransport");
 
 const createNewuser = async (user) => {
   const { name, email, password, picture } = user;
@@ -9,6 +14,8 @@ const createNewuser = async (user) => {
     name,
     picture,
     password: hashedPassword,
+    //esto
+    status: false,
   };
 
   try {
@@ -28,6 +35,20 @@ const createNewuser = async (user) => {
             attributes: [],
           },
         },
+      });
+      //esto
+      const token = jwt.sign({ email }, process.env.PRIVATE_KEY);
+      const body = createActivationBody(token, name);
+      let mailOptions = {
+        from: process.env.MAIL_USERNAME,
+        to: email,
+        subject: "Activa tu cuenta",
+        html: body,
+      };
+      transporter.sendMail(mailOptions, function (err, data) {
+        if (err) {
+          throw Error(err.message);
+        }
       });
     }
 
@@ -123,23 +144,23 @@ const updateUser = async (user) => {
   }
 };
 
-const blockAccountController = async (block, email) => { 
+const blockAccountController = async (block, email) => {
   try {
     const blockUser = await User.findOne({ where: { email } });
-    
-    if (blockUser.status) { 
-      await blockUser.update({ status: block }); 
+
+    if (blockUser.status) {
+      await blockUser.update({ status: block });
       return "Usuario bloqueado con éxito.";
-    } else if (!blockUser.status){
+    } else if (!blockUser.status) {
       await blockUser.update({ status: true });
       return "Usuario desbloqueado con éxito.";
     } else {
-      return "No se encontró un usuario con ese email."
+      return "No se encontró un usuario con ese email.";
     }
   } catch (error) {
     console.error("Error al bloquear usuario:", error);
   }
-}
+};
 
 module.exports = {
   createNewuser,
@@ -147,5 +168,5 @@ module.exports = {
   getUserByEmail,
   deleteUser,
   updateUser,
-  blockAccountController
+  blockAccountController,
 };
