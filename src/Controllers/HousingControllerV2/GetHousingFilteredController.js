@@ -2,28 +2,30 @@ const getHousingFilteredHandler = require("../../Handlers/HousinhandlerV2/GetHou
 
 const getHousingFiltered = async (req, res) => {
   const {
-    location,
+    provinces,
+    cities,
     serviceId,
     square,
+    minPrice,
     maxPrice,
     startDate,
     endDate,
     orderBy,
     orderDirection,
-    accommodationType
   } = req.query;
 
   try {
     const housingFiltered = await getHousingFilteredHandler(
-      location,
+      provinces,
+      cities,
       serviceId,
       square,
+      minPrice,
       maxPrice,
       startDate,
       endDate,
       orderBy,
-      orderDirection,
-      accommodationType
+      orderDirection
     );
     return res.json(housingFiltered);
   } catch (error) {
