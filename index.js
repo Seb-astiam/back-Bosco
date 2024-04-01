@@ -8,7 +8,7 @@ const http = require('http');
 const port = process.env.PORT || 3001
 const server = http.createServer(app);
 initializeSocket(server);
-conn.sync({ force: true }).then(() => {
+conn.sync({ alter: true }).then(() => {
   server.listen(port, () => {
     console.log(`Servidor Express y Socket.IO en funcionamiento en el puerto ${port}`);
   });

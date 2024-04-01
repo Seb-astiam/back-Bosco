@@ -33,11 +33,12 @@ NotificationModel(sequelize)
 const { Housing, UserMascota, User, Service, Role, Company, Profile ,Reservation,RatingHousing,RatingPet,Notification} =
   sequelize.models;
 
-User.hasOne(Housing);
+User.hasMany(Housing);
 Housing.belongsTo(User);
 User.hasMany(Notification);
 User.hasMany(UserMascota);
 UserMascota.belongsTo(User);
+
 Housing.belongsToMany(Service, { through: "ServicexHousing" });
 Service.belongsToMany(Housing, { through: "ServicexHousing" });
 
@@ -62,6 +63,9 @@ Reservation.belongsTo(Housing);
 
 User.hasOne(Profile);
 Profile.belongsTo(User);
+
+User.belongsToMany(Role, { through: "UserRole" });
+Role.belongsToMany(User, { through: "UserRole" });
 
 module.exports = {
   conn: sequelize,

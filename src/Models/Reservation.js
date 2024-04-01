@@ -14,10 +14,11 @@ module.exports = (sequelize) => {
     type: DataTypes.DATEONLY,
     allowNull: true,
     },
-    estatus: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
+    status: {
+            type: DataTypes.ENUM('pendiente', 'aprobada', 'cancelada'),
+             allowNull: false,
+             defaultValue: 'pendiente'
+          },
     // Otros campos que desees para la relación
   });
 

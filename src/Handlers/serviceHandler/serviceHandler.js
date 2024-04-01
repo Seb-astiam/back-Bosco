@@ -4,6 +4,7 @@ const { createService, getServices, updateService, deleteService } = require("..
 const postServiceHandler = async (req, res) => {
   const { type } =
     req.body;
+    console.log(type)
   try {
     if (
       !type

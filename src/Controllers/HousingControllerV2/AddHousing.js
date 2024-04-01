@@ -6,7 +6,7 @@ const addhousing = async (req, res) => {
   const { accommodationType, datesAvailable, datesEnd, location, price, services, square, title } = req.body;
   const { email } = req.query;
   const images = req.files;
-
+ console.log('mira asi es la iamge',images);
   try {
     const uploadImage = async (imagePaths) => {
       // Opciones para la carga de imágenes en Cloudinary
