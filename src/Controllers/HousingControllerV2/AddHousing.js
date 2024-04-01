@@ -3,7 +3,7 @@ const cloudinary = require('../../Config/cloudinary');
 const path = require('path');
 const fs = require('fs-extra');
 const addhousing = async (req, res) => {
-  const { accommodationType, datesAvailable, datesEnd, location, price, services, square, title } = req.body;
+  const { accommodationType, datesAvailable, datesEnd, provinces, cities, price, services, square, title } = req.body;
   const { email } = req.query;
   const images = req.files;
 
@@ -43,7 +43,8 @@ const addhousing = async (req, res) => {
       datesEnd,
       accommodationType,
       price,
-      location,
+      provinces,
+      cities,
       square,
       availability: true,
       images: uploadedImageUrls, // Usar las URLs de las imágenes subidas

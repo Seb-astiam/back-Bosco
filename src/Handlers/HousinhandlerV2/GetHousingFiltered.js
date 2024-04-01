@@ -26,7 +26,8 @@ const includeAll=(serviceId)=>{
 
 
 const getHousingFilteredHandler = async (
-  location,
+  provinces,
+  cities,
   serviceId,
   square,
   maxPrice,
@@ -40,7 +41,9 @@ const getHousingFilteredHandler = async (
 
   let where = { availability: true };
 
-  if (location) where = { ...where, location };
+  if (provinces) where = { ...where, provinces };
+
+  if (cities) where = { ...where, cities };
 
   if (square) where = { ...where, square: { [Op.gte]: square } };
 
@@ -68,10 +71,7 @@ const getHousingFilteredHandler = async (
       
   
       return housingFiltered;
-      
-   
 
-  
     
   } catch (error) {
     throw Error(error.message);
