@@ -10,6 +10,7 @@ const login = async (req, res) => {
       return res.status(400).send("Debe ingresar email y contraseña");
     const user = await loginController(email, password);
     const response = {
+      id: user.id,
       name: user.name,
       email: user.email,
       picture: user.picture,

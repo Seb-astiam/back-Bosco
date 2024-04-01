@@ -13,6 +13,7 @@ const path = require("path");
 const { routerLogin } = require("./loginRoute");
 
 const { routerLoginbackOffice } = require("./routerLoginbackOffice");
+const { routerReservation } = require("./routeReservation");
 
 const router = Router();
 
@@ -41,5 +42,7 @@ router.use("/profileHousing", Housings);
 
 router.use("/loginBackOffice", routerLoginbackOffice);
 router.use("/auth", routerLogin);
+
+router.use("/reservation", routerReservation);
 
 module.exports = router;
