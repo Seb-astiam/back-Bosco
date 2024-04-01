@@ -1,4 +1,4 @@
-const { Housing, Service } = require("../../DB_conection");
+const { Housing, Service,User } = require("../../DB_conection");
 const { Op } = require("sequelize");
 
 const includeAll=(serviceId)=>{
@@ -10,6 +10,10 @@ const includeAll=(serviceId)=>{
       attributes: ["id", "type"], // Incluye solo los atributos que necesitas
       through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
     },
+    {
+      model: User,
+      attributes: ["email"], // Incluye el correo electrónico del usuario
+    },
   ]}
   else {
     return include = [
@@ -17,6 +21,10 @@ const includeAll=(serviceId)=>{
         model: Service,
         attributes: ["id", "type"], // Incluye solo los atributos que necesitas
         through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
+      },
+      {
+        model: User,
+        attributes: ["email"], // Incluye el correo electrónico del usuario
       },
     ]
 
@@ -36,6 +44,7 @@ const getHousingFilteredHandler = async (
   orderDirection
 ) => {
   let order = [];
+  
   if (orderBy && orderDirection) order = [[orderBy, orderDirection]];
 
   let where = { availability: true };

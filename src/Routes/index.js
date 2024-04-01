@@ -12,6 +12,7 @@ const path = require("path");
 
 const { routerLogin } = require("./loginRoute");
 
+const { routerLoginbackOffice } = require("./routerLoginbackOffice");
 
 const router = Router();
 
@@ -24,7 +25,6 @@ imagesRouter.get("/:imageName", (req, res) => {
   // Sirve la imagen
   res.sendFile(imagePath);
 });
-
 
 router.use("/Uploads", imagesRouter);
 
@@ -39,8 +39,7 @@ router.use("/role", routerRole);
 
 router.use("/profileHousing", Housings);
 
-
-router.use("/login", routerLogin);
-
+router.use("/loginBackOffice", routerLoginbackOffice);
+router.use("/auth", routerLogin);
 
 module.exports = router;
