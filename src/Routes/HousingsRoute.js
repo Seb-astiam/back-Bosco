@@ -6,13 +6,13 @@ const addHousings = require("../Controllers/HousingControllerV2/AddHousing");
 const updateHousing = require("../Controllers/HousingControllerV2/UpdateHosings");
 const getHousingFiltered = require("../Controllers/HousingControllerV2/GetHousingFilteredController");
 const Delhosuing = require("../Controllers/HousingControllerV2/Delhousings");
-
+const  OcupancyReport = require("../Controllers/Report/OcupancyReport")
 
 
 router.post("/register", upload.array("images", 3), addHousings);
 router.get("/allHousingslocation", getHousings);
-
+router.get('/ocupancyreport', OcupancyReport)
 router.get("/filtered", getHousingFiltered);
-router.post("/update/:id", updateHousing),
+router.put("/update/:id", upload.array("images", 3),updateHousing),
  router.delete("/:id", Delhosuing);
 module.exports = router;
