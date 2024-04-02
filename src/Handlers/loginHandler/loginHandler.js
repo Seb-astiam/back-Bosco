@@ -9,6 +9,8 @@ const login = async (req, res) => {
     if (!email || !password)
       return res.status(400).send("Debe ingresar email y contraseña");
     const user = await loginController(email, password);
+
+    console.log(user, 'user')
     const response = {
       id: user.id,
       name: user.name,
