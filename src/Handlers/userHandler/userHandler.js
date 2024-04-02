@@ -9,6 +9,7 @@ const {
 
 const postUser = async (req, res) => {
   const { name, email, password, picture } = req.body;
+
   try {
     if (!name || !email || !password)
       return res.status(400).send("Falta información de registro");
