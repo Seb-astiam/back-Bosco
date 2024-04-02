@@ -38,6 +38,6 @@ module.exports = (sequelize) => {
     status: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
-    }
+    },
   });
 };
