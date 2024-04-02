@@ -1,26 +1,37 @@
-const { Housing, Service } = require("../../DB_conection");
+const { Housing, Service, User } = require("../../DB_conection");
 const { Op } = require("sequelize");
 
-const includeAll = (serviceId) => {
-  if (serviceId) {
-    return (include = [
+const includeAll=(serviceId)=>{
+  if(serviceId){
+    return include = [
+    {
+      model: Service,
+      where: { id: serviceId },
+      attributes: ["id", "type"], // Incluye solo los atributos que necesitas
+      through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
+    },
+    {
+      model: User,
+      attributes: ["email"], // Incluye el correo electrónico del usuario
+    },
+  ]}
+  else {
+    return include = [
       {
         model: Service,
-        where: { id: serviceId },
         attributes: ["id", "type"], // Incluye solo los atributos que necesitas
         through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
       },
-    ]);
-  } else {
-    return (include = [
       {
-        model: Service,
-        attributes: ["id", "type"], // Incluye solo los atributos que necesitas
-        through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
+        model: User,
+        attributes: ["email"], // Incluye el correo electrónico del usuario
       },
-    ]);
+    ]
+
   }
-};
+  
+}
+
 
 const getHousingFilteredHandler = async (
   provinces,
