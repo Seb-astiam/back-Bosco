@@ -12,7 +12,6 @@ const AddHousingsHandler = async (housingData, email, services) => {
       where: { email },
       attributes: ["id"], // Solo recuperar el ID del usuario
     });
-    console.log("soy el id", id);
     if (!id) {
       throw new Error("Usuario no encontrado");
     }

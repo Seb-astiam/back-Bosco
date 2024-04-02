@@ -1,27 +1,29 @@
-
-
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  const Reservation = sequelize.define('Reservation', {
+  return sequelize.define('Reservation', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
    
-    
-   fecha: {
-    type: DataTypes.DATEONLY,
-    allowNull: true,
+   fechaInicio: {
+        type: DataTypes.DATEONLY,
+        allowNull: true,
     },
+
+    fechaFin: {
+        type: DataTypes.DATEONLY,
+        allowNull: true,
+    },
+
     estatus: {
-      type: DataTypes.ENUM('pendiente', 'aprobada', 'cancelada'),
+      type: DataTypes.ENUM('Pending', 'Success', 'Reject'),
       allowNull: false,
-      // defaultValue: "pendiente",
+      defaultValue: 'Pending'
     },
-    // Otros campos que desees para la relación
   });
 
-  return Reservation;
 };
+

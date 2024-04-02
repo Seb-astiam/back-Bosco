@@ -17,6 +17,7 @@ const { routerReservation } = require("./ReserveRoute");
 
 const { routerLoginbackOffice } = require("./routerLoginbackOffice");
 
+
 const router = Router();
 
 const imagesRouter = express.Router();
@@ -46,5 +47,7 @@ router.use("/profileHousing", Housings);
 
 router.use("/loginBackOffice", routerLoginbackOffice);
 router.use("/auth", routerLogin);
+
+router.use("/reservation", routerReservation);
 
 module.exports = router;

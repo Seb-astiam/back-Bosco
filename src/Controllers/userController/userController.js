@@ -23,6 +23,7 @@ const createNewuser = async (user) => {
       where: { email },
       defaults,
     });
+
     if (created) {
       await newUser.addRoles(1);
       var user = await User.findOne({
@@ -33,8 +34,9 @@ const createNewuser = async (user) => {
           attributes: ["id", "name"],
           through: {
             attributes: [],
-          },
+          }, 
         },
+        
       });
       //esto
       const token = jwt.sign({ email }, process.env.PRIVATE_KEY);
