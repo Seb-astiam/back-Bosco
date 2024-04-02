@@ -38,7 +38,7 @@ const historialReserva = await Reservation.findAll({
         },
         {
             model: Housing,
-            attributes: ['title', 'price', 'location', 'UserId'],
+            attributes: ['title', 'price', 'provinces', 'UserId'],
             through: {
                 attributes: [],
             },
