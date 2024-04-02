@@ -1,5 +1,5 @@
 
-const {User, Housing, Reservation } = require("../../DB_conection")
+const {UserMascota, Housing, Reservation } = require("../../DB_conection")
 const {Sequelize} = require("sequelize");
 const Op = Sequelize.Op;
 
@@ -11,7 +11,7 @@ const getReserve = async (req, res) => {
                 {
                     include:  [
                         {
-                          model: User,
+                          model: UserMascota,
                           where: { id },
                           
                           through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
@@ -24,29 +24,48 @@ const getReserve = async (req, res) => {
         } catch (error) {
             console.log(error)
         }
-}
+};
+
 
 
 const postReserveHandler = async (req, res) => {
-
-    const { senderId, recipientId, fecha, estatus } = req.body;
-    console.log(req.body);
-    try {
-      const reservation = await Reservation.create({fecha, estatus});
+  const { senderId, recipientId, fecha, estatus } = req.body;
+  console.log(req.body);
+  
+  try {
+      // Crear una nueva reserva con la fecha y el estatus proporcionados
+      const reservation = await Reservation.create({ fecha, estatus });
       console.log(reservation);
+      
+      // Asociar el modelo UserMascota con la reserva
+      const userMascota = await UserMascota.findByPk(senderId);
+      if (!userMascota) {
+          throw new Error('UserMascota no encontrado');
+      }
+      await reservation.addUserMascota(userMascota);
+      
+      // Asociar el modelo Housing con la reserva
+      const housing = await Housing.findByPk(recipientId);
+      if (!housing) {
+          throw new Error('Housing no encontrado');
+      }
+      await reservation.addHousing(housing);  
+      
 
-      await Reservation.addUser(senderId);
-      await Reservation.addHousing(recipientId);
-
-      //io.emit('reservation_create', notification);
-
-      res.status(201).json({ message: "Reserva creada exitosamente"});
-    } catch (error) {
+      res.status(201).json({message: "Reserva creada exitosamente",
+      reservation: {
+        id: reservation.id,
+        fecha: reservation.fecha,
+        estatus: reservation.estatus,
+        senderId: userMascota.id, 
+        recipientId: housing.id 
+      } });
+  } catch (error) {      
       res.status(400).json({ message: error.message });
-    }
-   
-    };
-module.exports= {
+  }
+};
+
+module.exports = {
   postReserveHandler,
   getReserve
 };

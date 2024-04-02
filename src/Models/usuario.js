@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
       },
     },
     picture: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     password: {
       type: DataTypes.STRING,
@@ -31,5 +31,13 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    facebookAccount: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    }
   });
 };

@@ -5,6 +5,7 @@ const {
   delUser,
   updateUserProfile,
   getUserEmail,
+  blockAccountHandler
 } = require("../Handlers/userHandler/userHandler");
 
 const routerUser = Router();
@@ -14,5 +15,6 @@ routerUser.get("/", getUsers);
 routerUser.get("/:email", getUserEmail);
 routerUser.delete("/:email", delUser);
 routerUser.put("/", updateUserProfile);
+routerUser.put("/status", blockAccountHandler)
 
 module.exports = routerUser;

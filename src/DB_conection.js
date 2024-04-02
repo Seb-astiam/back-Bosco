@@ -3,7 +3,7 @@ const { Sequelize } = require("sequelize");
 const { DB_PORT,   DB_USER, DB_PASSWORD, DB_HOST,DB_NAME} = process.env;
 const HousingModel = require("./Models/Housing");
 const MascotaModel = require("./Models/Mascota");
-const UserModel = require("./Models/User");
+const UserModel = require("./Models/usuario");
 const ProfileModel = require("./Models/Profile");
 const ServiceModel = require("./Models/Service");
 const RoleModel = require("./Models/Role");
@@ -11,6 +11,7 @@ const ReservationModel = require("./Models/Reservation")
 const RatingHousingModel = require("./Models/RatingHousing");
 const RatingPetModel= require("./Models/RatingPet");
 const  NotificationModel= require('./Models/Notification')
+
  const sequelize = new Sequelize(
    `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
   { logging: false, native: false }
@@ -33,11 +34,12 @@ NotificationModel(sequelize)
 const { Housing, UserMascota, User, Service, Role, Company, Profile ,Reservation,RatingHousing,RatingPet,Notification} =
   sequelize.models;
 
-User.hasOne(Housing);
+User.hasMany(Housing);
 Housing.belongsTo(User);
 User.hasMany(Notification);
 User.hasMany(UserMascota);
 UserMascota.belongsTo(User);
+
 Housing.belongsToMany(Service, { through: "ServicexHousing" });
 Service.belongsToMany(Housing, { through: "ServicexHousing" });
 
@@ -62,6 +64,9 @@ Reservation.belongsToMany(UserMascota, { through: "ReservationxUserMascota" });
 
 User.hasOne(Profile);
 Profile.belongsTo(User);
+
+User.belongsToMany(Role, { through: "UserRole" });
+Role.belongsToMany(User, { through: "UserRole" });
 
 module.exports = {
   conn: sequelize,

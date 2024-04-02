@@ -28,12 +28,9 @@ const getHousingWithServicesHandler = async (location) => {
       const housingWithServices = await Housing.findAll(queryOptions);
   
       // Construir las URL completas para las imágenes y agregarlas a la respuesta
-      const housingWithImagesURL = housingWithServices.map(housing => ({
-        ...housing.toJSON(),
-        images: housing.images.map(image => `http://localhost:3001/Uploads${image.replace('/uploads', '')}`) // Corrige la URL de la imagen
-      }));
+      
   
-      return housingWithImagesURL;
+      return housingWithServices ;
     } catch (error) {
       throw new Error("Error al obtener alojamientos con servicios:", error);
     }

@@ -4,6 +4,7 @@ const {
   deleteUser,
   updateUser,
   getUserByEmail,
+  blockAccountController
 } = require("../../Controllers/userController/userController");
 
 const postUser = async (req, res) => {
@@ -94,10 +95,23 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
+const blockAccountHandler = async (req, res) => {
+  const { block, email } = req.body
+
+  try {
+      const blockAccount = await blockAccountController(block, email);
+      return res.status(200).send(blockAccount)
+
+  } catch (error) {
+    return res.status(500).json({error: error})
+  }
+}
+
 module.exports = {
   postUser,
   getUsers,
   getUserEmail,
   delUser,
   updateUserProfile,
+  blockAccountHandler
 };

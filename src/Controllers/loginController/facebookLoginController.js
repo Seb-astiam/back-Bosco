@@ -1,10 +1,10 @@
 const { User, Role } = require("../../DB_conection");
 const axios = require("axios");
 
-const googleLoginController = async (token) => {
+const facebookLoginController = async (token, userId) => {
   try {
     const { data } = await axios(
-      `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`
+      `https://graph.facebook.com/${userId}?fields=id,name,email,picture&access_token=${token}`
     );
     const { email } = data;
     const user = await User.findOne({
@@ -23,4 +23,4 @@ const googleLoginController = async (token) => {
   }
 };
 
-module.exports = { googleLoginController };
+module.exports = { facebookLoginController };
