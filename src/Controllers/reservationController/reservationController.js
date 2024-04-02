@@ -78,7 +78,7 @@ const getReservationsAlojamientoController = async (identificacion) => {
                 },
                 {
                     model: User,
-                    attributes: ['email', 'name']
+                    attributes: ['email', 'name', 'id']
                 }
                 ]
             })

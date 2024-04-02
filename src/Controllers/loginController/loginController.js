@@ -1,17 +1,18 @@
-const { User, Role } = require("../../DB_conection");
+const { User, Role, UserMascota } = require("../../DB_conection");
 const bcrypt = require("bcrypt");
 
 const loginController = async (email, password) => {
   try {
     const user = await User.findOne({
       where: { email },
-      include: {
-        model: Role,
-        attributes: ["id", "name"],
-        through: {
-          attributes: [],
+      include: 
+        {
+          model: Role,
+          attributes: ["id", "name"],
+          through: {
+            attributes: [],
+          },
         },
-      },
     });
 
     if (!user) throw Error("No user");

@@ -1,4 +1,4 @@
-const { User, Role } = require("../../DB_conection");
+const { User, Role, UserMascota } = require("../../DB_conection");
 const axios = require("axios");
 
 const facebookLoginController = async (token, userId) => {
@@ -9,13 +9,14 @@ const facebookLoginController = async (token, userId) => {
     const { email } = data;
     const user = await User.findOne({
       where: { email },
-      include: {
-        model: Role,
-        attributes: ["id", "name"],
-        through: {
-          attributes: [],
-        },
-      },
+      include: 
+        {
+          model: Role,
+          attributes: ["id", "name"],
+          through: {
+            attributes: [],
+          },
+        }
     });
     return user;
   } catch (error) {
