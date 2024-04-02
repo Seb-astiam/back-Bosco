@@ -16,12 +16,14 @@ const createUserMascotaHandler = async (req, res) => {
     genre,
     coexistence,
     size,
-    
+    UserId
   } = req.body;
+
+  console.log(req.body)
 
   try {
     if (
-      (image, name, type, age, raze, aggressiveness, genre, coexistence, size)
+      (image, name, type, age, raze, aggressiveness, genre, coexistence, size, UserId)
     ) {
       const responseController = await createUserMascotaController({
         image,
@@ -33,8 +35,9 @@ const createUserMascotaHandler = async (req, res) => {
         genre,
         coexistence,
         size,
+        UserId
       });
-      res.status(201).json(responseController);
+      res.status(201).send(responseController);
     } else {
       res.status(400).send("no estan todas las propiedades");
     }
@@ -44,8 +47,11 @@ const createUserMascotaHandler = async (req, res) => {
 };
 
 const getAllUserMascotasHandler = async (req, res) => {
+  const { UserId } = req.params
+    
   try {
-    const userMascotas = await getAllUserMascotasController();
+    if(!UserId) return 'Este usuario no tiene mascotas'
+    const userMascotas = await getAllUserMascotasController(UserId);
     res.status(200).json(userMascotas);
   } catch (error) {
     res
