@@ -1,9 +1,12 @@
 const { Profile, User } = require("../../DB_conection");
 
 const createNewProfile = async (user) => {
-  const { userId, province, city, address, phone, balance } = user;
+  const {name ,surname ,genre, userId, province, city, address, phone, balance } = user;
 
   const profile = {
+    name ,
+    surname ,
+    genre,
     province,
     city,
     address,

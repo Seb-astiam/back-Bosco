@@ -6,11 +6,12 @@ const {
 } = require("../../Controllers/profileController/profileController");
 
 const postUserProfile = async (req, res) => {
-  const { userId, province, city, address, phone, balance } = req.body;
+  const {name ,surname ,genre, userId, province, city, address, phone, balance } = req.body;
+  console.log(req.body);
   try {
     if (!userId || !province || !city || !address || !phone)
       return res.status(400).send("Falta información de registro de perfil");
-    const newProfile = { userId, province, city, address, phone };
+    const newProfile = { name ,surname ,genre,userId, province, city, address, phone };
     if (balance) newProfile.balance = balance;
     await createNewProfile(newProfile);
     return res.status(201).send("Perfil creado exitosamente");

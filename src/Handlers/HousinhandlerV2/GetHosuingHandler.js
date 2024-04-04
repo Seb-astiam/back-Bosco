@@ -1,11 +1,7 @@
 const { Housing, Service, User } = require('../../DB_conection');
 
 
-<<<<<<< HEAD
-const getHousingWithServicesHandler = async (location) => {
-=======
 const getHousingWithServicesHandler = async (province) => {
->>>>>>> master
     try {
       let queryOptions = {
         include: [
@@ -25,11 +21,7 @@ const getHousingWithServicesHandler = async (province) => {
         queryOptions = {
           ...queryOptions,
           where: {
-<<<<<<< HEAD
-            location: location,
-=======
             province: province,
->>>>>>> master
            
           },
         };
