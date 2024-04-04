@@ -1,22 +1,30 @@
 const {
   createNewuser,
   getAllUsers,
-  getUserById,
   deleteUser,
   updateUser,
+  getUserByEmail,
+  blockAccountController
 } = require("../../Controllers/userController/userController");
 
 const postUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, picture } = req.body;
+
   try {
     if (!name || !email || !password)
       return res.status(400).send("Falta información de registro");
-    const newUser = { name, email, password };
+    const createUser = { name, email, password, picture };
 
-    const created = await createNewuser(newUser);
+    const [newUser, created] = await createNewuser(createUser);
 
     if (created) {
-      return res.status(201).send("Usuario creado exitosamente");
+      const response = {
+        name: newUser.name,
+        email: newUser.email,
+        picture: newUser.picture,
+        roles: newUser.Roles,
+      };
+      return res.status(201).json(response);
     } else {
       return res.status(400).send("Ya existe un usuario con el mail ingresado");
     }
@@ -37,21 +45,31 @@ const getUsers = async (req, res) => {
   }
 };
 
-const getUserId = async (req, res) => {
-  const { id } = req.params;
+const getUserEmail = async (req, res) => {
+  const { email } = req.params;
   try {
-    const user = await getUserById(id);
+    const user = await getUserByEmail(email);
     if (!user) return res.status(404).send("Usuario no encontrado");
     return res.json(user);
   } catch (error) {
     res.status(500).send("Error buscando usuario: " + error.message);
   }
 };
+// const getUserId = async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const user = await getUserById(id);
+//     if (!user) return res.status(404).send("Usuario no encontrado");
+//     return res.json(user);
+//   } catch (error) {
+//     res.status(500).send("Error buscando usuario: " + error.message);
+//   }
+// };
 
 const delUser = async (req, res) => {
-  const { id } = req.params;
+  const { email } = req.params;
   try {
-    const deleted = await deleteUser(id);
+    const deleted = await deleteUser(email);
     if (deleted === 0) return res.status(404).send("Id no valida");
     return res.send("Usuario borrado exitosamente");
   } catch (error) {
@@ -60,12 +78,13 @@ const delUser = async (req, res) => {
 };
 
 const updateUserProfile = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, picture } = req.body;
 
   const user = {
     name,
     email,
     password,
+    picture,
   };
   try {
     if (!email) return res.status(400).send("El email es requerido");
@@ -77,4 +96,23 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-module.exports = { postUser, getUsers, getUserId, delUser, updateUserProfile };
+const blockAccountHandler = async (req, res) => {
+  const { block, email } = req.body
+
+  try {
+      const blockAccount = await blockAccountController(block, email);
+      return res.status(200).send(blockAccount)
+
+  } catch (error) {
+    return res.status(500).json({error: error})
+  }
+}
+
+module.exports = {
+  postUser,
+  getUsers,
+  getUserEmail,
+  delUser,
+  updateUserProfile,
+  blockAccountHandler
+};

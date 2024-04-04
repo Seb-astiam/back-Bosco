@@ -1,21 +1,35 @@
-const { Housing, Service } = require('../../DB_conection');
+const { Housing, Service, User } = require('../../DB_conection');
 
 
+<<<<<<< HEAD
 const getHousingWithServicesHandler = async (location) => {
+=======
+const getHousingWithServicesHandler = async (province) => {
+>>>>>>> master
     try {
       let queryOptions = {
-        include: {
+        include: [
+          {
           model: Service,
           attributes: ["id", "type"], // Incluye solo los atributos que necesitas
           through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
-        },
+          },
+          {
+            model: User,
+            attributes: ["name", "email"]
+          }
+        ]
       };
   
-      if (location) {
+      if (province) {
         queryOptions = {
           ...queryOptions,
           where: {
+<<<<<<< HEAD
             location: location,
+=======
+            province: province,
+>>>>>>> master
            
           },
         };

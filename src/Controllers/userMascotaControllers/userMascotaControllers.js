@@ -1,21 +1,23 @@
 const { UserMascota, User } = require("../../DB_conection");
 
-const createUserMascotaController = async ({ userId, image, name, type, age, raze, aggressiveness, genre, coexistence, size }) => {
-  try {
-    const user = await User.findByPk(userId);
-    if (!user) throw Error("Id invalido");
-    const newUserMascota = await UserMascota.create({ image, name, type, age, raze, aggressiveness, genre, coexistence, size });
-    await user.addUserMascota(newUserMascota);
-    return newUserMascota
-  } catch (error) {
-    throw new Error("Error creating userMascota: " + error.message);
-  }
-};
+const createUserMascotaController = async ({ image, name, type, age, raze, aggressiveness, genre, coexistence, size, UserId }) => {
 
+    try {
+      await UserMascota.create({ image, name, type, age, raze, aggressiveness, genre, coexistence, size, UserId });
+      return "Mascota Creada"
+    } catch (error) {
+      throw new Error("Error creating userMascota: " + error.message);
+    }
+  };
+  
 
-const getAllUserMascotasController = async () => {
+const getAllUserMascotasController = async (UserId)=>{
   try {
-    const userMascota = await UserMascota.findAll()
+    const userMascota = await UserMascota.findAll({
+      where: {
+        UserId: UserId
+      }
+    })
     return userMascota;
   } catch (error) {
     throw new Error("Error getting userMascota: " + error.message);

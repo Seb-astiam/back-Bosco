@@ -4,7 +4,7 @@ const {createUserMascotaHandler, getAllUserMascotasHandler, deleteUserMascotaHan
 
 routerMascota = Router();
 
-routerMascota.get("/allMascotas", getAllUserMascotasHandler );
+routerMascota.get("/allMascotas/:UserId", getAllUserMascotasHandler );
 
 routerMascota.post("/newMascota", createUserMascotaHandler);
 

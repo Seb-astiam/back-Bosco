@@ -1,9 +1,10 @@
-const PORT = 3001;
+require("dotenv").config();
 const { conn } = require("./src/DB_conection");
 const { app } = require("./src/app");
+const { PORT } = process.env;
 
-conn.sync({ alter: false }).then(() => {
-  app.listen(PORT, async () => {
-    console.log("Server raised in port: " + PORT);
+conn.sync({ alter: true }).then(() => {
+  app.listen(PORT || 3001, () => {
+    console.log(`On work port: ${PORT}`);
   });
 });

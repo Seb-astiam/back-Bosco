@@ -7,8 +7,8 @@ const UserModel = require("./Models/usuario");
 const ProfileModel = require("./Models/Profile");
 const ServiceModel = require("./Models/Service");
 const RoleModel = require("./Models/Role");
-const ReserveModel = require("./Models/Reserve");
-
+const ReservationModel = require("./Models/Reservation")
+ 
 const sequelize = new Sequelize(
   `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
   { logging: false, native: false }
@@ -23,12 +23,12 @@ UserModel(sequelize);
 ProfileModel(sequelize);
 ServiceModel(sequelize);
 RoleModel(sequelize);
-ReserveModel(sequelize);
+ReservationModel(sequelize);
 
-const { Housing, UserMascota, User, Service, Role, Company, Profile , Reserve} =
+const { Housing, UserMascota, User, Service, Role, Company, Profile, Reservation } =
   sequelize.models;
 
-User.hasOne(Housing);
+User.hasMany(Housing);
 Housing.belongsTo(User);
 
 User.hasMany(UserMascota);
@@ -39,12 +39,19 @@ Service.belongsToMany(Housing, { through: "ServicexHousing" });
 User.hasOne(Profile);
 Profile.belongsTo(User);
 
-// En tu modelo Reserve
-Reserve.hasOne(UserMascota, { foreignKey: 'reserveId' });
-UserMascota.belongsTo(Reserve, { foreignKey: 'reserveId' });
+User.belongsToMany(Role, { through: "UserRole" });
+Role.belongsToMany(User, { through: "UserRole" });
 
-Reserve.hasOne(Housing, { foreignKey: 'reserveId' });
-Housing.belongsTo(Reserve, { foreignKey: 'reserveId' });
+// Reservation User
+
+Reservation.belongsToMany(User, { through: 'ReservaUsuario' });
+User.belongsToMany(Reservation, { through: 'ReservaUsuario' });
+
+
+// Reservation Housing
+
+Reservation.belongsToMany(Housing, { through: 'ReservaHousing' });
+Housing.belongsToMany(Reservation, { through: 'ReservaHousing' });
 
 
 module.exports = {
@@ -56,5 +63,5 @@ module.exports = {
   Role,
   Company,
   Profile,
-  Reserve
+  Reservation
 };

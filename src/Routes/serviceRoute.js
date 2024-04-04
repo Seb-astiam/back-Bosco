@@ -7,9 +7,9 @@ routerService.get("/allServices", getAllServicesHandler );
 
 routerService.post("/newService", postServiceHandler);
 
-routerService.delete("/service/:id", deleteServiceHandler);
+routerService.delete("/:id", deleteServiceHandler);
 
-routerService.put("/service/:id", updateServiceHandler);
+routerService.put("/:id", updateServiceHandler);
 
 
 module.exports = {routerService};
