@@ -82,6 +82,10 @@ User.belongsToMany(Reservation, { through: 'ReservaUsuario' });
 Reservation.belongsToMany(Housing, { through: 'ReservaHousing' });
 Housing.belongsToMany(Reservation, { through: 'ReservaHousing' });
 
+// Reservation Mascota
+
+UserMascota.hasMany(Reservation);
+Reservation.belongsTo(UserMascota);
 
 module.exports = {
   conn: sequelize,

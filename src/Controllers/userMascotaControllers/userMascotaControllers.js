@@ -51,10 +51,20 @@ const updateUserMascotaController= async (id, newData)=>{
   }
 };
 
+const getMascotaByIdController = async (idMascota) => {
+    try {
+      const mascota = await UserMascota.findByPk(idMascota);
+      return mascota
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
   module.exports = {
    createUserMascotaController,
    getAllUserMascotasController,
    deleteUserMascotaController,
    updateUserMascotaController,
+   getMascotaByIdController
   };
   

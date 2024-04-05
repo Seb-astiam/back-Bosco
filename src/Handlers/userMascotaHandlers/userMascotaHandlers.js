@@ -3,6 +3,7 @@ const {
   getAllUserMascotasController,
   deleteUserMascotaController,
   updateUserMascotaController,
+  getMascotaByIdController
 } = require("../../Controllers/userMascotaControllers/userMascotaControllers");
 
 const createUserMascotaHandler = async (req, res) => {
@@ -18,8 +19,6 @@ const createUserMascotaHandler = async (req, res) => {
     size,
     UserId
   } = req.body;
-
-  console.log(req.body)
 
   try {
     if (
@@ -95,9 +94,22 @@ const updateUserMascotaHandler = async (req, res) => {
   }
 };
 
+const getMascotaByIdHandler = async (req, res) => {
+  const { idMascota } = req.params
+
+  if(!idMascota) return "No se proporciono el id para realizar la busqueda"
+  try {
+    const mascota = await getMascotaByIdController(idMascota);
+   return res.status(200).json(mascota);
+  } catch (error) {
+      return res.status(500).json({error: error.message})
+  }
+}
+
 module.exports = {
   createUserMascotaHandler,
   getAllUserMascotasHandler,
   deleteUserMascotaHandler,
   updateUserMascotaHandler,
+  getMascotaByIdHandler
 };
