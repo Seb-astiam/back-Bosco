@@ -1,17 +1,14 @@
 const { postReservationController, getAllReservationController, getReservationsAlojamientoController, updateReservationController } = require("../../Controllers/reservationController/reservationController");
-const { Reservation } = require("../../DB_conection");
 
 
 const postReservationHandler = async (req, res) => {
-  const { id_alojamiento, email_usuario, fechaInicio, fechaFin } = req.body;
+  const { id_alojamiento, email_usuario, fechaInicio, fechaFin, UserMascotumId } = req.body;
 
   try {
-
-    console.log(id_alojamiento, email_usuario, fechaInicio, fechaFin)
-    if ( !id_alojamiento || !email_usuario || !fechaInicio || !fechaFin){
+    if ( !id_alojamiento || !email_usuario || !fechaInicio || !fechaFin || !UserMascotumId){
       return res.status(400).send("Falta información para registrar la reserva");
     }
-    const registroReserva = await postReservationController({ id_alojamiento, email_usuario, fechaInicio, fechaFin });
+    const registroReserva = await postReservationController({ id_alojamiento, email_usuario, fechaInicio, fechaFin, UserMascotumId });
 
     if (registroReserva) {
       return res.status(201).send("Reserva creada exitosamente");
