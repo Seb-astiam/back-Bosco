@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const {createUserMascotaHandler, getAllUserMascotasHandler, deleteUserMascotaHandler, updateUserMascotaHandler} = require("../Handlers/userMascotaHandlers/userMascotaHandlers")
+const {createUserMascotaHandler, getAllUserMascotasHandler, deleteUserMascotaHandler, updateUserMascotaHandler, getMascotaByIdHandler} = require("../Handlers/userMascotaHandlers/userMascotaHandlers")
 
 
 routerMascota = Router();
@@ -11,5 +11,7 @@ routerMascota.post("/newMascota", createUserMascotaHandler);
 routerMascota.delete('/mascota/:id', deleteUserMascotaHandler);
 
 routerMascota.put('/mascota/:id', updateUserMascotaHandler);
+
+routerMascota.get('/getMascotaById/:idMascota', getMascotaByIdHandler)
 
 module.exports = {routerMascota};
