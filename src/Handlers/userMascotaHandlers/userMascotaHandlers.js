@@ -16,6 +16,7 @@ const createUserMascotaHandler = async (req, res) => {
     genre,
     coexistence,
     size,
+    
   } = req.body;
 
   try {

@@ -1,4 +1,4 @@
-const { Housing, Service,User } = require("../../DB_conection");
+const { Housing, Service, User } = require("../../DB_conection");
 const { Op } = require("sequelize");
 
 const includeAll=(serviceId)=>{
@@ -34,9 +34,11 @@ const includeAll=(serviceId)=>{
 
 
 const getHousingFilteredHandler = async (
-  location,
+  provinces,
+  cities,
   serviceId,
   square,
+  minPrice,
   maxPrice,
   startDate,
   endDate,
@@ -49,11 +51,18 @@ const getHousingFilteredHandler = async (
 
   let where = { availability: true };
 
-  if (location) where = { ...where, location };
+  if (provinces) where = { ...where, provinces };
+
+  if (cities) where = { ...where, cities };
 
   if (square) where = { ...where, square: { [Op.gte]: square } };
 
-  if (maxPrice) where = { ...where, price: { [Op.lte]: maxPrice } };
+  if (maxPrice && !minPrice)
+    where = { ...where, price: { [Op.lte]: maxPrice } };
+  if (!maxPrice && minPrice)
+    where = { ...where, price: { [Op.gte]: minPrice } };
+  if (maxPrice && minPrice)
+    where = { ...where, price: { [Op.between]: [minPrice, maxPrice] } };
 
   if (startDate && endDate)
     where = {
@@ -70,18 +79,11 @@ const getHousingFilteredHandler = async (
     };
 
   try {
-    let include= includeAll(serviceId)
+    let include = includeAll(serviceId);
 
-      
-      const housingFiltered = await Housing.findAll({include, where, order });
-      
-  
-      return housingFiltered;
-      
-   
+    const housingFiltered = await Housing.findAll({ include, where, order });
 
-  
-    
+    return housingFiltered;
   } catch (error) {
     throw Error(error.message);
   }

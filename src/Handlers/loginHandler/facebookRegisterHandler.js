@@ -1,11 +1,11 @@
 const {
-  googleRegisterController,
-} = require("../../Controllers/loginController/googleRegisterController");
+  facebookRegisterController,
+} = require("../../Controllers/loginController/facebookRegisterController");
 
-const googleRegister = async (req, res) => {
-  const { token } = req.body;
+const facebookRegister = async (req, res) => {
+  const { token, userId } = req.body;
   try {
-    const [newUser, created] = await googleRegisterController(token);
+    const [newUser, created] = await facebookRegisterController(token, userId);
     if (created) {
       const response = {
         name: newUser.name,
@@ -23,4 +23,4 @@ const googleRegister = async (req, res) => {
   }
 };
 
-module.exports = { googleRegister };
+module.exports = { facebookRegister };

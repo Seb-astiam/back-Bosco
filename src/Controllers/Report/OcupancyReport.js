@@ -1,17 +1,17 @@
 const {Housing} = require('../../DB_conection')
 
 const OcupancyReport = async (req, res) => {
-    const {location} = req.query;
+    const {provinces} = req.query;
   
     try {
       // Consulta para obtener la cantidad total de alojamientos en una ubicación
       const cantidadTotal = await Housing.count({
-        where: { location :location}
+        where: { provinces :provinces}
       });
   
       // Consulta para obtener la cantidad de alojamientos ocupados en una ubicación
       const cantidadOcupados = await Housing.count({
-        where: { location, availability: true} // Suponiendo que tienes un campo "ocupado" en tu modelo Housing
+        where: { provinces, availability: true} // Suponiendo que tienes un campo "ocupado" en tu modelo Housing
       });
   
       // Calcula la cantidad de alojamientos disponibles restando los ocupados de los totales

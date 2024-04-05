@@ -6,15 +6,15 @@ const fs = require('fs-extra');
 
 
 const updateHousing = async (req, res) => {
-    const { accommodationType, datesAvailable, datesEnd, location, price, services, square, title } = req.body;
+    const { accommodationType, datesAvailable, datesEnd, provinces,cities, price, services, square, title } = req.body;
     console.log( 'rsto lo tare desde el bodu',req.body)
     const { id } = req.params;
      const images= req.files
     console.log('id', id);
-    console.log('datos', accommodationType, datesAvailable, datesEnd, location, price, services, square, title );
+    
     console.log('images', images);
 
-    if (!accommodationType || !datesAvailable || !datesEnd || !location || !price || !services || !square || !title) {
+    if (!accommodationType || !datesAvailable || !datesEnd ||  !price || !services || !square || !title) {
         console.log('Faltan datos obligatorios');
         res.status(400).json({ error: 'Faltan datos obligatorios' });
         return;
@@ -55,7 +55,8 @@ const updateHousing = async (req, res) => {
                 datesEnd,
                 accommodationType,
                 price,
-                location,
+                provinces,
+                cities,
                 square,
                 availability: true,
                 images: uploadedImageUrls,
@@ -70,7 +71,8 @@ const updateHousing = async (req, res) => {
                 datesEnd,
                 accommodationType,
                 price,
-                location,
+                provinces,
+                cities,
                 square,
                 availability: true,
             };
