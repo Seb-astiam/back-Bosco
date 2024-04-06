@@ -1,8 +1,7 @@
 const { Service } = require("../../DB_conection");
 
 const createService = async (service) => {
-    const { type } =
-        service;
+    const { type } =service;
     console.log(type);
     const defaults = {
         type

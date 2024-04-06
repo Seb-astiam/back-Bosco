@@ -9,6 +9,7 @@ const {
   getUserByIdHandler
 } = require("../Handlers/userHandler/userHandler");
 
+
 const routerUser = Router();
 
 routerUser.post("/", postUser);

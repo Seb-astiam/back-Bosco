@@ -46,6 +46,7 @@ const getHousingFilteredHandler = async (
   orderDirection
 ) => {
   let order = [];
+  
   if (orderBy && orderDirection) order = [[orderBy, orderDirection]];
 
   let where = { availability: true };

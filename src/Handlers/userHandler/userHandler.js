@@ -75,7 +75,7 @@ const updateUserProfile = async (req, res) => {
     name,
     email,
     password,
-    picture,
+   // picture,
   };
   try {
     if (!email) return res.status(400).send("El email es requerido");

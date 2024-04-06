@@ -1,10 +1,24 @@
 require("dotenv").config();
 const { conn } = require("./src/DB_conection");
 const { app } = require("./src/app");
-const { PORT } = process.env;
+const initializeSocket = require('./src/socket')
+const http = require('http');
+// const { PORT } = process.env;
 
+const port = process.env.PORT || 3001
+const server = http.createServer(app);
+initializeSocket(server);
 conn.sync({ alter: true }).then(() => {
-  app.listen(PORT || 3001, () => {
-    console.log(`On work port: ${PORT}`);
+  server.listen(port, () => {
+    console.log(`Servidor Express y Socket.IO en funcionamiento en el puerto ${port}`);
   });
 });
+
+
+
+
+
+
+
+
+
