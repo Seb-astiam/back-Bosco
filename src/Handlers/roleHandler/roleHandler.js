@@ -4,7 +4,6 @@ const { getRoles, createRole, deleteRole, updateRole } = require("../../Controll
 const postRoleHandler = async (req, res) => {
     const { name } =
       req.body;
-    console.log(name)
     try {
       if (
         !name

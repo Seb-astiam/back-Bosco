@@ -56,15 +56,6 @@ User.belongsToMany(Notification,{through: 'UserNotificaction'});
 Notification.belongsToMany(User,{through: 'UserNotificaction'});
 
 
-// Housing.hasMany(Reservation);
-// Reservation.belongsTo(Housing);
-
-UserMascota.hasMany(Reservation);
-Reservation.belongsTo(UserMascota); 
-Reservation.belongsTo(Housing); 
-
-
-
 User.hasOne(Profile);
 Profile.belongsTo(User);
 
