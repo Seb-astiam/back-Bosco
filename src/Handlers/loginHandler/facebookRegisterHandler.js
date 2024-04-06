@@ -12,6 +12,7 @@ const facebookRegister = async (req, res) => {
         email: newUser.email,
         picture: newUser.picture,
         roles: newUser.Roles,
+        id: newUser.id,
       };
       return res.status(201).json(response);
     } else {

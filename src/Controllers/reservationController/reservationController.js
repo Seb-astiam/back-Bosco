@@ -1,7 +1,8 @@
 const { Reservation, User, Housing } = require("../../DB_conection");
 
-const postReservationController = async ({ id_alojamiento, email_usuario, fechaInicio, fechaFin }) => {
-   
+const postReservationController = async ({ id_alojamiento, email_usuario, fechaInicio, fechaFin, UserMascotumId }) => {
+
+
     try {
  
         const idUser = await User.findOne({
@@ -11,7 +12,7 @@ const postReservationController = async ({ id_alojamiento, email_usuario, fechaI
             attributes: ['id']
         });
 
-        const registroReserva = await Reservation.create({ fechaInicio, fechaFin });
+        const registroReserva = await Reservation.create({ fechaInicio, fechaFin, UserMascotumId });
 
         await registroReserva.addUsers(idUser.dataValues.id);
         await registroReserva.addHousings(id_alojamiento);

@@ -24,7 +24,6 @@ const googleRegisterController = async (token) => {
       await newUser.addRoles(1);
       var user = await User.findOne({
         where: { email },
-        attributes: ["name", "email", "picture"],
         include: {
           model: Role,
           attributes: ["id", "name"],

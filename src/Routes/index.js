@@ -5,8 +5,9 @@ const routerLocation = require("./locationRoute");
 const routerProfile = require("./profileRoute");
 const { routerService } = require("./serviceRoute");
 const { routerRole } = require("./roleRoute");
-
+const routerUserinfo = require('./UserinfoRoute')
 const Housings = require("./HousingsRoute");
+const   routerHousingType =require('./HousingTypeRoute')
 const express = require("express");
 const path = require("path");
 
@@ -36,13 +37,12 @@ router.use("/profile", routerProfile);
 
 // Agrega el resto de las rutas
 router.use("/user", routerUser);
+router.use("/userinfo", routerUserinfo);
 router.use("/", routerMascota);
 router.use("/location", routerLocation);
 router.use("/service", routerService);
 router.use("/role", routerRole);
-
-router.use("/reserv", routerReservation)
-
+router.use('/housingtype', routerHousingType)
 router.use("/profileHousing", Housings);
 
 router.use("/loginBackOffice", routerLoginbackOffice);

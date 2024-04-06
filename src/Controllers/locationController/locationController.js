@@ -17,13 +17,13 @@ const getCityList = async (province, searchTerm) => {
   try {
     if (searchTerm) {
       const { data } = await axios(
-        `${URL}localidades?provincia=${province}&campos=id,nombre&max=1000&nombre=${searchTerm}`
+        `${URL}localidades?provincia=${province}&orden=nombre&campos=id,nombre&max=1000&nombre=${searchTerm}`
       );
       const cities = data.localidades;
       return cities;
     } else {
       const { data } = await axios(
-        `${URL}localidades?provincia=${province}&campos=id,nombre&max=1000`
+        `${URL}localidades?provincia=${province}&campos=id,nombre&max=1000&orden=nombre`
       );
       const cities = data.localidades;
       return cities;

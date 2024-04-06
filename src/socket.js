@@ -7,9 +7,19 @@ const initializeSocket = (server) => {
     }
   });
 
-  io.on('connection', (socket) => {
-    console.log('Un cliente se ha conectado');
+  let onlineUsers = [];
 
+const addNewUser = (username, socketId) => {
+  !onlineUsers.some((user) => user.username === username) &&
+    onlineUsers.push({ username, socketId });
+};
+  io.on('connection', (socket) => {
+    console.log('Un cliente se ha conectado',socket.id);
+    socket.on("newUser", (username) => {
+      addNewUser(username, socket.id);
+    });
+
+  
     // Aca recibo los eventos que emite el front
     socket.on('mensaje', (mensaje) => {
       console.log('Mensaje recibido:', mensaje);
@@ -19,9 +29,10 @@ const initializeSocket = (server) => {
 
       
     });
-  
+    
+      socket.emit('mensaje2', 'hola');
 
-     socket.to(userid).emmit('notificacion', mensaje )
+     //socket.to(userid).emmit('notificacion', mensaje )
 
      
     socket.on('disconnect', () => {

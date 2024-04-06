@@ -97,23 +97,23 @@ const getUserByEmail = async (email) => {
     throw Error(error.message);
   }
 };
-// const getUserById = async (id) => {
-//   try {
-//     const user = await User.findByPk(id);
-//     return user;
-//   } catch (error) {
-//     throw Error(error.message);
-//   }
-// };
 
-// const getUserById = async (id) => {
-//   try {
-//     const user = await User.findByPk(id);
-//     return user;
-//   } catch (error) {
-//     throw Error(error.message);
-//   }
-// };
+const getUserByIdController= async (id) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        id
+      },
+      attributes: ['name', 'email']
+    });
+
+    return user;
+  } catch (error) {
+    throw Error(error.message);
+  }
+};
+
+
 
 const deleteUser = async (email) => {
   try {
@@ -171,4 +171,5 @@ module.exports = {
   deleteUser,
   updateUser,
   blockAccountController,
+  getUserByIdController
 };
