@@ -3,7 +3,6 @@ const { conn } = require("./src/DB_conection");
 const { app } = require("./src/app");
 const initializeSocket = require('./src/socket')
 const http = require('http');
-// const { PORT } = process.env;
 
 const port = process.env.PORT || 3001
 const server = http.createServer(app);
