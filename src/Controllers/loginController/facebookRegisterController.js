@@ -1,5 +1,6 @@
 const { User, Role } = require("../../DB_conection");
 const axios = require("axios");
+const jwt = require("jsonwebtoken");
 
 const facebookRegisterController = async (token, userId) => {
   try {
@@ -33,6 +34,20 @@ const facebookRegisterController = async (token, userId) => {
           },
         },
       });
+      const jwtoken = jwt.sign(
+        {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          picture: user.picture,
+          roles: user.Roles,
+        },
+        process.env.PRIVATE_KEY,
+        {
+          expiresIn: "12h",
+        }
+      );
+      return [user, created, jwtoken];
     }
 
     return [user, created];

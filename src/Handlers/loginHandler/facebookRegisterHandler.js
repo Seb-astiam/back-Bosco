@@ -5,7 +5,10 @@ const {
 const facebookRegister = async (req, res) => {
   const { token, userId } = req.body;
   try {
-    const [newUser, created] = await facebookRegisterController(token, userId);
+    const [newUser, created, jwtoken] = await facebookRegisterController(
+      token,
+      userId
+    );
     if (created) {
       const response = {
         name: newUser.name,
@@ -13,7 +16,9 @@ const facebookRegister = async (req, res) => {
         picture: newUser.picture,
         roles: newUser.Roles,
         id: newUser.id,
+        token: jwtoken,
       };
+      console.log(response);
       return res.status(201).json(response);
     } else {
       return res.status(400).send("Ya existe un usuario con el mail ingresado");
