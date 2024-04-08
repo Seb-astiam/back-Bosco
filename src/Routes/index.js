@@ -17,7 +17,8 @@ const { routerReservation } = require("./ReserveRoute");
 
 
 const { routerLoginbackOffice } = require("./routerLoginbackOffice");
-
+const { routerReservation } = require("./routeReservation");
+const routerMercadoPago = require("./mercadopagoRouter");
 
 const router = Router();
 
@@ -49,5 +50,5 @@ router.use("/loginBackOffice", routerLoginbackOffice);
 router.use("/auth", routerLogin);
 
 router.use("/reservation", routerReservation);
-
+router.use("/pagos", routerMercadoPago);
 module.exports = router;
