@@ -4,8 +4,13 @@ const {
   deleteUser,
   updateUser,
   getUserByEmail,
-  blockAccountController
+  blockAccountController,
+  updatePictureController
 } = require("../../Controllers/userController/userController");
+const cloudinary = require('../../Config/cloudinary');
+const path = require('path');
+const fs = require('fs-extra');
+const { User } = require("../../DB_conection");
 
 const postUser = async (req, res) => {
   const { name, email, password, picture } = req.body;
@@ -50,11 +55,12 @@ const getUserEmail = async (req, res) => {
   try {
     const user = await getUserByEmail(email);
     if (!user) return res.status(404).send("Usuario no encontrado");
-    return res.json(user);
+    return res.json(user.picture); // Devolver solo el campo 'picture'
   } catch (error) {
     res.status(500).send("Error buscando usuario: " + error.message);
   }
 };
+
 // const getUserId = async (req, res) => {
 //   const { id } = req.params;
 //   try {
@@ -107,12 +113,62 @@ const blockAccountHandler = async (req, res) => {
     return res.status(500).json({error: error})
   }
 }
+const updatePictureProfile = async (req, res) => {
+  const { email } = req.query;
+  console.log(req.body);
+  const picture = req.files;
+  console.log("picture back");
+  console.log(picture);
 
+  try {
+    const uploadImage = async (imagePaths) => {
+      // Opciones para la carga de imágenes en Cloudinary
+      const options = {
+        use_filename: true,
+        unique_filename: false,
+        overwrite: true,
+      };
+
+      const uploadedImageUrls = [];
+      for (const imagePath of imagePaths) {
+        // Subir la imagen a Cloudinary
+        const result = await cloudinary.uploader.upload(imagePath, options);
+        
+        // Almacenar la URL de la imagen subida
+        uploadedImageUrls.push(result.secure_url);
+        // Eliminar el archivo local después de subirlo a Cloudinary
+        await fs.unlink(imagePath);
+      }
+      // Devolver las URLs de las imágenes subidas
+      return uploadedImageUrls;
+    };
+
+    // Obtener las rutas de las imágenes
+    const imagePaths = picture.map(image => path.join(__dirname, '../../public/img/upload', image.filename));
+    // Subir las imágenes a Cloudinary
+    const uploadedImageUrls = await uploadImage(imagePaths);
+
+    // Crear objeto de datos del alojamiento
+    const userData = {
+      picture: uploadedImageUrls, // Usar las URLs de las imágenes subidas
+    };
+    console.log("backend");
+    console.log(userData);
+    // Llamar al manejador para agregar el alojamiento
+    await updatePictureController(userData, email);
+
+    res.status(201).json({ message: 'Datos recibidos correctamente' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: `Error al crear el alojamiento: ${error.message}` });
+  }
+};
 module.exports = {
   postUser,
   getUsers,
   getUserEmail,
   delUser,
   updateUserProfile,
-  blockAccountHandler
+  blockAccountHandler,
+  updatePictureProfile
 };

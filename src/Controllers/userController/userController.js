@@ -34,9 +34,9 @@ const createNewuser = async (user) => {
           attributes: ["id", "name"],
           through: {
             attributes: [],
-          }, 
+          },
         },
-        
+
       });
       //esto
       const token = jwt.sign({ email }, process.env.PRIVATE_KEY);
@@ -163,6 +163,29 @@ const blockAccountController = async (block, email) => {
     console.error("Error al bloquear usuario:", error);
   }
 };
+const updatePictureController = async (userData, email) => {
+  try {
+    // Buscar al usuario por su correo electrónico
+    const user = await User.findOne({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new Error("Usuario no encontrado");
+    }
+
+    // Actualizar la foto del usuario
+    user.picture = userData.picture[0]; // Suponiendo que 'picture' es el campo de la foto en tu modelo de usuario
+
+    // Guardar los cambios en la base de datos
+    await user.save();
+
+    return user;
+  } catch (error) {
+    throw new Error(`Error al actualizar la foto del usuario: ${error.message}`);
+  }
+};
+
 
 module.exports = {
   createNewuser,
@@ -171,4 +194,5 @@ module.exports = {
   deleteUser,
   updateUser,
   blockAccountController,
+  updatePictureController
 };
