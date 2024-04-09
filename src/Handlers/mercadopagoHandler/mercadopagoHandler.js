@@ -4,11 +4,9 @@ require("dotenv").config();
 
 const mercadoPagoConfig = new MercadoPagoConfig({ accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN });
 
+
 const createPreference = async (req, res) => {
-
 const {  title, unit_price ,quantity } = req.body
-
-
     try {
         const body = {
             items: [{
@@ -25,7 +23,6 @@ const {  title, unit_price ,quantity } = req.body
             },
             auto_return: "approved"
         };
-        console.log(body, "body");
 
         const preference = new Preference(mercadoPagoConfig);
         const result = await preference.create({ body });
