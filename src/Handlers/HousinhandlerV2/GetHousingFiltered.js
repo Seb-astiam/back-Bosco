@@ -2,29 +2,31 @@ const { Housing, Service, User } = require("../../DB_conection");
 const { Op } = require("sequelize");
 
 const includeAll=(serviceId)=>{
+  
   if(serviceId){
+    const arrService = serviceId.split(',').map((id) => Number(id))
     return include = [
     {
       model: Service,
-      where: { id: serviceId },
-      attributes: ["id", "type"], // Incluye solo los atributos que necesitas
-      through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
+      where: { id: arrService },
+      attributes: ["id", "type"], 
+      through: { attributes: [] }, 
     },
     {
       model: User,
-      attributes: ["email"], // Incluye el correo electrónico del usuario
+      attributes: ["email"], 
     },
   ]}
   else {
     return include = [
       {
         model: Service,
-        attributes: ["id", "type"], // Incluye solo los atributos que necesitas
-        through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
+        attributes: ["id", "type"],
+        through: { attributes: [] }, 
       },
       {
         model: User,
-        attributes: ["email"], // Incluye el correo electrónico del usuario
+        attributes: ["email"], 
       },
     ]
 
