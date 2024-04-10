@@ -9,9 +9,10 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
       },
 
-      image: { type: DataTypes.STRING,
-         allowNull: false 
-        },
+      images: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: false,
+      },
 
       name: { type: DataTypes.STRING,
          allowNull: false

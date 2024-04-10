@@ -18,6 +18,7 @@ module.exports = (sequelize) => {
     },
     genre:{
       type:DataTypes.STRING,
+      defaultValue:"",
       allowNull:false
     },
     province: {

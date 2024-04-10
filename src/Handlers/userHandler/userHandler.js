@@ -115,10 +115,7 @@ const blockAccountHandler = async (req, res) => {
 }
 const updatePictureProfile = async (req, res) => {
   const { email } = req.query;
-  console.log(req.body);
   const picture = req.files;
-  console.log("picture back");
-  console.log(picture);
 
   try {
     const uploadImage = async (imagePaths) => {
