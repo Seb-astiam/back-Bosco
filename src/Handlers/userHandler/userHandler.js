@@ -149,8 +149,7 @@ const updatePictureProfile = async (req, res) => {
     const userData = {
       picture: uploadedImageUrls, // Usar las URLs de las imágenes subidas
     };
-    console.log("backend");
-    console.log(userData);
+
     // Llamar al manejador para agregar el alojamiento
     await updatePictureController(userData, email);
 

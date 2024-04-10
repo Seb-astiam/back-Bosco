@@ -1,16 +1,17 @@
 const { Router } = require("express");
-const {createUserMascotaHandler, getAllUserMascotasHandler, deleteUserMascotaHandler, updateUserMascotaHandler, getUserMascotasHandler} = require("../Handlers/userMascotaHandlers/userMascotaHandlers")
+const {createUserMascotaHandler, getAllUserMascotasHandler, deleteUserMascotaHandler, updateUserMascotaHandler, getUserMascotasHandler} = require("../Handlers/userMascotaHandlers/userMascotaHandlers");
+const upload = require("../Midleware/Upload");
 
 
 routerMascota = Router();
 
 routerMascota.get("/allMascotas/:UserId", getAllUserMascotasHandler );
 
-routerMascota.post("/newMascota", createUserMascotaHandler);
+routerMascota.post("/newMascota", upload.array("images"), createUserMascotaHandler);
 
 routerMascota.delete('/mascota/:id', deleteUserMascotaHandler);
 
-routerMascota.put('/mascota/:id', updateUserMascotaHandler);
+routerMascota.put('/mascota/:id', upload.array("images"), updateUserMascotaHandler);
 
 routerMascota.get("/userMascotas/:id", getUserMascotasHandler );
 
