@@ -1,9 +1,22 @@
-const addHounsingsHandler = require('../../Handlers/HousinhandlerV2/AddHousingsHandler');
-const cloudinary = require('../../Config/cloudinary');
-const path = require('path');
-const fs = require('fs-extra');
+const addHounsingsHandler = require("../../Handlers/HousinhandlerV2/AddHousingsHandler");
+const cloudinary = require("../../Config/cloudinary");
+const path = require("path");
+const fs = require("fs-extra");
 const addhousing = async (req, res) => {
-  const { accommodationType, datesAvailable, datesEnd, provinces, cities, price, services, square, title } = req.body;
+  const {
+    accommodationType,
+    hourly,
+    hourAvailable,
+    hourEnd,
+    datesAvailable,
+    datesEnd,
+    provinces,
+    cities,
+    price,
+    services,
+    square,
+    title,
+  } = req.body;
   const { email } = req.query;
   const images = req.files;
   try {
@@ -20,7 +33,7 @@ const addhousing = async (req, res) => {
       for (const imagePath of imagePaths) {
         // Subir la imagen a Cloudinary
         const result = await cloudinary.uploader.upload(imagePath, options);
-        
+
         // Almacenar la URL de la imagen subida
         uploadedImageUrls.push(result.secure_url);
         // Eliminar el archivo local después de subirlo a Cloudinary
@@ -31,13 +44,18 @@ const addhousing = async (req, res) => {
     };
 
     // Obtener las rutas de las imágenes
-    const imagePaths = images.map(image => path.join(__dirname, '../../public/img/upload', image.filename));
+    const imagePaths = images.map((image) =>
+      path.join(__dirname, "../../public/img/upload", image.filename)
+    );
     // Subir las imágenes a Cloudinary
     const uploadedImageUrls = await uploadImage(imagePaths);
 
     // Crear objeto de datos del alojamiento
     const housingData = {
       title,
+      hourly,
+      hourAvailable,
+      hourEnd,
       datesAvailable,
       datesEnd,
       accommodationType,
@@ -52,10 +70,12 @@ const addhousing = async (req, res) => {
     // Llamar al manejador para agregar el alojamiento
     await addHounsingsHandler(housingData, email, services);
 
-    res.status(201).json({ message: 'Datos recibidos correctamente' });
+    res.status(201).json({ message: "Datos recibidos correctamente" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: `Error al crear el alojamiento: ${error.message}` });
+    res
+      .status(500)
+      .json({ error: `Error al crear el alojamiento: ${error.message}` });
   }
 };
 
