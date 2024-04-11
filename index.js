@@ -1,8 +1,10 @@
 require("dotenv").config();
 const { conn, User } = require("./src/DB_conection");
+const usuario = require("./src/Models/usuario");
 const { app } = require("./src/app");
 const http = require('http');
 const { Server } = require('socket.io')
+const transporter = require("./src/Utils/createTransport")
 
 const port = process.env.PORT || 3001
 
@@ -20,9 +22,34 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log(`Usuario conectado ${socket.id}`);
 
+  socket.on("join_room", (usuario) => {
+    const room = usuario
+    console.log(room, 'room creacion')
+
+    socket.join(room);
+  })
+
   socket.on("notificacion", (mensaje, usuario) => {
     const noti = mensaje
-    socket.broadcast.emit("notificacion", noti);
+    const room = usuario.UserEmail
+
+    console.log(room, 'room de envio')
+
+    let mailOptions = {
+      from: process.env.MAIL_USERNAME,
+      to: usuario.UserEmail,
+      subject: "Solicitud Aprobada",
+      html: `<p>Su solicitud de reserva ha sido aceptada</p>`,
+    };
+
+    transporter.sendMail(mailOptions, function (err, data) {
+      if (err) {
+        throw Error(err.message);
+      }
+    });
+
+
+    socket.to(room).emit("notificacion", noti);
   });
 });
 
