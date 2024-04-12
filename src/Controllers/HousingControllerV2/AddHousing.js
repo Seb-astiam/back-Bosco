@@ -51,13 +51,10 @@ const addhousing = async (req, res) => {
     const uploadedImageUrls = await uploadImage(imagePaths);
 
     // Crear objeto de datos del alojamiento
-    const housingData = {
+
+    let housingData = {
       title,
       hourly,
-      hourAvailable,
-      hourEnd,
-      datesAvailable,
-      datesEnd,
       accommodationType,
       price,
       provinces,
@@ -66,6 +63,16 @@ const addhousing = async (req, res) => {
       availability: true,
       images: uploadedImageUrls, // Usar las URLs de las imágenes subidas
     };
+    if (hourly === "true") {
+      housingData = {
+        ...housingData,
+        hourly,
+        hourAvailable,
+        hourEnd,
+      };
+    } else {
+      housingData = { ...housingData, datesAvailable, datesEnd };
+    }
 
     // Llamar al manejador para agregar el alojamiento
     await addHounsingsHandler(housingData, email, services);

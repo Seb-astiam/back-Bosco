@@ -16,14 +16,14 @@ module.exports = (sequelize) => {
     hourAvailable: {
       type: DataTypes.INTEGER,
       validate: {
-        max: 23,
+        max: 24,
         min: 0,
       },
     },
     hourEnd: {
       type: DataTypes.INTEGER,
       validate: {
-        max: 23,
+        max: 24,
         min: 0,
       },
     },
