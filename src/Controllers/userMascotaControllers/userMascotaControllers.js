@@ -1,19 +1,23 @@
 const { UserMascota } = require("../../DB_conection");
 
-const createUserMascotaController = async ({ image, name, type, age, raze, aggressiveness, genre, coexistence, size }) => {
+const createUserMascotaController = async ({ image, name, type, age, raze, aggressiveness, genre, coexistence, size, UserId }) => {
 
     try {
-      const newUserMascota = await UserMascota.create({ image, name, type, age, raze, aggressiveness, genre, coexistence, size });
-      return newUserMascota
+      await UserMascota.create({ image, name, type, age, raze, aggressiveness, genre, coexistence, size, UserId });
+      return "Mascota Creada"
     } catch (error) {
       throw new Error("Error creating userMascota: " + error.message);
     }
   };
   
 
-const getAllUserMascotasController = async ()=>{
+const getAllUserMascotasController = async (UserId)=>{
   try {
-    const userMascota = await UserMascota.findAll()
+    const userMascota = await UserMascota.findAll({
+      where: {
+        UserId: UserId
+      }
+    })
     return userMascota;
   } catch (error) {
     throw new Error("Error getting userMascota: " + error.message);
@@ -47,10 +51,20 @@ const updateUserMascotaController= async (id, newData)=>{
   }
 };
 
+const getMascotaByIdController = async (idMascota) => {
+    try {
+      const mascota = await UserMascota.findByPk(idMascota);
+      return mascota
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
   module.exports = {
    createUserMascotaController,
    getAllUserMascotasController,
    deleteUserMascotaController,
    updateUserMascotaController,
+   getMascotaByIdController
   };
   

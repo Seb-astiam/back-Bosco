@@ -4,72 +4,17 @@ const cloudinary = require('../../Config/cloudinary');
 const path = require('path');
 const fs = require('fs-extra');
 
-// const  updateHousing  = async (req, res) => {
-//   const { accommodationType, datesAvailable, datesEnd, location, price, services, square, title } = req.body;
-//   const { email } = req.query;
-//   const images = req.files;
-// console.log(req.body)
-//   try {
-//     const uploadImage = async (imagePaths) => {
-//       // Opciones para la carga de imágenes en Cloudinary
-//       const options = {
-//         use_filename: true,
-//         unique_filename: false,
-//         overwrite: true,
-//       };
 
-//       const uploadedImageUrls = [];
-//       // Iterar sobre cada ruta de imagen en el array
-//       for (const imagePath of imagePaths) {
-//         // Subir la imagen a Cloudinary
-//         const result = await cloudinary.uploader.upload(imagePath, options);
-        
-//         // Almacenar la URL de la imagen subida
-//         uploadedImageUrls.push(result.secure_url);
-//         // Eliminar el archivo local después de subirlo a Cloudinary
-//         await fs.unlink(imagePath);
-//       }
-//       // Devolver las URLs de las imágenes subidas
-//       return uploadedImageUrls;
-//     };
-
-//     // Obtener las rutas de las imágenes
-//     const imagePaths = images.map(image => path.join(__dirname, '../../public/img/upload', image.filename));
-//     // Subir las imágenes a Cloudinary
-//     const uploadedImageUrls = await uploadImage(imagePaths);
-
-//     // Crear objeto de datos del alojamiento
-//     const housingData = {
-//       title,
-//       datesAvailable,
-//       datesEnd,
-//       accommodationType,
-//       price,
-//       location,
-//       square,
-//       availability: true,
-//       images: uploadedImageUrls, // Usar las URLs de las imágenes subidas
-//     };
-
-//     // Llamar al manejador para agregar el alojamiento
-//     await UpdateHosingsHandler(housingData, email, services);
-
-//     res.status(201).json({ message: 'Datos recibidos correctamente' });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: `Error al crear el alojamiento: ${error.message}` });
-//   }
-// };
 const updateHousing = async (req, res) => {
-    const { accommodationType, datesAvailable, datesEnd, location, price, services, square, title } = req.body;
+    const { accommodationType, datesAvailable, datesEnd, provinces,cities, price, services, square, title } = req.body;
     console.log( 'rsto lo tare desde el bodu',req.body)
     const { id } = req.params;
      const images= req.files
     console.log('id', id);
-    console.log('datos', accommodationType, datesAvailable, datesEnd, location, price, services, square, title );
+    
     console.log('images', images);
 
-    if (!accommodationType || !datesAvailable || !datesEnd || !location || !price || !services || !square || !title) {
+    if (!accommodationType || !datesAvailable || !datesEnd ||  !price || !services || !square || !title) {
         console.log('Faltan datos obligatorios');
         res.status(400).json({ error: 'Faltan datos obligatorios' });
         return;
@@ -110,7 +55,8 @@ const updateHousing = async (req, res) => {
                 datesEnd,
                 accommodationType,
                 price,
-                location,
+                provinces,
+                cities,
                 square,
                 availability: true,
                 images: uploadedImageUrls,
@@ -125,7 +71,8 @@ const updateHousing = async (req, res) => {
                 datesEnd,
                 accommodationType,
                 price,
-                location,
+                provinces,
+                cities,
                 square,
                 availability: true,
             };

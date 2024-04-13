@@ -4,30 +4,26 @@ const {
   deleteUser,
   updateUser,
   getUserByEmail,
+  blockAccountController,
+  getUserByIdController
 } = require("../../Controllers/userController/userController");
 
 const postUser = async (req, res) => {
-  const { name, email, password, picture } = req.body;
+  const { name, email, password, roleIds } = req.body;
   try {
-    if (!name || !email || !password)
+    if (!name || !email || !password )
       return res.status(400).send("Falta información de registro");
-    const createUser = { name, email, password, picture };
+    const createUser = { name, email, password };
 
-    const [newUser, created] = await createNewuser(createUser);
+    const [newUser, created] = await createNewuser(createUser, roleIds);
 
     if (created) {
-      const response = {
-        name: newUser.name,
-        email: newUser.email,
-        picture: newUser.picture,
-        roles: newUser.Roles,
-      };
-      return res.status(201).json(response);
+      return res.status(201).send("Ahora active su cuenta");
     } else {
       return res.status(400).send("Ya existe un usuario con el mail ingresado");
     }
   } catch (error) {
-    res.status(500).send("Error creando usuario: " + error.message);
+    res.status(500).send(error.message);
   }
 };
 
@@ -53,16 +49,6 @@ const getUserEmail = async (req, res) => {
     res.status(500).send("Error buscando usuario: " + error.message);
   }
 };
-// const getUserId = async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const user = await getUserById(id);
-//     if (!user) return res.status(404).send("Usuario no encontrado");
-//     return res.json(user);
-//   } catch (error) {
-//     res.status(500).send("Error buscando usuario: " + error.message);
-//   }
-// };
 
 const delUser = async (req, res) => {
   const { email } = req.params;
@@ -94,10 +80,36 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
+const blockAccountHandler = async (req, res) => {
+  const { block, email } = req.body
+
+  try {
+      const blockAccount = await blockAccountController(block, email);
+      return res.status(200).send(blockAccount)
+
+  } catch (error) {
+    return res.status(500).json({error: error})
+  }
+}
+
+const getUserByIdHandler = async (req, res) => {
+  const { id } = req.params
+
+  if(!id) return "Falta el id del usuario para hacer la busqueda"
+  try {
+      const user = await getUserByIdController(id);
+      return res.status(200).json(user);
+  } catch (error) {
+      return res.status(500).json({error: error.message})
+  }
+}
+
 module.exports = {
   postUser,
   getUsers,
   getUserEmail,
   delUser,
   updateUserProfile,
+  blockAccountHandler,
+  getUserByIdHandler
 };

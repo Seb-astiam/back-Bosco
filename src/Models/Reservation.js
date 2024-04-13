@@ -1,52 +1,41 @@
-// ReservaAll.js
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  const Reservation = sequelize.define('Reservation', {
+  return sequelize.define("Reservation", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
-   
-    
-   fecha: {
-    type: DataTypes.DATEONLY,
-    allowNull: true,
+
+    fechaInicio: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
     },
-    status: {
-            type: DataTypes.ENUM('pendiente', 'aprobada', 'cancelada'),
-             allowNull: false,
-             defaultValue: 'pendiente'
-          },
-    // Otros campos que desees para la relación
+
+    fechaFin: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+    },
+    horaInicio: {
+      type: DataTypes.INTEGER,
+      validate: {
+        max: 24,
+        min: 0,
+      },
+    },
+    horaFin: {
+      type: DataTypes.INTEGER,
+      validate: {
+        max: 24,
+        min: 0,
+      },
+    },
+
+    estatus: {
+      type: DataTypes.ENUM("Pending", "Success", "Reject"),
+      allowNull: false,
+      defaultValue: "Pending",
+    },
   });
-
-  return Reservation;
 };
-
-
-// opcion 2
-// const { DataTypes } = require('sequelize');
-
-// module.exports = (sequelize) => {
-//   const Reserva = sequelize.define('Reserva', {
-//     // Definir campos del modelo Reserva
-//     fechaInicio: {
-//       type: DataTypes.DATE,
-//       allowNull: false
-//     },
-//     fechaFin: {
-//       type: DataTypes.DATE,
-//       allowNull: false
-//     },
-//     estado: {
-//       type: DataTypes.ENUM('pendiente', 'aprobada', 'cancelada'),
-//       allowNull: false,
-//       defaultValue: 'pendiente'
-//     },
-//     // Otros campos según sea necesario
-//   });
-
-//   return Reserva;
-// };

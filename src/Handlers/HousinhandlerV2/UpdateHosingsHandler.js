@@ -2,7 +2,7 @@ const { User, Housing } = require("../../DB_conection");
 const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
 const UpdateHosingsHandler = async (housingData, services,id) => {
-// const newIdservice = services.split(",").map(Number);
+ const newIdservice = services.split(",").map(Number);
  
     try {
       
@@ -23,7 +23,7 @@ const UpdateHosingsHandler = async (housingData, services,id) => {
       });
   
       // Actualizar los servicios asociados al alojamiento
-      await housing.setServices(services);
+      await housing.setServices(newIdservice);
   
       return housing;
     } catch (error) {
