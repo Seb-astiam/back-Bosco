@@ -42,7 +42,10 @@ const { Housing, UserMascota, User, Service, Role, Company, Profile ,Reservation
 
 User.hasMany(Housing);
 Housing.belongsTo(User);
-User.hasMany(Notification);
+
+User.belongsToMany(Role ,{ through: 'userRol' });
+Role.belongsToMany(User ,{ through: 'userRol' });
+
 User.hasMany(UserMascota);
 UserMascota.belongsTo(User);
 

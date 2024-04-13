@@ -20,6 +20,8 @@ const createUserMascotaHandler = async (req, res) => {
     UserId
   } = req.body;
 
+  console.log(req.body, 'data')
+
   try {
     if (
       (image, name, type, age, raze, aggressiveness, genre, coexistence, size, UserId)
