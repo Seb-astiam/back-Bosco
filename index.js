@@ -44,7 +44,7 @@ io.on("connection", (socket) => {
   });
 });
 
-conn.sync({ force: false }).then(() => {
+conn.sync({ alter:true }).then(() => {
   server.listen(port, () => {
     console.log(
       `Servidor Express y Socket.IO en funcionamiento en el puerto ${port}`
