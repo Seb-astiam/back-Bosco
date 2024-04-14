@@ -84,7 +84,7 @@ const getReservationsAlojamientoController = async (identificacion) => {
               model: Housing,
               where: {
                 id: housing.id,
-              },
+              }
             },
             {
               model: User,
@@ -94,6 +94,8 @@ const getReservationsAlojamientoController = async (identificacion) => {
         });
       })
     );
+
+    console.log(vistaAlojamiento, 'vistaAlojamiento')
 
     return vistaAlojamiento;
   } catch (error) {
@@ -120,9 +122,25 @@ const updateReservationController = async ({ status, id_reserva }) => {
   }
 };
 
+const updateEstadoPagoController = async ( estadoParaBotonDePago, id_reserva ) => {
+  try {
+    const reserva = await Reservation.findByPk(id_reserva);
+       await reserva.update(
+        { estadoDePago: estadoParaBotonDePago},
+        { fields: ["estadoDePago"] }
+      );
+
+
+    if(estadoDePago) return 'se cambio el estado de pago'
+  } catch (error) {
+    throw Error(error.message);
+  }
+};
+
 module.exports = {
   postReservationController,
   getAllReservationController,
   getReservationsAlojamientoController,
   updateReservationController,
+  updateEstadoPagoController
 };

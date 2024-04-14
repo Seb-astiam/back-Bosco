@@ -1,10 +1,12 @@
 const { Router } = require("express");
-const {  getReviewsAlojamientoHandler, postReviewHandler} = require("../Handlers/reviewAndComents/reviewAndComentsHandler");
+const {  getReviewsAlojamientoHandler, postReviewHandler, getAllReviewHousingHandler} = require("../Handlers/reviewAndComents/reviewAndComentsHandler");
 
 const routerReview = Router();
 
 routerReview.get("/allReview/:id", getReviewsAlojamientoHandler);
 
+
+routerReview.get("/allReviewHousing/:idAlojamiento", getAllReviewHousingHandler);
 
 
 routerReview.post("/newReview", postReviewHandler);

@@ -17,9 +17,9 @@ const {  title, unit_price ,quantity } = req.body
                 currency_id: "ARS",
             }],
             back_urls: {
-                success: "http://localhost:5173/historial-reservas",
-                failure: "http://localhost:5173/historial-reservas",
-                pending: "http://localhost:5173/historial-reservas",
+                success: "http://localhost:5173/success",
+                failure: "https://front-bosco.up.railway.app/failure",
+                pending: "https://front-bosco.up.railway.app/pending",
             },
             auto_return: "approved"
         };

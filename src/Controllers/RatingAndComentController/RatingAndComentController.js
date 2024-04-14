@@ -2,37 +2,22 @@ const { Reservation, Housing, User, UserMascota, RatingHousing } = require("../.
 
 const postReviewController = async ({ id_alojamiento, fecha, comentario, valoracion}) => {
     try { 
-        const housingData = await Housing.findOne({
-            where: {
-              id: id_alojamiento,
-            },
-            include: [
-              {
-                model: Reservation, 
-                through: {}, 
-              },
-              
-            ],
-          });
-          
-                
+      // id_Alojamiento = id_reserva
+      const reserva = await Reservation.findOne({
+        where: {
+          id: id_alojamiento
+        },
+        include: {
+          model: Housing,
+        }
+      })
+      const idAlojamiento = reserva.Housings[0].id
 
-
-        const  createCalificationHousing= await RatingHousing.create({ id_alojamiento, fecha, comentario, valoracion });
-
-
-       
-        const id_reserva = housingData.Reservations[0].id; 
-        await createCalificationHousing.addReservation(id_reserva);
-
-        
-        
-       
-        const idReservation = await Reservation.findByPk(id_reserva)
-        
+        const  createCalificationHousing= await RatingHousing.create({ id_alojamiento: idAlojamiento, fecha, comentario, valoracion });
+        await createCalificationHousing.addReservation(id_alojamiento);
+        const idReservation = await Reservation.findByPk(id_alojamiento)
         if(idReservation)
        return true
-
     } catch (error) {
         throw Error(error.message);
     }
@@ -43,11 +28,9 @@ const postReviewController = async ({ id_alojamiento, fecha, comentario, valorac
 
 const getReviewsAlojamientoController = async (idReserva) => {
   try {
-     
       const reserva = await Reservation.findByPk(idReserva, {
           include: {
               model: RatingHousing,
-           
               through: {}
           }
       });
@@ -56,7 +39,6 @@ const getReviewsAlojamientoController = async (idReserva) => {
           throw new Error("La reserva no existe");
       }
 
-        console.log(reserva, "soy reserva")
       return reserva.RatingHousings.map(rating => {
           return {
               comentario: rating.comentario,
@@ -68,5 +50,40 @@ const getReviewsAlojamientoController = async (idReserva) => {
   }
 };
 
+const getAllReviewHousingController = async (idAlojamiento) => {
+    try {
+        const alojamientoReseña = await Housing.findByPk(idAlojamiento, {
+          attributes: ["title"],
+          include: [
+            {
+              model: Reservation,
+              attributes: ['id', 'UserMascotumId'],
+              through: {},
+              include: {
+                model: RatingHousing,
+                attributes: ['comentario', 'valoracion'],
+                through: {}
+              }
+            },
+            
+          ]
+        })
 
-module.exports = { postReviewController, getReviewsAlojamientoController };
+        const reservasycomentarios = alojamientoReseña.Reservations.map((reseña) => {
+          const comentarios = reseña.RatingHousings.map((comentario) => {
+              return {comentario: comentario.comentario, valoracion: comentario.valoracion}
+          })
+
+          return comentarios
+        }).flat()
+
+      return reservasycomentarios
+    } catch (error) {
+      console.error(error)
+    }
+}
+
+
+
+
+module.exports = { postReviewController, getReviewsAlojamientoController, getAllReviewHousingController };

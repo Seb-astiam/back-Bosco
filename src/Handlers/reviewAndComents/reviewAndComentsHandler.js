@@ -1,9 +1,8 @@
-const { postReviewController, getReviewsAlojamientoController} = require("../../Controllers/RatingAndComentController/RatingAndComentController");
+const { postReviewController, getReviewsAlojamientoController, getAllReviewHousingController} = require("../../Controllers/RatingAndComentController/RatingAndComentController");
 
 
 const postReviewHandler = async (req, res) => {
   const { id_alojamiento, fecha, comentario, valoracion} = req.body;
-  console.log(req.body);
 
   try {
     if ( !id_alojamiento || !fecha || !comentario ||!valoracion){
@@ -22,15 +21,10 @@ const postReviewHandler = async (req, res) => {
 
 
 const getReviewsAlojamientoHandler = async (req, res) => {
-
   const {id} = req.params;
-
-
-  console.log(id);
 
   try {
     const allReviews = await getReviewsAlojamientoController(id);
-  
 
     if (!allReviews || allReviews.length === 0) {
       return res.status(400).send("No hay reseñas disponibles");
@@ -42,7 +36,23 @@ const getReviewsAlojamientoHandler = async (req, res) => {
   }
 };
 
+const getAllReviewHousingHandler = async (req, res) => {
+  const {idAlojamiento} = req.params;
+
+  try {
+    const allReviews = await getAllReviewHousingController(idAlojamiento);
+
+    if (!allReviews || allReviews.length === 0) {
+      return res.status(400).send("No hay reseñas disponibles");
+    } 
+
+    return res.status(200).json(allReviews) 
+  } catch (error) {
+    res.status(500).json({error: error.message});
+  }
+}
 
 
 
-module.exports = { postReviewHandler, getReviewsAlojamientoHandler};
+
+module.exports = { postReviewHandler, getReviewsAlojamientoHandler, getAllReviewHousingHandler};
