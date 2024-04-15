@@ -31,15 +31,11 @@ imagesRouter.get("/:imageName", (req, res) => {
   const imageName = req.params.imageName;
   const imagePath = path.join(__dirname, `../Uploads/${imageName}`);
 
-  // Sirve la imagen
   res.sendFile(imagePath);
 });
 
 router.use("/Uploads", imagesRouter);
-
 router.use("/profile", routerProfile);
-
-// Agrega el resto de las rutas
 router.use("/user", routerUser);
 router.use("/userinfo", routerUserinfo);
 router.use("/", routerMascota);
@@ -48,10 +44,8 @@ router.use("/service", routerService);
 router.use("/role", routerRole);
 router.use('/housingtype', routerHousingType)
 router.use("/profileHousing", Housings);
-
 router.use("/loginBackOffice", routerLoginbackOffice);
 router.use("/auth", routerLogin);
-
 router.use("/reservation", routerReservation);
 router.use("/review", routerReview);
 router.use("/reviewPet", routerReviewPet);

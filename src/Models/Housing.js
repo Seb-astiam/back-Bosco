@@ -11,6 +11,23 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    //nuevo : reservar por horas o por dias
+    hourly: { type: DataTypes.BOOLEAN, defaultValue: false },
+    hourAvailable: {
+      type: DataTypes.INTEGER,
+      validate: {
+        max: 24,
+        min: 0,
+      },
+    },
+    hourEnd: {
+      type: DataTypes.INTEGER,
+      validate: {
+        max: 24,
+        min: 0,
+      },
+    },
+    //
     datesAvailable: {
       type: DataTypes.DATEONLY,
       allowNull: true,

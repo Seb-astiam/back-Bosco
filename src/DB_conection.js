@@ -12,6 +12,8 @@ const RatingHousingModel = require("./Models/RatingHousing");
 const RatingPetModel= require("./Models/RatingPet");
 const  NotificationModel= require('./Models/Notification')
 const HousingTypeModel = require('./Models/HousingType')
+
+
  const sequelize = new Sequelize(
    `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
   { logging: false, native: false }
@@ -19,6 +21,7 @@ const HousingTypeModel = require('./Models/HousingType')
 
 //const sequelize = new Sequelize( DB_PORT, { logging: false, native: false }
 //);
+
 HousingTypeModel(sequelize)
 HousingModel(sequelize);
 MascotaModel(sequelize);
@@ -39,7 +42,10 @@ const { Housing, UserMascota, User, Service, Role, Company, Profile ,Reservation
 
 User.hasMany(Housing);
 Housing.belongsTo(User);
-User.hasMany(Notification);
+
+User.belongsToMany(Role ,{ through: 'userRol' });
+Role.belongsToMany(User ,{ through: 'userRol' });
+
 User.hasMany(UserMascota);
 UserMascota.belongsTo(User);
 
@@ -65,18 +71,11 @@ Profile.belongsTo(User);
 User.belongsToMany(Role, { through: "UserRole" });
 Role.belongsToMany(User, { through: "UserRole" });
 
-// Reservation User
-
 Reservation.belongsToMany(User, { through: 'ReservaUsuario' });
 User.belongsToMany(Reservation, { through: 'ReservaUsuario' });
 
-
-// Reservation Housing
-
 Reservation.belongsToMany(Housing, { through: 'ReservaHousing' });
 Housing.belongsToMany(Reservation, { through: 'ReservaHousing' });
-
-// Reservation Mascota
 
 UserMascota.hasMany(Reservation);
 Reservation.belongsTo(UserMascota);
