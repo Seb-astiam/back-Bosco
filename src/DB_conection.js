@@ -21,7 +21,7 @@ const HousingTypeModel = require("./Models/HousingType");
 const sequelize = new Sequelize( DB_PORT, { logging: false, native: false }
 );
 
-HousingTypeModel(sequelize)
+HousingTypeModel(sequelize);
 HousingModel(sequelize);
 MascotaModel(sequelize);
 UserModel(sequelize);
@@ -72,13 +72,8 @@ HousingType.belongsToMany(Housing, { through: "HosuingTypexHousing" });
   User.hasOne(Profile);
   Profile.belongsTo(User);
 
-User.belongsToMany(Role, { through: "UserRole" });
-Role.belongsToMany(User, { through: "UserRole" });
-
-// Reservation User
-
-  Reservation.belongsToMany(User, { through: 'ReservaUsuario' });
-  User.belongsToMany(Reservation, { through: 'ReservaUsuario' });
+Reservation.belongsToMany(User, { through: "ReservaUsuario" });
+User.belongsToMany(Reservation, { through: "ReservaUsuario" });
 
   Reservation.belongsToMany(Housing, { through: 'ReservaHousing' });
   Housing.belongsToMany(Reservation, { through: 'ReservaHousing' });
