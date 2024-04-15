@@ -79,7 +79,7 @@ const getHousingFilteredHandler = async (
         hourly: true,
       };
     }
-  } else {
+  } else if (hourly === "false") {
     if (startDate && endDate)
       where = {
         ...where,
