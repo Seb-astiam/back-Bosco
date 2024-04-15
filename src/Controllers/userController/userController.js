@@ -64,7 +64,7 @@ const createNewuser = async (user) => {
 const getAllUsers = async () => {
   try {
     const users = await User.findAll({
-      attributes: ["name", "email", "picture", "status"],
+      attributes: ["id","name", "email", "picture", "status"],
       include: {
         model: Role,
         attributes: ["id", "name"],
@@ -150,19 +150,26 @@ const blockAccountController = async (block, email) => {
   try {
     const blockUser = await User.findOne({ where: { email } });
 
-    if (blockUser.status) {
-      await blockUser.update({ status: block });
-      return "Usuario bloqueado con éxito.";
-    } else if (!blockUser.status) {
-      await blockUser.update({ status: true });
+    if (!blockUser) {
+      return "No se encontró un usuario con ese email.";
+    }
+
+  
+    await blockUser.update({ status: block });
+
+   
+    if (block) {
       return "Usuario desbloqueado con éxito.";
     } else {
-      return "No se encontró un usuario con ese email.";
+     
+      return "Usuario bloqueado con éxito.";
     }
   } catch (error) {
     console.error("Error al bloquear usuario:", error);
+    throw new Error("Error al bloquear usuario.");
   }
 };
+
 
 module.exports = {
   createNewuser,

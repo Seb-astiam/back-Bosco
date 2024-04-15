@@ -1,13 +1,13 @@
  const userSearchHandler = require('../../Handlers/UserSearchBOhandler/userSearchHandler')
 
  const userSearchController = async(req,res)=>{
-  const {email}= req.query
+  const {email,name}= req.query
   console.log('soy la query',req.query);
   
  
 
   try {
- const usersearch =await userSearchHandler(email)
+ const usersearch =await userSearchHandler(email,name)
     res.status(200).json(usersearch)
     
   } catch (error) {

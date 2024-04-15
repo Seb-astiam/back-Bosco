@@ -15,6 +15,7 @@ const { routerLogin } = require("./loginRoute");
 
 const { routerLoginbackOffice } = require("./routerLoginbackOffice");
 const { routerReservation } = require("./routeReservation");
+const userAdiminRouter = require("./userAdiminRoute");
 
 const router = Router();
 
@@ -34,6 +35,7 @@ router.use("/profile", routerProfile);
 
 // Agrega el resto de las rutas
 router.use("/user", routerUser);
+router.use('/userAdmin', userAdiminRouter)
 router.use("/userinfo", routerUserinfo);
 router.use("/", routerMascota);
 router.use("/location", routerLocation);
