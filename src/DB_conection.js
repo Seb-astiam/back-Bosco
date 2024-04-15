@@ -1,21 +1,20 @@
 require("dotenv").config();
 const { Sequelize } = require("sequelize");
-const { DB_PORT,   DB_USER, DB_PASSWORD, DB_HOST,DB_NAME} = process.env;
+const { DB_PORT, DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 const HousingModel = require("./Models/Housing");
 const MascotaModel = require("./Models/Mascota");
 const UserModel = require("./Models/usuario");
 const ProfileModel = require("./Models/Profile");
 const ServiceModel = require("./Models/Service");
 const RoleModel = require("./Models/Role");
-const ReservationModel = require("./Models/Reservation")
+const ReservationModel = require("./Models/Reservation");
 const RatingHousingModel = require("./Models/RatingHousing");
-const RatingPetModel= require("./Models/RatingPet");
-const  NotificationModel= require('./Models/Notification')
-const HousingTypeModel = require('./Models/HousingType')
+const RatingPetModel = require("./Models/RatingPet");
+const NotificationModel = require("./Models/Notification");
+const HousingTypeModel = require("./Models/HousingType");
 
-
-//  const sequelize = new Sequelize(
-//    `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
+// const sequelize = new Sequelize(
+//   `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
 //   { logging: false, native: false }
 // );
 
@@ -29,16 +28,28 @@ UserModel(sequelize);
 ProfileModel(sequelize);
 ServiceModel(sequelize);
 RoleModel(sequelize);
-ReservationModel(sequelize)
-RatingHousingModel(sequelize)
-RatingPetModel(sequelize)
-NotificationModel(sequelize)
+ReservationModel(sequelize);
+RatingHousingModel(sequelize);
+RatingPetModel(sequelize);
+NotificationModel(sequelize);
 
-const { Housing, UserMascota, User, Service, Role, Company, Profile ,Reservation,RatingHousing,RatingPet,Notification,HousingType} =
-  sequelize.models;
+const {
+  Housing,
+  UserMascota,
+  User,
+  Service,
+  Role,
+  Company,
+  Profile,
+  Reservation,
+  RatingHousing,
+  RatingPet,
+  Notification,
+  HousingType,
+} = sequelize.models;
 
-  Housing.belongsToMany(HousingType, { through: "HosuingTypexHousing" });
-  HousingType.belongsToMany(Housing, { through: "HosuingTypexHousing" });
+Housing.belongsToMany(HousingType, { through: "HosuingTypexHousing" });
+HousingType.belongsToMany(Housing, { through: "HosuingTypexHousing" });
 
   User.hasMany(Housing);
   Housing.belongsTo(User);
@@ -61,17 +72,23 @@ const { Housing, UserMascota, User, Service, Role, Company, Profile ,Reservation
   User.hasOne(Profile);
   Profile.belongsTo(User);
 
+User.belongsToMany(Role, { through: "UserRole" });
+Role.belongsToMany(User, { through: "UserRole" });
+
+// Reservation User
+
   Reservation.belongsToMany(User, { through: 'ReservaUsuario' });
   User.belongsToMany(Reservation, { through: 'ReservaUsuario' });
 
   Reservation.belongsToMany(Housing, { through: 'ReservaHousing' });
   Housing.belongsToMany(Reservation, { through: 'ReservaHousing' });
 
-  UserMascota.hasMany(Reservation);
-  Reservation.belongsTo(UserMascota);
+UserMascota.hasMany(Reservation);
+Reservation.belongsTo(UserMascota);
 
   User.hasMany(UserMascota);
   UserMascota.belongsTo(User);
+
 
 module.exports = {
   conn: sequelize,

@@ -15,6 +15,7 @@ const { routerLogin } = require("./loginRoute");
 
 const { routerLoginbackOffice } = require("./routerLoginbackOffice");
 const { routerReservation } = require("./routeReservation");
+const userAdiminRouter = require("./userAdiminRoute");
 const routerMercadoPago = require("./mercadopagoRouter");
 
 const router = Router();
@@ -31,6 +32,7 @@ imagesRouter.get("/:imageName", (req, res) => {
 router.use("/Uploads", imagesRouter);
 router.use("/profile", routerProfile);
 router.use("/user", routerUser);
+router.use('/userAdmin', userAdiminRouter)
 router.use("/userinfo", routerUserinfo);
 router.use("/", routerMascota);
 router.use("/location", routerLocation);
