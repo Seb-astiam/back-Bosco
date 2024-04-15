@@ -95,8 +95,6 @@ const getReservationsAlojamientoController = async (identificacion) => {
       })
     );
 
-    console.log(vistaAlojamiento, 'vistaAlojamiento')
-
     return vistaAlojamiento;
   } catch (error) {
     throw Error(error.message);
