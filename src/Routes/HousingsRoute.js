@@ -12,7 +12,7 @@ const verifyToken = require("../Midleware/verifyToken");
 router.post("/register", upload.array("images", 3), addHousings);
 router.get("/allHousingslocation", getHousings);
 router.get("/ocupancyreport", OcupancyReport);
-router.get("/filtered", verifyToken, getHousingFiltered);
+router.get("/filtered", getHousingFiltered);
 router.put("/update/:id", upload.array("images", 3), updateHousing),
   router.delete("/:id", Delhosuing);
 module.exports = router;

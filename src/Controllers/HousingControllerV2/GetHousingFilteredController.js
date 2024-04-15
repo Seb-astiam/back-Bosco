@@ -8,6 +8,9 @@ const getHousingFiltered = async (req, res) => {
     square,
     minPrice,
     maxPrice,
+    hourly, //horas(true) o dias(false)
+    startHour, //
+    endHour, //
     startDate,
     endDate,
     orderBy,
@@ -22,6 +25,9 @@ const getHousingFiltered = async (req, res) => {
       square,
       minPrice,
       maxPrice,
+      hourly,
+      startHour,
+      endHour,
       startDate,
       endDate,
       orderBy,
