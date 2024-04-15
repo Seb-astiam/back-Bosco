@@ -36,7 +36,7 @@ io.on("connection", (socket) => {
 
     transporter.sendMail(mailOptions, function (err, data) {
       if (err) {
-        throw Error(err.message);
+        throw Error(err.message); 
       }
     });
 

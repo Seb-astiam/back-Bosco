@@ -70,6 +70,9 @@ const { Housing, UserMascota, User, Service, Role, Company, Profile ,Reservation
   UserMascota.hasMany(Reservation);
   Reservation.belongsTo(UserMascota);
 
+  User.hasMany(UserMascota);
+  UserMascota.belongsTo(User);
+
 module.exports = {
   conn: sequelize,
   Housing,
