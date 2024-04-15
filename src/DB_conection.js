@@ -52,6 +52,9 @@ RatingHousing.belongsToMany(Reservation, { through: 'RatingHousingxReservation' 
 
 Reservation.belongsToMany(RatingPet, { through: 'ReservationxRatingPet' });
 RatingPet.belongsToMany(Reservation, { through: 'ReservationxRatingPet' });
+
+
+
 User.belongsToMany(Notification,{through: 'UserNotificaction'});
 Notification.belongsToMany(User,{through: 'UserNotificaction'});
 

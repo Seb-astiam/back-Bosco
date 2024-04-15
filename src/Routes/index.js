@@ -7,17 +7,20 @@ const { routerService } = require("./serviceRoute");
 const { routerRole } = require("./roleRoute");
 const routerUserinfo = require('./UserinfoRoute')
 const Housings = require("./HousingsRoute");
-const   routerHousingType =require('./HousingTypeRoute')
+const   routerHousingType =require('./HousingTypeRoute');
+const routerReview = require("./reviewRoute")
+const routerReviewPet = require("./reviewPetRoute")
 const express = require("express");
 const path = require("path");
 
+
 const { routerLogin } = require("./loginRoute");
-const { routerReservation } = require("./ReserveRoute");
+const { routerReservation } = require("./routeReservation");
 
 
 
 const { routerLoginbackOffice } = require("./routerLoginbackOffice");
-const { routerReservation } = require("./routeReservation");
+
 const routerMercadoPago = require("./mercadopagoRouter");
 
 const router = Router();
@@ -50,5 +53,8 @@ router.use("/loginBackOffice", routerLoginbackOffice);
 router.use("/auth", routerLogin);
 
 router.use("/reservation", routerReservation);
+router.use("/review", routerReview);
+router.use("/reviewPet", routerReviewPet);
+
 router.use("/pagos", routerMercadoPago);
 module.exports = router;

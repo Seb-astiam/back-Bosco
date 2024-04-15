@@ -1,100 +1,72 @@
-const { UserMascota, User, Housing, RatingPet, RatingHousing } = require("../../DB_conection");
+const { Reservation, Housing, User, UserMascota, RatingHousing } = require("../../DB_conection");
 
-const postReviewController = async ({ id_alojamiento, email_usuario, fecha, rating, comentario, UserMascotumId }) => {
-
-
-    try {
- 
-        const idUser = await User.findOne({
+const postReviewController = async ({ id_alojamiento, fecha, comentario, valoracion}) => {
+    try { 
+        const housingData = await Housing.findOne({
             where: {
-                email: email_usuario
+              id: id_alojamiento,
             },
-            attributes: ['id']
-        });
+            include: [
+              {
+                model: Reservation, 
+                through: {}, 
+              },
+              
+            ],
+          });
+          
+                
 
-        const  createCalificationHousing= await RatingHousing.create({ fecha, comentario, rating, UserMascotumId });
 
-        await createCalificationHousing.addUsers(idUser.dataValues.id);
-        await createCalificationHousing.addHousings(id_alojamiento);
+        const  createCalificationHousing= await RatingHousing.create({ id_alojamiento, fecha, comentario, valoracion });
 
-       return createCalificationHousing;
+
+       
+        const id_reserva = housingData.Reservations[0].id; 
+        await createCalificationHousing.addReservation(id_reserva);
+
+        
+        
+       
+        const idReservation = await Reservation.findByPk(id_reserva)
+        
+        if(idReservation)
+       return true
 
     } catch (error) {
         throw Error(error.message);
     }
 };
 
-const getAllReviewsController = async (email) => {
-    try {
 
-const allReviews = await RatingHousing.findAll({
-    include: [
-        {
-            model: User,
-            where: {
-                email: email
-            }
-        },
-        {
-            model: Housing,
-            attributes: ['title', 'price', 'provinces', 'UserId'],
-            through: {
-                attributes: [],
-            },
-        }
-    ]
-});
 
-        if (!allReviews.length) {
-            return "No hay reservas registradas para este usuario";
-        }
 
-        return allReviews;
+const getReviewsAlojamientoController = async (idReserva) => {
+  try {
+     
+      const reserva = await Reservation.findByPk(idReserva, {
+          include: {
+              model: RatingHousing,
+           
+              through: {}
+          }
+      });
 
-    } catch (error) {
-        throw Error(error.message);
-    }
+      if (!reserva) {
+          throw new Error("La reserva no existe");
+      }
+
+
+      return reserva.RatingHousings.map(rating => {
+          return {
+              comentario: rating.comentario,
+              valoracion: rating.valoracion
+          };
+      });
+  } catch (error) {
+      throw new Error(error.message);
+  }
 };
 
-const getReviewsAlojamientoController = async (identificacion) => {
-    try {
-        const userHousing = await Housing.findAll({
-           where: {
-            UserId: identificacion
-           }
-        });
 
-        if (!userHousing) return false;
-
-
-        const vistaAlojamiento = Promise.all(userHousing.map(async (housing) => {
-            return await RatingHousing.findAll({
-                include: [{
-                    model: Housing,
-                    where: {
-                       id: housing.id 
-                    }
-                },
-                {
-                    model: User,
-                    attributes: ['email', 'name', 'id']
-                }
-                ]
-            })
-        })) 
-
-
-        return vistaAlojamiento
-
-
-    } catch (error) {
-        throw Error(error.message);
-    }
-}
-
-
-
-
-
-
-module.exports = { postReviewController, getAllReviewsController, getReviewsAlojamientoController };
+module.exports = { postReviewController, getReviewsAlojamientoController };
