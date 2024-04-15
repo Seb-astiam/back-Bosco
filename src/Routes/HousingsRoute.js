@@ -7,7 +7,6 @@ const updateHousing = require("../Controllers/HousingControllerV2/UpdateHosings"
 const getHousingFiltered = require("../Controllers/HousingControllerV2/GetHousingFilteredController");
 const Delhosuing = require("../Controllers/HousingControllerV2/Delhousings");
 const OcupancyReport = require("../Controllers/Report/OcupancyReport");
-const verifyToken = require("../Midleware/verifyToken");
 
 router.post("/register", upload.array("images", 3), addHousings);
 router.get("/allHousingslocation", getHousings);

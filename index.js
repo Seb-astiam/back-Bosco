@@ -12,7 +12,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   connectionStateRecovery: {},
   cors: {
-    origin: "http://localhost:5173",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
@@ -36,7 +36,7 @@ io.on("connection", (socket) => {
 
     transporter.sendMail(mailOptions, function (err, data) {
       if (err) {
-        throw Error(err.message);
+        throw Error(err.message); 
       }
     });
 
@@ -44,7 +44,7 @@ io.on("connection", (socket) => {
   });
 });
 
-conn.sync({ force: false }).then(() => {
+conn.sync({ alter:true }).then(() => {
   server.listen(port, () => {
     console.log(
       `Servidor Express y Socket.IO en funcionamiento en el puerto ${port}`
