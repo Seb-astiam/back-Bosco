@@ -71,7 +71,7 @@ const { Housing, UserMascota, User, Service, Role, Company, Profile ,Reservation
   Reservation.belongsTo(UserMascota);
 
   User.hasMany(UserMascota);
-  UserMascota.belongsTo(User);  
+  UserMascota.belongsTo(User);
 
 module.exports = {
   conn: sequelize,

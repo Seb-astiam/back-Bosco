@@ -72,7 +72,8 @@ const getAllUserMascotasHandler = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ error: "Error al obtener UserMascota: " + error.message });
+      .json({ error: "Error al obtener UserMascota: ",
+      error: error.message });
   }
 };
 const getUserMascotasHandler = async (req, res) => {
