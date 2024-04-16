@@ -1,8 +1,8 @@
 const {
   createNewProfile,
-  getProfileByUserId,
   deleteProfile,
   updateProfile,
+  getProfileByemail,
 } = require("../../Controllers/profileController/profileController");
 
 const postUserProfile = async (req, res) => {
@@ -21,9 +21,9 @@ const postUserProfile = async (req, res) => {
 };
 
 const getUserProfile = async (req, res) => {
-  const { userId } = req.params;
+  const { email } = req.params;
   try {
-    const profile = await getProfileByUserId(userId);
+    const profile = await getProfileByemail(email);
     if (!profile) return res.status(404).send("Perfil no encontrado");
     return res.json(profile);
   } catch (error) {

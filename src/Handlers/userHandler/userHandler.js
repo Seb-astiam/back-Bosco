@@ -5,12 +5,12 @@ const {
   updateUser,
   getUserByEmail,
   blockAccountController,
-  updatePictureController
+  updatePictureController,
+  getUserByIdController
 } = require("../../Controllers/userController/userController");
 const cloudinary = require('../../Config/cloudinary');
 const path = require('path');
 const fs = require('fs-extra');
-const { User } = require("../../DB_conection");
 
 const postUser = async (req, res) => {
   const { name, email, password, roleIds } = req.body;
@@ -53,18 +53,6 @@ const getUserEmail = async (req, res) => {
     res.status(500).send("Error buscando usuario: " + error.message);
   }
 };
-
-// const getUserId = async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const user = await getUserById(id);
-//     if (!user) return res.status(404).send("Usuario no encontrado");
-//     return res.json(user);
-//   } catch (error) {
-//     res.status(500).send("Error buscando usuario: " + error.message);
-//   }
-// };
-
 const delUser = async (req, res) => {
   const { email } = req.params;
   try {
@@ -171,7 +159,6 @@ module.exports = {
   delUser,
   updateUserProfile,
   blockAccountHandler,
-  getUserByIdHandler
-  blockAccountHandler,
+  getUserByIdHandler,
   updatePictureProfile
 };

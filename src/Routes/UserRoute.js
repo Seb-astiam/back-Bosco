@@ -6,8 +6,10 @@ const {
   updateUserProfile,
   getUserEmail,
   blockAccountHandler,
-  getUserByIdHandler
+  getUserByIdHandler,
+  updatePictureProfile
 } = require("../Handlers/userHandler/userHandler");
+const upload = require("../Midleware/Upload");
 
 
 const routerUser = Router();

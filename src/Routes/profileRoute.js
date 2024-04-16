@@ -9,7 +9,7 @@ const {
 const routerProfile = Router();
 
 routerProfile.post("/", postUserProfile);
-routerProfile.get("/:userId", getUserProfile);
+routerProfile.get("/:email", getUserProfile);
 routerProfile.delete("/:userId", delUserProfile);
 routerProfile.put("/", updateUserProfile);
 

@@ -25,9 +25,13 @@ const createNewProfile = async (user) => {
   }
 };
 
-const getProfileByUserId = async (userId) => {
+const getProfileByemail = async (email) => {
   try {
-    const user = await User.findByPk(userId);
+    const user = await User.findOne({
+      where:{
+        email:email
+      }
+    });
     if (!user) throw Error("Id invalido");
     const profile = await user.getProfile();
     return profile;
@@ -85,7 +89,7 @@ const updateProfile = async (profile) => {
 
 module.exports = {
   createNewProfile,
-  getProfileByUserId,
+  getProfileByemail,
   deleteProfile,
   updateProfile,
 };

@@ -1,6 +1,5 @@
 require("dotenv").config();
-const { conn, User } = require("./src/DB_conection");
-const usuario = require("./src/Models/usuario");
+const { conn } = require("./src/DB_conection");
 const { app } = require("./src/app");
 const http = require("http");
 const { Server } = require("socket.io");
