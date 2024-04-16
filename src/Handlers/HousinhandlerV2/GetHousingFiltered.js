@@ -1,37 +1,35 @@
 const { Housing, Service, User } = require("../../DB_conection");
 const { Op } = require("sequelize");
 
-const includeAll=(serviceId)=>{
-  if(serviceId){
-    return include = [
-    {
-      model: Service,
-      where: { id: serviceId },
-      attributes: ["id", "type"], // Incluye solo los atributos que necesitas
-      through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
-    },
-    {
-      model: User,
-      attributes: ["email"], // Incluye el correo electrónico del usuario
-    },
-  ]}
-  else {
-    return include = [
+const includeAll = (serviceId) => {
+  if (serviceId) {
+    const arrService = serviceId.split(",").map((id) => Number(id));
+    return (include = [
       {
         model: Service,
-        attributes: ["id", "type"], // Incluye solo los atributos que necesitas
-        through: { attributes: [] }, // No incluye los atributos de la tabla intermedia
+        where: { id: arrService },
+        attributes: ["id", "type"],
+        through: { attributes: [] },
       },
       {
         model: User,
-        attributes: ["email"], // Incluye el correo electrónico del usuario
+        attributes: ["email"],
       },
-    ]
-
+    ]);
+  } else {
+    return (include = [
+      {
+        model: Service,
+        attributes: ["id", "type"],
+        through: { attributes: [] },
+      },
+      {
+        model: User,
+        attributes: ["email"],
+      },
+    ]);
   }
-  
-}
-
+};
 
 const getHousingFilteredHandler = async (
   provinces,
@@ -40,12 +38,16 @@ const getHousingFilteredHandler = async (
   square,
   minPrice,
   maxPrice,
+  hourly,
+  startHour,
+  endHour,
   startDate,
   endDate,
   orderBy,
   orderDirection
 ) => {
   let order = [];
+
   if (orderBy && orderDirection) order = [[orderBy, orderDirection]];
 
   let where = { availability: true };
@@ -63,19 +65,40 @@ const getHousingFilteredHandler = async (
   if (maxPrice && minPrice)
     where = { ...where, price: { [Op.between]: [minPrice, maxPrice] } };
 
-  if (startDate && endDate)
-    where = {
-      ...where,
-      datesAvailable: { [Op.lte]: startDate },
-      datesEnd: { [Op.gte]: endDate },
-    };
+  if (hourly === "true") {
+    if (startHour && endHour) {
+      where = {
+        ...where,
+        hourly: true,
+        hourAvailable: { [Op.lte]: startHour },
+        hourEnd: { [Op.gte]: endHour },
+      };
+    } else {
+      where = {
+        ...where,
+        hourly: true,
+      };
+    }
+  } else if (hourly === "false") {
+    if (startDate && endDate)
+      where = {
+        ...where,
+        datesAvailable: { [Op.lte]: startDate },
+        datesEnd: { [Op.gte]: endDate },
+      };
 
-  if (startDate && !endDate)
+    if (startDate && !endDate)
+      where = {
+        ...where,
+        datesAvailable: { [Op.lte]: startDate },
+        datesEnd: { [Op.gte]: startDate },
+      };
+
     where = {
       ...where,
-      datesAvailable: { [Op.lte]: startDate },
-      datesEnd: { [Op.gte]: startDate },
+      hourly: false,
     };
+  }
 
   try {
     let include = includeAll(serviceId);

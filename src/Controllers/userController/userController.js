@@ -6,7 +6,8 @@ require("dotenv").config();
 const createActivationBody = require("../../Utils/createActivationBody");
 const transporter = require("../../Utils/createTransport");
 
-const createNewuser = async (user) => {
+
+const createNewuser = async (user, roleIds) => {
   const { name, email, password, picture } = user;
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -25,19 +26,13 @@ const createNewuser = async (user) => {
     });
 
     if (created) {
-      await newUser.addRoles(1);
-      var user = await User.findOne({
-        where: { email },
-        attributes: ["name", "email", "picture"],
-        include: {
-          model: Role,
-          attributes: ["id", "name"],
-          through: {
-            attributes: [],
-          },
-        },
-
-      });
+      if(roleIds){
+        const roles = await Role.findAll({ where: { id: roleIds } });
+        await newUser.addRoles(roles);
+      } else {
+        const [roles, creado] = await Role.findOrCreate({ where: { name: ("usuario") } });
+        await newUser.addRoles(roles);
+      }
       //esto
       const token = jwt.sign({ email }, process.env.PRIVATE_KEY);
       const body = createActivationBody(token, name);
@@ -64,7 +59,7 @@ const createNewuser = async (user) => {
 const getAllUsers = async () => {
   try {
     const users = await User.findAll({
-      attributes: ["name", "email", "picture", "status"],
+      attributes: ["id","name", "email", "picture", "status"],
       include: {
         model: Role,
         attributes: ["id", "name"],
@@ -97,23 +92,23 @@ const getUserByEmail = async (email) => {
     throw Error(error.message);
   }
 };
-// const getUserById = async (id) => {
-//   try {
-//     const user = await User.findByPk(id);
-//     return user;
-//   } catch (error) {
-//     throw Error(error.message);
-//   }
-// };
 
-// const getUserById = async (id) => {
-//   try {
-//     const user = await User.findByPk(id);
-//     return user;
-//   } catch (error) {
-//     throw Error(error.message);
-//   }
-// };
+const getUserByIdController= async (id) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        id
+      },
+      attributes: ['name', 'email']
+    });
+
+    return user;
+  } catch (error) {
+    throw Error(error.message);
+  }
+};
+
+
 
 const deleteUser = async (email) => {
   try {
@@ -150,17 +145,23 @@ const blockAccountController = async (block, email) => {
   try {
     const blockUser = await User.findOne({ where: { email } });
 
-    if (blockUser.status) {
-      await blockUser.update({ status: block });
-      return "Usuario bloqueado con éxito.";
-    } else if (!blockUser.status) {
-      await blockUser.update({ status: true });
+    if (!blockUser) {
+      return "No se encontró un usuario con ese email.";
+    }
+
+  
+    await blockUser.update({ status: block });
+
+   
+    if (block) {
       return "Usuario desbloqueado con éxito.";
     } else {
-      return "No se encontró un usuario con ese email.";
+     
+      return "Usuario bloqueado con éxito.";
     }
   } catch (error) {
     console.error("Error al bloquear usuario:", error);
+    throw new Error("Error al bloquear usuario.");
   }
 };
 const updatePictureController = async (userData, email) => {
@@ -187,6 +188,7 @@ const updatePictureController = async (userData, email) => {
 };
 
 
+
 module.exports = {
   createNewuser,
   getAllUsers,
@@ -194,5 +196,5 @@ module.exports = {
   deleteUser,
   updateUser,
   blockAccountController,
-  updatePictureController
+  getUserByIdController
 };

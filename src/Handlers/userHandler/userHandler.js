@@ -13,28 +13,21 @@ const fs = require('fs-extra');
 const { User } = require("../../DB_conection");
 
 const postUser = async (req, res) => {
-  const { name, email, password, picture } = req.body;
-
+  const { name, email, password, roleIds } = req.body;
   try {
-    if (!name || !email || !password)
+    if (!name || !email || !password )
       return res.status(400).send("Falta información de registro");
-    const createUser = { name, email, password, picture };
+    const createUser = { name, email, password };
 
-    const [newUser, created] = await createNewuser(createUser);
+    const [newUser, created] = await createNewuser(createUser, roleIds);
 
     if (created) {
-      const response = {
-        name: newUser.name,
-        email: newUser.email,
-        picture: newUser.picture,
-        roles: newUser.Roles,
-      };
-      return res.status(201).json(response);
+      return res.status(201).send("Ahora active su cuenta");
     } else {
       return res.status(400).send("Ya existe un usuario con el mail ingresado");
     }
   } catch (error) {
-    res.status(500).send("Error creando usuario: " + error.message);
+    res.status(500).send(error.message);
   }
 };
 
@@ -90,7 +83,7 @@ const updateUserProfile = async (req, res) => {
     name,
     email,
     password,
-    picture,
+   // picture,
   };
   try {
     if (!email) return res.status(400).send("El email es requerido");
@@ -159,12 +152,26 @@ const updatePictureProfile = async (req, res) => {
     res.status(500).json({ error: `Error al crear el alojamiento: ${error.message}` });
   }
 };
+const getUserByIdHandler = async (req, res) => {
+  const { id } = req.params
+
+  if(!id) return "Falta el id del usuario para hacer la busqueda"
+  try {
+      const user = await getUserByIdController(id);
+      return res.status(200).json(user);
+  } catch (error) {
+      return res.status(500).json({error: error.message})
+  }
+}
+
 module.exports = {
   postUser,
   getUsers,
   getUserEmail,
   delUser,
   updateUserProfile,
+  blockAccountHandler,
+  getUserByIdHandler
   blockAccountHandler,
   updatePictureProfile
 };

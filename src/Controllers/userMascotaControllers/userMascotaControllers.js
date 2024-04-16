@@ -63,10 +63,22 @@ const updateUserMascotaController = async (id, newData) => {
   }
 };
 
-module.exports = {
-  createUserMascotaController,
-  getAllUserMascotasController,
-  deleteUserMascotaController,
-  updateUserMascotaController,
-  getUserMascotasController
-};
+
+const getMascotaByIdController = async (idMascota) => {
+    try {
+      const mascota = await UserMascota.findByPk(idMascota);
+      return mascota
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+  module.exports = {
+   createUserMascotaController,
+   getAllUserMascotasController,
+   deleteUserMascotaController,
+   updateUserMascotaController,
+   getMascotaByIdController,
+   getUserMascotasController
+  };
+  

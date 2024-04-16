@@ -4,6 +4,8 @@ const {
   deleteUserMascotaController,
   updateUserMascotaController,
   getUserMascotasController,
+  getMascotaByIdController
+
 } = require("../../Controllers/userMascotaControllers/userMascotaControllers");
 const cloudinary = require('../../Config/cloudinary');
 const path = require('path');
@@ -22,9 +24,8 @@ const createUserMascotaHandler = async (req, res) => {
     size,
     UserId
   } = req.body;
-  const images=req.files
 
-  console.log(req.body)
+  const images = req.files
 
   try {
     if (
@@ -32,7 +33,6 @@ const createUserMascotaHandler = async (req, res) => {
     ) {
       
       const imagePaths = images.map(image => path.join(__dirname, '../../public/img/upload', image.filename));
-      // Subir las imágenes a Cloudinary
       const uploadedImageUrls = await uploadImage(imagePaths);
   
 
@@ -55,7 +55,10 @@ const createUserMascotaHandler = async (req, res) => {
       res.status(400).send("no estan todas las propiedades");
     }
   } catch (error) {
-    res.status(417).send("Error creating product " + error.message);
+    res.status(417).json({
+      error: error.message,
+      msg: "Error creating product "
+    });
   }
 };
 
@@ -69,7 +72,8 @@ const getAllUserMascotasHandler = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ error: "Error al obtener UserMascota: " + error.message });
+      .json({ error: "Error al obtener UserMascota: ",
+      error: error.message });
   }
 };
 const getUserMascotasHandler = async (req, res) => {
@@ -147,10 +151,23 @@ const uploadImage = async (imagePaths) => {
   return uploadedImageUrls;
 };
 
+const getMascotaByIdHandler = async (req, res) => {
+  const { idMascota } = req.params
+
+  if(!idMascota) return "No se proporciono el id para realizar la busqueda"
+  try {
+    const mascota = await getMascotaByIdController(idMascota);
+   return res.status(200).json(mascota);
+  } catch (error) {
+      return res.status(500).json({error: error.message})
+  }
+}
+
 module.exports = {
   createUserMascotaHandler,
   getAllUserMascotasHandler,
   deleteUserMascotaHandler,
   updateUserMascotaHandler,
-  getUserMascotasHandler
+  getUserMascotasHandler,
+  getMascotaByIdHandler
 };

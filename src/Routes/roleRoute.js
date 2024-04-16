@@ -1,5 +1,6 @@
 const { Router } = require("express");
-const { postRole, getAllRoles, getAllRolesHandler, postRoleHandler, updateRoleHandler, deleteRoleHandler } = require("../Handlers/roleHandler/roleHandler");
+const { postRole, getAllRoles, getAllRolesHandler, postRoleHandler,
+     updateRoleHandler, deleteRoleHandler } = require("../Handlers/roleHandler/roleHandler");
 
 routerRole = Router();
 
