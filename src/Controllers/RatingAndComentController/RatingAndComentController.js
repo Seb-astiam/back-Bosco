@@ -56,7 +56,7 @@ const getReviewsAlojamientoController = async (idReserva) => {
           throw new Error("La reserva no existe");
       }
 
-
+        console.log(reserva, "soy reserva")
       return reserva.RatingHousings.map(rating => {
           return {
               comentario: rating.comentario,

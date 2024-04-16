@@ -48,7 +48,7 @@ const getAllReservationController = async (email) => {
         },
         {
           model: Housing,
-          attributes: ["title", "price", "provinces", "UserId"],
+          attributes: ["title", "price", "provinces", "UserId", "id"],
           through: {
             attributes: [],
           },

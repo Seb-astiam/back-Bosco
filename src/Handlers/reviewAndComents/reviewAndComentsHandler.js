@@ -3,6 +3,7 @@ const { postReviewController, getReviewsAlojamientoController} = require("../../
 
 const postReviewHandler = async (req, res) => {
   const { id_alojamiento, fecha, comentario, valoracion} = req.body;
+  console.log(req.body);
 
   try {
     if ( !id_alojamiento || !fecha || !comentario ||!valoracion){
@@ -22,8 +23,13 @@ const postReviewHandler = async (req, res) => {
 
 const getReviewsAlojamientoHandler = async (req, res) => {
 
+  const {id} = req.params;
+
+
+  console.log(id);
+
   try {
-    const allReviews = await getReviewsAlojamientoController(req.params.idReserva);
+    const allReviews = await getReviewsAlojamientoController(id);
   
 
     if (!allReviews || allReviews.length === 0) {
