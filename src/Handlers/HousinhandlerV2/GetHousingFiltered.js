@@ -32,6 +32,7 @@ const includeAll = (serviceId) => {
 };
 
 const getHousingFilteredHandler = async (
+  title,
   provinces,
   cities,
   serviceId,
@@ -52,6 +53,14 @@ const getHousingFilteredHandler = async (
 
   let where = { availability: true };
 
+  if (title)
+    where = {
+      ...where,
+      title: {
+        [Op.iLike]: "%" + title + "%",
+      },
+    };
+
   if (provinces) where = { ...where, provinces };
 
   if (cities) where = { ...where, cities };
@@ -64,7 +73,7 @@ const getHousingFilteredHandler = async (
     where = { ...where, price: { [Op.gte]: minPrice } };
   if (maxPrice && minPrice)
     where = { ...where, price: { [Op.between]: [minPrice, maxPrice] } };
-
+  console.log(typeof hourly, hourly);
   if (hourly === "true") {
     if (startHour && endHour) {
       where = {
