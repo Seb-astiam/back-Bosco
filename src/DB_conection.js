@@ -14,7 +14,6 @@ const NotificationModel = require("./Models/Notification");
 const HousingTypeModel = require("./Models/HousingType");
 
 
-
 //  const sequelize = new Sequelize(
 //    `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
 //   { logging: false, native: false }
@@ -64,6 +63,7 @@ UserMascota.belongsTo(User);
 
 Housing.belongsToMany(Service, { through: "ServicexHousing" });
 Service.belongsToMany(Housing, { through: "ServicexHousing" });
+
 
 Reservation.belongsToMany(RatingHousing, { through: 'RatingHousingxReservation' });
 RatingHousing.belongsToMany(Reservation, { through: 'RatingHousingxReservation' });
