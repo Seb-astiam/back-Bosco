@@ -6,7 +6,8 @@ require("dotenv").config();
 const createActivationBody = require("../../Utils/createActivationBody");
 const transporter = require("../../Utils/createTransport");
 
-const createNewuser = async (user) => {
+
+const createNewuser = async (user, roleIds) => {
   const { name, email, password, picture } = user;
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -25,19 +26,13 @@ const createNewuser = async (user) => {
     });
 
     if (created) {
-      await newUser.addRoles(1);
-      var user = await User.findOne({
-        where: { email },
-        attributes: ["name", "email", "picture"],
-        include: {
-          model: Role,
-          attributes: ["id", "name"],
-          through: {
-            attributes: [],
-          }, 
-        },
-        
-      });
+      if(roleIds){
+        const roles = await Role.findAll({ where: { id: roleIds } });
+        await newUser.addRoles(roles);
+      } else {
+        const [roles, creado] = await Role.findOrCreate({ where: { name: ("usuario") } });
+        await newUser.addRoles(roles);
+      }
       //esto
       const token = jwt.sign({ email }, process.env.PRIVATE_KEY);
       const body = createActivationBody(token, name);

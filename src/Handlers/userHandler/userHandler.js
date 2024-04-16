@@ -9,28 +9,21 @@ const {
 } = require("../../Controllers/userController/userController");
 
 const postUser = async (req, res) => {
-  const { name, email, password, picture } = req.body;
-
+  const { name, email, password, roleIds } = req.body;
   try {
-    if (!name || !email || !password)
+    if (!name || !email || !password )
       return res.status(400).send("Falta información de registro");
-    const createUser = { name, email, password, picture };
+    const createUser = { name, email, password };
 
-    const [newUser, created] = await createNewuser(createUser);
+    const [newUser, created] = await createNewuser(createUser, roleIds);
 
     if (created) {
-      const response = {
-        name: newUser.name,
-        email: newUser.email,
-        picture: newUser.picture,
-        roles: newUser.Roles,
-      };
       return res.status(201).send("Ahora active su cuenta");
     } else {
       return res.status(400).send("Ya existe un usuario con el mail ingresado");
     }
   } catch (error) {
-    res.status(500).send("Error creando usuario: " + error.message);
+    res.status(500).send(error.message);
   }
 };
 

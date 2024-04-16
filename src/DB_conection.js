@@ -12,13 +12,16 @@ const RatingHousingModel = require("./Models/RatingHousing");
 const RatingPetModel = require("./Models/RatingPet");
 const NotificationModel = require("./Models/Notification");
 const HousingTypeModel = require("./Models/HousingType");
-const sequelize = new Sequelize(
-  `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-  { logging: false, native: false }
+
+
+//  const sequelize = new Sequelize(
+//    `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
+//   { logging: false, native: false }
+// );
+
+const sequelize = new Sequelize( DB_PORT, { logging: false, native: false }
 );
 
-//const sequelize = new Sequelize( DB_PORT, { logging: false, native: false }
-//);
 HousingTypeModel(sequelize);
 HousingModel(sequelize);
 MascotaModel(sequelize);
@@ -51,44 +54,36 @@ HousingType.belongsToMany(Housing, { through: "HosuingTypexHousing" });
 
 User.hasMany(Housing);
 Housing.belongsTo(User);
-User.hasMany(Notification);
+
+User.belongsToMany(Role, { through: "userRol" });
+Role.belongsToMany(User, { through: "userRol" });
+
 User.hasMany(UserMascota);
 UserMascota.belongsTo(User);
 
 Housing.belongsToMany(Service, { through: "ServicexHousing" });
 Service.belongsToMany(Housing, { through: "ServicexHousing" });
 
-Reservation.belongsToMany(RatingHousing, {
-  through: "RatingHousingxReservation",
-});
-RatingHousing.belongsToMany(Reservation, {
-  through: "RatingHousingxReservation",
-});
 
-Reservation.belongsToMany(RatingPet, { through: "ReservationxRatingPet" });
-RatingPet.belongsToMany(Reservation, { through: "ReservationxRatingPet" });
-User.belongsToMany(Notification, { through: "UserNotificaction" });
-Notification.belongsToMany(User, { through: "UserNotificaction" });
+Reservation.belongsToMany(RatingHousing, { through: 'RatingHousingxReservation' });
+RatingHousing.belongsToMany(Reservation, { through: 'RatingHousingxReservation' });
+
+Reservation.belongsToMany(RatingPet, { through: 'ReservationxRatingPet' });
+RatingPet.belongsToMany(Reservation, { through: 'ReservationxRatingPet' });
+
+User.belongsToMany(Notification,{through: 'UserNotificaction'});
+Notification.belongsToMany(User,{through: 'UserNotificaction'});
 
 User.hasOne(Profile);
 Profile.belongsTo(User);
 
-User.belongsToMany(Role, { through: "UserRole" });
-Role.belongsToMany(User, { through: "UserRole" });
+Reservation.belongsToMany(User, { through: 'ReservaUsuario' });
+User.belongsToMany(Reservation, { through: 'ReservaUsuario' });
 
-// Reservation User
+Reservation.belongsToMany(Housing, { through: 'ReservaHousing' });
+Housing.belongsToMany(Reservation, { through: 'ReservaHousing' });
 
-Reservation.belongsToMany(User, { through: "ReservaUsuario" });
-User.belongsToMany(Reservation, { through: "ReservaUsuario" });
-
-// Reservation Housing
-
-Reservation.belongsToMany(Housing, { through: "ReservaHousing" });
-Housing.belongsToMany(Reservation, { through: "ReservaHousing" });
-
-// // Reservation Mascota
-
-  UserMascota.hasMany(Reservation);
+UserMascota.hasMany(Reservation);
 Reservation.belongsTo(UserMascota);
 
 module.exports = {
