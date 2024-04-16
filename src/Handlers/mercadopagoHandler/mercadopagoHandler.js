@@ -13,13 +13,12 @@ const {  title, unit_price ,quantity } = req.body
                 title: title,
                 quantity: Number(quantity),
                 unit_price: Number(unit_price),
-               
                 currency_id: "ARS",
             }],
             back_urls: {
-                success: "http://localhost:5173/historial-reservas",
-                failure: "http://localhost:5173/historial-reservas",
-                pending: "http://localhost:5173/historial-reservas",
+                success: "https://front-bosco.up.railway.app/success",
+                failure: "https://front-bosco.up.railway.app/failure",
+                pending: "https://front-bosco.up.railway.app/pending",
             },
             auto_return: "approved"
         };
