@@ -27,7 +27,6 @@ const getUserProfile = async (req, res) => {
     if (!profile) return res.status(404).send("Perfil no encontrado");
     return res.json(profile);
   } catch (error) {
-    res.status(500).send("Error buscando perfil: " + error.message);
   }
 };
 
