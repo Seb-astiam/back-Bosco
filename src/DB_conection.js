@@ -52,38 +52,39 @@ const {
 Housing.belongsToMany(HousingType, { through: "HosuingTypexHousing" });
 HousingType.belongsToMany(Housing, { through: "HosuingTypexHousing" });
 
-  User.hasMany(Housing);
-  Housing.belongsTo(User);
+User.hasMany(Housing);
+Housing.belongsTo(User);
 
-  User.belongsToMany(Role ,{ through: 'userRol' });
-  Role.belongsToMany(User ,{ through: 'userRol' });
+User.belongsToMany(Role, { through: "userRol" });
+Role.belongsToMany(User, { through: "userRol" });
 
-  Housing.belongsToMany(Service, { through: "ServicexHousing" });
-  Service.belongsToMany(Housing, { through: "ServicexHousing" });
+User.hasMany(UserMascota);
+UserMascota.belongsTo(User);
 
-  Reservation.belongsToMany(RatingHousing, { through: 'RatingHousingxReservation' });
-  RatingHousing.belongsToMany(Reservation, { through: 'RatingHousingxReservation' });
+Housing.belongsToMany(Service, { through: "ServicexHousing" });
+Service.belongsToMany(Housing, { through: "ServicexHousing" });
 
-  Reservation.belongsToMany(RatingPet, { through: 'ReservationxRatingPet' });
-  RatingPet.belongsToMany(Reservation, { through: 'ReservationxRatingPet' });
 
-  User.belongsToMany(Notification,{through: 'UserNotificaction'});
-  Notification.belongsToMany(User,{through: 'UserNotificaction'});
+Reservation.belongsToMany(RatingHousing, { through: 'RatingHousingxReservation' });
+RatingHousing.belongsToMany(Reservation, { through: 'RatingHousingxReservation' });
 
-  User.hasOne(Profile);
-  Profile.belongsTo(User);
+Reservation.belongsToMany(RatingPet, { through: 'ReservationxRatingPet' });
+RatingPet.belongsToMany(Reservation, { through: 'ReservationxRatingPet' });
 
-Reservation.belongsToMany(User, { through: "ReservaUsuario" });
-User.belongsToMany(Reservation, { through: "ReservaUsuario" });
+User.belongsToMany(Notification,{through: 'UserNotificaction'});
+Notification.belongsToMany(User,{through: 'UserNotificaction'});
 
-  Reservation.belongsToMany(Housing, { through: 'ReservaHousing' });
-  Housing.belongsToMany(Reservation, { through: 'ReservaHousing' });
+User.hasOne(Profile);
+Profile.belongsTo(User);
+
+Reservation.belongsToMany(User, { through: 'ReservaUsuario' });
+User.belongsToMany(Reservation, { through: 'ReservaUsuario' });
+
+Reservation.belongsToMany(Housing, { through: 'ReservaHousing' });
+Housing.belongsToMany(Reservation, { through: 'ReservaHousing' });
 
 UserMascota.hasMany(Reservation);
 Reservation.belongsTo(UserMascota);
-
-  User.hasMany(UserMascota);
-  UserMascota.belongsTo(User);
 
 
 module.exports = {
