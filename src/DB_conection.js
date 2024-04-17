@@ -13,14 +13,14 @@ const RatingPetModel = require("./Models/RatingPet");
 const NotificationModel = require("./Models/Notification");
 const HousingTypeModel = require("./Models/HousingType");
 
- const sequelize = new Sequelize(
-   `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-  { logging: false, native: false }
-);
-
-
-// const sequelize = new Sequelize( DB_PORT, { logging: false, native: false }
+//  const sequelize = new Sequelize(
+//    `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
+//   { logging: false, native: false }
 // );
+
+
+const sequelize = new Sequelize( DB_PORT, { logging: false, native: false }
+);
 
 HousingTypeModel(sequelize);
 HousingModel(sequelize);
