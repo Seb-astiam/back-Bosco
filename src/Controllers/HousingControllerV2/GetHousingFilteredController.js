@@ -2,6 +2,7 @@ const getHousingFilteredHandler = require("../../Handlers/HousinhandlerV2/GetHou
 
 const getHousingFiltered = async (req, res) => {
   const {
+    title,
     provinces,
     cities,
     serviceId,
@@ -19,6 +20,7 @@ const getHousingFiltered = async (req, res) => {
 
   try {
     const housingFiltered = await getHousingFilteredHandler(
+      title,
       provinces,
       cities,
       serviceId,
