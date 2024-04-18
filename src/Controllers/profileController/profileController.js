@@ -27,13 +27,12 @@ const createNewProfile = async (user) => {
 
 const getProfileByemail = async (email) => {
   try {
-    console.log(email);
     const user = await User.findOne({
       where:{
-        email:email
+        email
       }
     });
-    if (!user) throw Error("emai0 invalido");
+    if (!user) throw Error("email invalido");
     const profile = await user.getProfile();
     return profile;
   } catch (error) {
