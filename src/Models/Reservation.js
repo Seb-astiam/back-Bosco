@@ -37,5 +37,10 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: "Pending",
     },
+    estadoDePago: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    }
   });
 };

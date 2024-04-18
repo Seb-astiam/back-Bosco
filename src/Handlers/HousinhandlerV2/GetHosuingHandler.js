@@ -1,4 +1,4 @@
-const { Housing, Service, User } = require('../../DB_conection');
+const { Housing, RatingHousing, Service, User } = require('../../DB_conection');
 
 
 const getHousingWithServicesHandler = async (province) => {
@@ -22,12 +22,18 @@ const getHousingWithServicesHandler = async (province) => {
           ...queryOptions,
           where: {
             province: province,
-           
           },
+          include: [{
+            model: RatingHousing,
+            attributes: ["comentario", "valoracion"], // Incluye solo los atributos que necesitas
+          through: { attributes: [] },
+          }]
+          ,
         };
       }
   
       const housingWithServices = await Housing.findAll(queryOptions);
+      console.log(housingWithServices.dataValues);
   
       // Construir las URL completas para las imágenes y agregarlas a la respuesta
       

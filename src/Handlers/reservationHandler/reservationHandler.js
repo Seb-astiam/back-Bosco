@@ -3,6 +3,7 @@ const {
   getAllReservationController,
   getReservationsAlojamientoController,
   updateReservationController,
+  updateEstadoPagoController
 } = require("../../Controllers/reservationController/reservationController");
 
 const postReservationHandler = async (req, res) => {
@@ -96,9 +97,22 @@ const updateReservationHandler = async (req, res) => {
   }
 };
 
+const updateEstadoPagoHandler = async(req, res) => {
+  const { id_reserva } = req.body;
+
+  try {
+    let estadoParaBotonDePago = true
+    const estadoReserva = await updateEstadoPagoController(estadoParaBotonDePago, id_reserva);
+    return res.status(200).json(estadoReserva);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
   postReservationHandler,
   getAllReservationHandler,
   getReservationsAlojamientoHandler,
   updateReservationHandler,
+  updateEstadoPagoHandler
 };

@@ -3,6 +3,7 @@ const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
 
 const AddHousingsHandler = async (housingData, email, services) => {
+  console.log(housingData);
   const newIdservice = services.split(",").map(Number); // esto me llevo tiempo y era una pendejera
 
   try {
