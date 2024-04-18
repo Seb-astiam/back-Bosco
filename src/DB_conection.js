@@ -49,8 +49,9 @@ const {
   HousingType,
 } = sequelize.models;
 
-Housing.belongsToMany(HousingType, { through: "HosuingTypexHousing" });
-HousingType.belongsToMany(Housing, { through: "HosuingTypexHousing" });
+
+  Housing.belongsToMany(HousingType, { through: "HosuingTypexHousing" });
+  HousingType.belongsToMany(Housing, { through: "HosuingTypexHousing" });
 
   User.hasMany(Housing);
   Housing.belongsTo(User);
@@ -73,18 +74,17 @@ HousingType.belongsToMany(Housing, { through: "HosuingTypexHousing" });
   User.hasOne(Profile);
   Profile.belongsTo(User);
 
-Reservation.belongsToMany(User, { through: "ReservaUsuario" });
-User.belongsToMany(Reservation, { through: "ReservaUsuario" });
+  Reservation.belongsToMany(User, { through: "ReservaUsuario" });
+  User.belongsToMany(Reservation, { through: "ReservaUsuario" });
 
   Reservation.belongsToMany(Housing, { through: 'ReservaHousing' });
   Housing.belongsToMany(Reservation, { through: 'ReservaHousing' });
 
-UserMascota.hasMany(Reservation);
-Reservation.belongsTo(UserMascota);
+  UserMascota.hasMany(Reservation);
+  Reservation.belongsTo(UserMascota);
 
   User.hasMany(UserMascota);
   UserMascota.belongsTo(User);
-
 
 module.exports = {
   conn: sequelize,

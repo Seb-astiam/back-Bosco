@@ -2,6 +2,7 @@ const { Router } = require("express");
 const {  getAllReservationHandler, postReservationHandler, updateReservationHandler, getReservationsAlojamientoHandler, updateEstadoPagoHandler } = require("../Handlers/reservationHandler/reservationHandler");
 const reservationFilter = require("../Handlers/reservationHandler/reservationFilter");
 
+
 routerReservation = Router();
 
 routerReservation.get("/allReservation/:id", getAllReservationHandler);
