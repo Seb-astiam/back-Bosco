@@ -15,7 +15,6 @@ const path = require("path");
 
 
 const { routerLogin } = require("./loginRoute");
-const { routerReservation } = require("./routeReservation");
 
 
 
@@ -51,6 +50,6 @@ router.use("/auth", routerLogin);
 router.use("/reservation", routerReservation);
 router.use("/review", routerReview);
 router.use("/reviewPet", routerReviewPet);
-
 router.use("/pagos", routerMercadoPago);
+
 module.exports = router;
