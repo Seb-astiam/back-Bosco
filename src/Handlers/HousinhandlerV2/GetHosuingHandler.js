@@ -33,7 +33,6 @@ const getHousingWithServicesHandler = async (province) => {
       }
   
       const housingWithServices = await Housing.findAll(queryOptions);
-      console.log(housingWithServices.dataValues);
   
       // Construir las URL completas para las imágenes y agregarlas a la respuesta
       
