@@ -12,7 +12,7 @@ const verifyToken = require("../Midleware/verifyToken");
 
 routerMascota = Router();
 
-routerMascota.get("/allMascotas/:UserId", getAllUserMascotasHandler);
+routerMascota.get("/allMascotas/:email", getAllUserMascotasHandler);
 
 routerMascota.post(
   "/newMascota",

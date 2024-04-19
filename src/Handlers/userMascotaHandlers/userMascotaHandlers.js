@@ -63,11 +63,11 @@ const createUserMascotaHandler = async (req, res) => {
 };
 
 const getAllUserMascotasHandler = async (req, res) => {
-  const { UserId } = req.params
+  const { email } = req.params
     
   try {
-    if(!UserId) return 'Este usuario no tiene mascotas'
-    const userMascotas = await getAllUserMascotasController(UserId);
+    if(!email) return 'Este usuario no tiene mascotas'
+    const userMascotas = await getAllUserMascotasController(email);
     res.status(200).json(userMascotas);
   } catch (error) {
     res

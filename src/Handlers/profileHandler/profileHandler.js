@@ -42,7 +42,7 @@ const delUserProfile = async (req, res) => {
 
 const updateUserProfile = async (req, res) => {
   const {
-    userId,
+    userEmail,
     password,
     province,
     city,
@@ -51,10 +51,13 @@ const updateUserProfile = async (req, res) => {
     balance,
     housingProfile,
     petProfile,
+    name,
+    surname,
+    genre
   } = req.body;
 
   const profile = {
-    userId,
+    userEmail,
     password,
     province,
     city,
@@ -63,6 +66,9 @@ const updateUserProfile = async (req, res) => {
     balance,
     housingProfile,
     petProfile,
+    name,
+    surname,
+    genre
   };
   try {
     await updateProfile(profile);

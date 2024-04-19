@@ -11,13 +11,15 @@ const createUserMascotaController = async ({ image, name, type, age, raze, aggre
   };
   
 
-const getAllUserMascotasController = async (UserId)=>{
+const getAllUserMascotasController = async (email)=>{
   try {
-    const userMascota = await UserMascota.findAll({
-      where: {
-        UserId: UserId
+    const user = await User.findOne({
+      where:{
+        email
       }
-    })
+    });
+    const userMascota = await user.getUserMascota();
+
     return userMascota;
   } catch (error) {
     throw new Error("Error getting userMascota: " + error.message);

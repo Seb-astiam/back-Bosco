@@ -196,5 +196,6 @@ module.exports = {
   deleteUser,
   updateUser,
   blockAccountController,
-  getUserByIdController
+  getUserByIdController,
+  updatePictureController
 };

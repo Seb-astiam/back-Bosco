@@ -20,7 +20,6 @@ const createNewProfile = async (user) => {
     await user.createProfile(profile);
     return;
   } catch (error) {
-    console.log(error);
     throw Error(error.message);
   }
 };
@@ -53,7 +52,7 @@ const deleteProfile = async (userId) => {
 
 const updateProfile = async (profile) => {
   const {
-    userId,
+    userEmail,
     province,
     city,
     address,
@@ -61,10 +60,18 @@ const updateProfile = async (profile) => {
     balance,
     housingProfile,
     petProfile,
+    name,
+    surname,
+    genre
   } = profile;
 
   try {
-    const newProfile = await Profile.findOne({ where: { UserId: userId } });
+    const user = await User.findOne({
+      where:{
+        email:userEmail
+      }
+    });
+    const newProfile = await user.getProfile();
 
     let attributes = {};
 
@@ -75,9 +82,11 @@ const updateProfile = async (profile) => {
     if (balance) attributes = { ...attributes, balance };
     if (housingProfile) attributes = { ...attributes, housingProfile };
     if (petProfile) attributes = { ...attributes, petProfile };
+    if (name) attributes = { ...attributes, name };
+    if (surname) attributes = { ...attributes, surname };
+    if (genre) attributes = { ...attributes, genre };
 
     await newProfile.update(attributes, {
-      where: { UserId: userId },
       fields: Object.keys(attributes),
     });
 

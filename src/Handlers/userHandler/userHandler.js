@@ -5,8 +5,8 @@ const {
   updateUser,
   getUserByEmail,
   blockAccountController,
-  updatePictureController,
-  getUserByIdController
+  getUserByIdController,
+  updatePictureController
 } = require("../../Controllers/userController/userController");
 const cloudinary = require('../../Config/cloudinary');
 const path = require('path');
@@ -125,7 +125,6 @@ const updatePictureProfile = async (req, res) => {
     const imagePaths = picture.map(image => path.join(__dirname, '../../public/img/upload', image.filename));
     // Subir las imágenes a Cloudinary
     const uploadedImageUrls = await uploadImage(imagePaths);
-
     // Crear objeto de datos del alojamiento
     const userData = {
       picture: uploadedImageUrls, // Usar las URLs de las imágenes subidas
