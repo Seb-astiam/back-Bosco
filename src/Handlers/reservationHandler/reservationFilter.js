@@ -1,12 +1,12 @@
 const reservationfilterController = require("../../Controllers/reservationController/reservationFilterController");
 
 const reservationFilter = async (req, res) => {
-  const { provinces, cities, startDate, endDate, price, estatus,email } = req.query;
+  const { provinces, cities, startDate, endDate, maxPrice, estatus,email } = req.query;
   try {
     const reservaFiltered = await reservationfilterController(
       provinces,
       cities,
-      price,
+      maxPrice,
       startDate,
       endDate,
       estatus,

@@ -16,6 +16,7 @@ const getHousingFiltered = async (req, res) => {
     endDate,
     orderBy,
     orderDirection,
+    accommodationType
   } = req.query;
 
   try {
@@ -33,7 +34,8 @@ const getHousingFiltered = async (req, res) => {
       startDate,
       endDate,
       orderBy,
-      orderDirection
+      orderDirection,
+      accommodationType
     );
     return res.json(housingFiltered);
   } catch (error) {

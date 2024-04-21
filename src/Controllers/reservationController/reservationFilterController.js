@@ -29,14 +29,14 @@ const includeAll = () => {
 
 
 
-const reservationfilterHandler = async (provinces, cities, price, startDate, endDate, estatus, userEmail) => {
+const reservationfilterHandler = async (provinces, cities, maxPrice, startDate, endDate, estatus, userEmail) => {
     let where = {};
 
     if (estatus) where.estatus = estatus;
 
     let include = includeAll(); 
 
-    if (provinces || cities || price) {
+    if (provinces || cities || maxPrice) {
        
         include.push({
             model: Housing,
@@ -48,7 +48,7 @@ const reservationfilterHandler = async (provinces, cities, price, startDate, end
 
     if (provinces) include[include.length - 1].where.provinces = provinces;
     if (cities) include[include.length - 1].where.cities = cities;
-    if (price) include[include.length - 1].where.price = price;
+    if (maxPrice) include[include.length - 1].where.price = { [Op.lte]: maxPrice };
 
     if (startDate && endDate) {
         where.fechaInicio = { [Op.lte]: startDate };

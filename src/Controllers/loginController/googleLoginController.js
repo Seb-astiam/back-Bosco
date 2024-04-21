@@ -18,6 +18,8 @@ const googleLoginController = async (token) => {
         },
       },
     });
+
+    if (!user.status) throw Error("Acceso Denegado");
     if (user) {
       const jwtoken = jwt.sign(
         {
