@@ -1,6 +1,7 @@
 const { Router } = require("express");
-const {  getAllReservationHandler, postReservationHandler, updateReservationHandler, getReservationsAlojamientoHandler } = require("../Handlers/reservationHandler/reservationHandler");
-const reservationFilter = require("../Controllers/reservationController/reservationFilter");
+const {  getAllReservationHandler, postReservationHandler, updateReservationHandler, getReservationsAlojamientoHandler, updateEstadoPagoHandler } = require("../Handlers/reservationHandler/reservationHandler");
+const reservationFilter = require("../Handlers/reservationHandler/reservationFilter");
+
 
 routerReservation = Router();
 
@@ -11,6 +12,8 @@ routerReservation.get("/reservations/:identificacion", getReservationsAlojamient
 routerReservation.post("/newReservation", postReservationHandler);
 
 routerReservation.put("/estadoReserva", updateReservationHandler);
+
+routerReservation.put("/estadoPago", updateEstadoPagoHandler);
 
 routerReservation.get("/filtered", reservationFilter);
 

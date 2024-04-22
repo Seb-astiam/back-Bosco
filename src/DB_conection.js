@@ -49,42 +49,42 @@ const {
   HousingType,
 } = sequelize.models;
 
-Housing.belongsToMany(HousingType, { through: "HosuingTypexHousing" });
-HousingType.belongsToMany(Housing, { through: "HosuingTypexHousing" });
 
-User.hasMany(Housing);
-Housing.belongsTo(User);
+  Housing.belongsToMany(HousingType, { through: "HosuingTypexHousing" });
+  HousingType.belongsToMany(Housing, { through: "HosuingTypexHousing" });
 
-User.belongsToMany(Role, { through: "userRol" });
-Role.belongsToMany(User, { through: "userRol" });
+  User.hasMany(Housing);
+  Housing.belongsTo(User);
 
-User.hasMany(UserMascota);
-UserMascota.belongsTo(User);
-Housing.belongsToMany(Service, { through: "ServicexHousing" });
-Service.belongsToMany(Housing, { through: "ServicexHousing" });
+  User.belongsToMany(Role ,{ through: 'userRol' });
+  Role.belongsToMany(User ,{ through: 'userRol' });
 
+  Housing.belongsToMany(Service, { through: "ServicexHousing" });
+  Service.belongsToMany(Housing, { through: "ServicexHousing" });
 
-Reservation.belongsToMany(RatingHousing, { through: 'RatingHousingxReservation' });
-RatingHousing.belongsToMany(Reservation, { through: 'RatingHousingxReservation' });
+  Reservation.belongsToMany(RatingHousing, { through: 'RatingHousingxReservation' });
+  RatingHousing.belongsToMany(Reservation, { through: 'RatingHousingxReservation' });
 
-Reservation.belongsToMany(RatingPet, { through: 'ReservationxRatingPet' });
-RatingPet.belongsToMany(Reservation, { through: 'ReservationxRatingPet' });
+  Reservation.belongsToMany(RatingPet, { through: 'ReservationxRatingPet' });
+  RatingPet.belongsToMany(Reservation, { through: 'ReservationxRatingPet' });
 
-User.belongsToMany(Notification,{through: 'UserNotificaction'});
-Notification.belongsToMany(User,{through: 'UserNotificaction'});
+  User.belongsToMany(Notification,{through: 'UserNotificaction'});
+  Notification.belongsToMany(User,{through: 'UserNotificaction'});
 
-User.hasOne(Profile);
-Profile.belongsTo(User);
+  User.hasOne(Profile);
+  Profile.belongsTo(User);
 
-Reservation.belongsToMany(User, { through: 'ReservaUsuario' });
-User.belongsToMany(Reservation, { through: 'ReservaUsuario' });
+  Reservation.belongsToMany(User, { through: "ReservaUsuario" });
+  User.belongsToMany(Reservation, { through: "ReservaUsuario" });
 
-Reservation.belongsToMany(Housing, { through: 'ReservaHousing' });
-Housing.belongsToMany(Reservation, { through: 'ReservaHousing' });
+  Reservation.belongsToMany(Housing, { through: 'ReservaHousing' });
+  Housing.belongsToMany(Reservation, { through: 'ReservaHousing' });
 
-UserMascota.hasMany(Reservation);
-Reservation.belongsTo(UserMascota);
+  UserMascota.hasMany(Reservation);
+  Reservation.belongsTo(UserMascota);
 
+  User.hasMany(UserMascota);
+  UserMascota.belongsTo(User);
 
 module.exports = {
   conn: sequelize,

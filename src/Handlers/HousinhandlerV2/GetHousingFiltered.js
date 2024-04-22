@@ -45,13 +45,16 @@ const getHousingFilteredHandler = async (
   startDate,
   endDate,
   orderBy,
-  orderDirection
+  orderDirection,
+  accommodationType
 ) => {
   let order = [];
 
   if (orderBy && orderDirection) order = [[orderBy, orderDirection]];
 
   let where = { availability: true };
+
+  if(accommodationType) where = {...where, accommodationType}
 
   if (title)
     where = {
@@ -73,7 +76,6 @@ const getHousingFilteredHandler = async (
     where = { ...where, price: { [Op.gte]: minPrice } };
   if (maxPrice && minPrice)
     where = { ...where, price: { [Op.between]: [minPrice, maxPrice] } };
-  console.log(typeof hourly, hourly);
   if (hourly === "true") {
     if (startHour && endHour) {
       where = {

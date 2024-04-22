@@ -18,6 +18,7 @@ const googleLogin = async (req, res) => {
     };
     return res.status(201).json(response);
   } catch (error) {
+    if (error.message === "Acceso Denegado") return res.status(400).send("Acceso Denegado");
     return res.status(500).send(error.message);
   }
 };

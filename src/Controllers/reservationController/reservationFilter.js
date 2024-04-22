@@ -2,7 +2,7 @@ const reservationfilterHandler = require("../../Handlers/reservationHandler/rese
 
 const reservationFilter = async (req, res) => {
   const { provinces, cities, startDate, endDate, price, estatus,email } = req.query;
-console.log(provinces, cities, startDate, endDate, price, estatus);
+
   try {
     const reservaFiltered = await reservationfilterHandler(
       provinces,
