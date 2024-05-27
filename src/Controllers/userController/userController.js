@@ -1,4 +1,4 @@
-const { User, Role } = require("../../DB_conection");
+const { User, Role, Housing } = require("../../DB_conection");
 const bcrypt = require("bcrypt");
 //esto
 const jwt = require("jsonwebtoken");
@@ -85,10 +85,13 @@ const getUserByEmail = async (email) => {
         through: {
           attributes: [],
         },
-      },
+      }
     });
+
+  
     return user;
   } catch (error) {
+    console.log(error)
     throw Error(error.message);
   }
 };

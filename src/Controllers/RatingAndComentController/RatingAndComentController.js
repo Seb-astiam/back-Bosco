@@ -1,6 +1,6 @@
 const { Reservation, Housing, User, UserMascota, RatingHousing } = require("../../DB_conection");
 
-const postReviewController = async ({ id_alojamiento, fecha, comentario, valoracion}) => {
+const postReviewController = async ({ id_alojamiento, fecha, comentario, valoracion }) => {
     try { 
       // id_Alojamiento = id_reserva
       const reserva = await Reservation.findOne({
@@ -12,11 +12,24 @@ const postReviewController = async ({ id_alojamiento, fecha, comentario, valorac
         }
       })
       const idAlojamiento = reserva.Housings[0].id
+      
 
-        const  createCalificationHousing= await RatingHousing.create({ id_alojamiento: idAlojamiento, fecha, comentario, valoracion });
-        await createCalificationHousing.addReservation(id_alojamiento);
-        const idReservation = await Reservation.findByPk(id_alojamiento)
-        if(idReservation)
+      const comprobarSiYaComento = await Reservation.findByPk(id_alojamiento, {
+        include: {
+            model: RatingHousing,
+            through: {}
+        }
+    });
+
+      if(comprobarSiYaComento.RatingHousings) return false
+
+
+
+      const  createCalificationHousing= await RatingHousing.create({ id_alojamiento: idAlojamiento, fecha, comentario, valoracion });
+      
+      await createCalificationHousing.addReservation(id_alojamiento);
+      const idReservation = await Reservation.findByPk(id_alojamiento)
+      if(idReservation)
        return true
     } catch (error) {
         throw Error(error.message);

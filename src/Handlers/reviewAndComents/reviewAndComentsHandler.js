@@ -2,17 +2,20 @@ const { postReviewController, getReviewsAlojamientoController, getAllReviewHousi
 
 
 const postReviewHandler = async (req, res) => {
-  const { id_alojamiento, fecha, comentario, valoracion} = req.body;
+
+  const { id_alojamiento, fecha, comentario, valoracion } = req.body;
 
   try {
-    if ( !id_alojamiento || !fecha || !comentario ||!valoracion){
+    if ( !id_alojamiento || !fecha || !comentario ||!valoracion ){
       return res.status(400).send("Falta información");
     }
     const registroReview = await postReviewController({ id_alojamiento, fecha, comentario, valoracion });
 
     if (registroReview) {
       return res.status(201).send("Reseña creada exitosamente");
-    } 
+    } else {
+      return res.status(400).send("Ya esta comentado");
+    }
   } catch (error) {
     res.status(500).json({error: error.message});
   }
