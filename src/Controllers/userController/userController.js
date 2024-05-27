@@ -79,22 +79,28 @@ const getUserByEmail = async (email) => {
     const user = await User.findOne({
       where: { email },
       attributes: ["name", "email", "picture"],
-      include: {
+      include: [
+        {
         model: Role,
         attributes: ["id", "name"],
         through: {
           attributes: [],
         },
-      }
+      },
+      {
+        model: Housing,
+      },
+    ]
     });
 
-  
+    
     return user;
   } catch (error) {
     console.log(error)
     throw Error(error.message);
   }
 };
+
 
 const getUserByIdController= async (id) => {
   try {
