@@ -68,7 +68,7 @@ const updateUserProfile = async (req, res) => {
     name,
     email,
     password,
-   // picture,
+    picture,
   };
   try {
     if (!email) return res.status(400).send("El email es requerido");
@@ -76,7 +76,7 @@ const updateUserProfile = async (req, res) => {
     if (!updated) return res.status(404).send("Usuario no encontrado");
     return res.send("Usuario actualizado exitosamente");
   } catch (error) {
-    return res.status(500).send("Error actualizando usuario: " + error.message);
+    return res.status(500).send(error.message);
   }
 };
 
